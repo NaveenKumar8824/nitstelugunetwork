@@ -50,6 +50,7 @@
     .event-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(255,107,0,0.11);border-color:rgba(255,107,0,0.3);}
     .card-banner{height:185px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
     .card-banner svg.banner-svg{position:absolute;inset:0;width:100%;height:100%;}
+    .card-banner img.banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
     .card-banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.0) 0%,rgba(0,0,0,0.18) 100%);}
     .card-year-badge{position:absolute;top:0.85rem;right:0.85rem;z-index:2;background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.28);border-radius:100px;padding:0.18rem 0.65rem;font-size:0.65rem;font-weight:600;color:white;letter-spacing:0.05em;}
     .card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column;}
@@ -83,13 +84,6 @@
 
     @media(max-width:400px){.dev-strip-inner{justify-content:center;text-align:center;}}
 
-
-      background:#061428;
-      padding:3rem 1.5rem;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
     footer{border-top:1px solid var(--border);padding:1.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
     .footer-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:0.95rem;color:var(--deep);}
     .footer-logo span{color:var(--saffron);}
@@ -131,122 +125,11 @@
     <!-- Vinayaka Card -->
     <a href="vinayaka.html" class="event-card card-vinayaka">
       <div class="card-banner">
-        <svg class="banner-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <radialGradient id="vBg" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#1b5e35"/><stop offset="100%" stop-color="#0a2410"/></radialGradient>
-            <radialGradient id="vHalo" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFD700" stop-opacity="0.5"/><stop offset="60%" stop-color="#FF8C00" stop-opacity="0.18"/><stop offset="100%" stop-color="#FF8C00" stop-opacity="0"/></radialGradient>
-            <radialGradient id="vSkin" cx="40%" cy="35%" r="60%"><stop offset="0%" stop-color="#e8a860"/><stop offset="100%" stop-color="#c07030"/></radialGradient>
-            <radialGradient id="vGold" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#FFE566"/><stop offset="100%" stop-color="#CC8800"/></radialGradient>
-            <radialGradient id="vCloth" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#e83030"/><stop offset="100%" stop-color="#900a0a"/></radialGradient>
-            <radialGradient id="vModak" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#fff0cc"/><stop offset="100%" stop-color="#e8c870"/></radialGradient>
-          </defs>
-          <rect width="400" height="200" fill="url(#vBg)"/>
-          <circle cx="200" cy="90" r="78" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.18"/>
-          <circle cx="200" cy="90" r="68" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.22"/>
-          <circle cx="200" cy="90" r="58" fill="none" stroke="#FFD700" stroke-width="0.8" stroke-opacity="0.28"/>
-          <g opacity="0.15" stroke="#FFD700" stroke-width="0.6" fill="none">
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(30 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(60 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(90 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(120 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(150 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(180 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(210 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(240 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(270 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(300 200 90)"/>
-            <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(330 200 90)"/>
-          </g>
-          <circle cx="200" cy="82" r="58" fill="url(#vHalo)"/>
-          <ellipse cx="200" cy="178" rx="66" ry="14" fill="#1b5e35"/>
-          <g fill="#e83888" opacity="0.85">
-            <ellipse cx="148" cy="172" rx="14" ry="20" transform="rotate(-25 148 172)"/>
-            <ellipse cx="162" cy="166" rx="13" ry="19" transform="rotate(-15 162 166)"/>
-            <ellipse cx="178" cy="163" rx="12" ry="19" transform="rotate(-6 178 163)"/>
-            <ellipse cx="200" cy="162" rx="12" ry="20"/>
-            <ellipse cx="222" cy="163" rx="12" ry="19" transform="rotate(6 222 163)"/>
-            <ellipse cx="238" cy="166" rx="13" ry="19" transform="rotate(15 238 166)"/>
-            <ellipse cx="252" cy="172" rx="14" ry="20" transform="rotate(25 252 172)"/>
-          </g>
-          <g fill="#ff6aaa" opacity="0.7">
-            <ellipse cx="156" cy="168" rx="11" ry="17" transform="rotate(-20 156 168)"/>
-            <ellipse cx="174" cy="162" rx="11" ry="17" transform="rotate(-8 174 162)"/>
-            <ellipse cx="200" cy="160" rx="11" ry="17"/>
-            <ellipse cx="226" cy="162" rx="11" ry="17" transform="rotate(8 226 162)"/>
-            <ellipse cx="244" cy="168" rx="11" ry="17" transform="rotate(20 244 168)"/>
-          </g>
-          <ellipse cx="200" cy="158" rx="44" ry="34" fill="url(#vCloth)"/>
-          <ellipse cx="200" cy="158" rx="44" ry="34" fill="none" stroke="#FFD700" stroke-width="2" stroke-opacity="0.7"/>
-          <ellipse cx="200" cy="138" rx="36" ry="30" fill="url(#vSkin)"/>
-          <ellipse cx="200" cy="144" rx="26" ry="22" fill="#c87830" fill-opacity="0.4"/>
-          <circle cx="200" cy="150" r="3" fill="#8B4513" opacity="0.6"/>
-          <path d="M170,118 Q200,132 230,118" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="200" cy="131" r="4" fill="#FFD700"/>
-          <circle cx="183" cy="126" r="2.5" fill="#FFD700"/>
-          <circle cx="217" cy="126" r="2.5" fill="#FFD700"/>
-          <ellipse cx="156" cy="140" rx="13" ry="22" fill="url(#vSkin)" transform="rotate(-20 156 140)"/>
-          <rect x="130" y="108" width="4" height="28" rx="2" fill="#CC8800"/>
-          <path d="M118,98 L134,108 L134,122 Z" fill="#E0E0E0" stroke="#AAAAAA" stroke-width="0.5"/>
-          <ellipse cx="244" cy="140" rx="13" ry="22" fill="url(#vSkin)" transform="rotate(20 244 140)"/>
-          <g transform="translate(260,120)">
-            <ellipse cx="0" cy="4" rx="7" ry="10" fill="#FF6AAA" transform="rotate(-20 0 4)"/>
-            <ellipse cx="0" cy="4" rx="7" ry="10" fill="#FF6AAA" transform="rotate(20 0 4)"/>
-            <ellipse cx="0" cy="0" rx="5" ry="8" fill="#FFB0D0"/>
-            <circle cx="0" cy="-1" r="4" fill="#FFE066"/>
-          </g>
-          <ellipse cx="200" cy="88" rx="38" ry="36" fill="url(#vSkin)"/>
-          <ellipse cx="164" cy="88" rx="22" ry="28" fill="#c87830"/>
-          <ellipse cx="164" cy="88" rx="16" ry="22" fill="#e8a860" opacity="0.6"/>
-          <ellipse cx="236" cy="88" rx="22" ry="28" fill="#c87830"/>
-          <ellipse cx="236" cy="88" rx="16" ry="22" fill="#e8a860" opacity="0.6"/>
-          <ellipse cx="200" cy="70" rx="5" ry="7" fill="#FF3333" opacity="0.85"/>
-          <rect x="196" y="63" width="8" height="3" rx="1.5" fill="#FFD700"/>
-          <ellipse cx="200" cy="58" rx="28" ry="8" fill="#CC8800"/>
-          <polygon points="185,58 182,30 188,58" fill="#FFD700"/>
-          <polygon points="193,56 192,22 198,56" fill="#FFD700"/>
-          <polygon points="200,55 200,18 206,55" fill="#FFD700"/>
-          <polygon points="207,56 208,22 213,56" fill="#FFD700"/>
-          <polygon points="215,58 218,30 221,58" fill="#FFD700"/>
-          <circle cx="200" cy="40" r="5" fill="#CC0000"/>
-          <circle cx="188" cy="46" r="3" fill="#0044CC"/>
-          <circle cx="212" cy="46" r="3" fill="#0044CC"/>
-          <rect x="173" y="56" width="54" height="9" rx="4" fill="#CC8800"/>
-          <circle cx="186" cy="60" r="3" fill="#FF0000"/>
-          <circle cx="200" cy="60" r="3.5" fill="#FF0000"/>
-          <circle cx="214" cy="60" r="3" fill="#FF0000"/>
-          <ellipse cx="190" cy="86" rx="7" ry="6.5" fill="white"/>
-          <ellipse cx="210" cy="86" rx="7" ry="6.5" fill="white"/>
-          <circle cx="191" cy="86" r="4" fill="#1a0a00"/>
-          <circle cx="211" cy="86" r="4" fill="#1a0a00"/>
-          <circle cx="192.5" cy="84.5" r="1.5" fill="white"/>
-          <circle cx="212.5" cy="84.5" r="1.5" fill="white"/>
-          <path d="M184,80 Q191,77 196,80" fill="none" stroke="#4a2000" stroke-width="2" stroke-linecap="round"/>
-          <path d="M204,80 Q210,77 216,80" fill="none" stroke="#4a2000" stroke-width="2" stroke-linecap="round"/>
-          <path d="M196,100 Q188,114 182,122 Q174,132 170,140 Q164,150 170,156 Q176,162 183,158 Q190,154 188,146" fill="none" stroke="#c07030" stroke-width="11" stroke-linecap="round"/>
-          <path d="M196,100 Q188,114 182,122 Q174,132 170,140 Q164,150 170,156 Q176,162 183,158 Q190,154 188,146" fill="none" stroke="#e8a860" stroke-width="8" stroke-linecap="round"/>
-          <path d="M192,106 Q186,108 184,112" fill="none" stroke="#c07030" stroke-width="1" stroke-opacity="0.5"/>
-          <path d="M187,116 Q181,118 179,123" fill="none" stroke="#c07030" stroke-width="1" stroke-opacity="0.5"/>
-          <ellipse cx="187" cy="144" rx="10" ry="11" fill="url(#vModak)"/>
-          <ellipse cx="187" cy="140" rx="8" ry="7" fill="#fff8e0"/>
-          <path d="M183,143 Q187,148 191,143" fill="none" stroke="#CC8800" stroke-width="1" stroke-opacity="0.6"/>
-          <path d="M193,96 Q200,101 207,96" fill="none" stroke="#7a3a00" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M212,98 Q226,104 228,114 Q228,120 222,118" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
-          <path d="M212,98 Q226,104 228,114 Q228,120 222,118" fill="none" stroke="#f0f0e0" stroke-width="2.5" stroke-linecap="round"/>
-          <text x="154" y="162" font-size="13" fill="#FFD700" text-anchor="middle" font-family="serif" opacity="0.9">ॐ</text>
-          <ellipse cx="167" cy="128" rx="10" ry="4" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(-20 167 128)"/>
-          <ellipse cx="233" cy="128" rx="10" ry="4" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(20 233 128)"/>
-          <circle cx="50" cy="40" r="5" fill="#FF8C00" opacity="0.5"/>
-          <circle cx="350" cy="35" r="6" fill="#FF8C00" opacity="0.45"/>
-          <circle cx="30" cy="140" r="4" fill="#FF6AAA" opacity="0.4"/>
-          <circle cx="370" cy="150" r="5" fill="#FF6AAA" opacity="0.4"/>
-          <circle cx="70" cy="170" r="3" fill="#FFD700" opacity="0.35"/>
-          <circle cx="330" cy="168" r="4" fill="#FFD700" opacity="0.35"/>
-          <path d="M10,10 Q30,5 25,25 Q10,22 10,10Z" fill="#2d8a50" opacity="0.5"/>
-          <path d="M390,10 Q370,5 375,25 Q390,22 390,10Z" fill="#2d8a50" opacity="0.5"/>
-          <path d="M10,190 Q30,195 25,175 Q10,178 10,190Z" fill="#2d8a50" opacity="0.5"/>
-          <path d="M390,190 Q370,195 375,175 Q390,178 390,190Z" fill="#2d8a50" opacity="0.5"/>
-        </svg>
+        <img
+          class="banner-img"
+          src="https://naveenkumar8824.github.io/nitstelugunetwork/vinayaka-banner.jpg"
+          alt="Vinayaka Chavithi 2026"
+        />
         <div class="card-banner-overlay"></div>
         <div class="card-year-badge">2026</div>
       </div>
@@ -459,7 +342,6 @@
   <div class="dev-strip-inner">
     <span class="dev-strip-text">Designed &amp; Developed by <strong>Naveen Kumar</strong> &lt;/&gt;</span>
     <div class="dev-strip-icons">
-      <!-- Instagram official logo -->
       <a href="https://www.instagram.com/naveennn_7" target="_blank" rel="noopener" class="dsi" title="Instagram">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
           <defs>
@@ -477,14 +359,12 @@
           <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
         </svg>
       </a>
-      <!-- WhatsApp official logo -->
       <a href="https://wa.me/919392920692" target="_blank" rel="noopener" class="dsi" title="WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
           <rect width="24" height="24" rx="5" fill="#25D366"/>
           <path fill="white" d="M12 4.8A7.2 7.2 0 0 0 5.6 15.7L4.5 19.5l3.9-1.02A7.2 7.2 0 1 0 12 4.8zm0 13a5.76 5.76 0 0 1-2.94-.81l-.21-.12-2.18.57.59-2.13-.14-.22A5.76 5.76 0 1 1 12 17.8zm3.17-4.3c-.17-.09-1.02-.5-1.18-.56-.15-.06-.27-.09-.38.09s-.44.56-.54.67c-.1.12-.2.13-.38.04a4.68 4.68 0 0 1-1.38-.85 5.16 5.16 0 0 1-.95-1.18c-.1-.18-.01-.27.08-.36.08-.08.17-.2.26-.3.09-.1.12-.17.18-.29.06-.11.03-.21-.02-.3-.05-.08-.38-.93-.53-1.28-.13-.33-.28-.29-.38-.29h-.33c-.11 0-.3.04-.45.21-.15.17-.6.58-.6 1.41s.61 1.64.69 1.75c.09.12 1.2 1.82 2.89 2.55.4.17.72.28.96.36.4.12.77.1 1.06.06.32-.05 1-.4 1.14-.8.14-.39.14-.73.1-.8-.05-.07-.16-.12-.33-.2z"/>
         </svg>
       </a>
-      <!-- Gmail official logo -->
       <a href="mailto:naveenkumarnaik69@gmail.com" class="dsi" title="Gmail">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
           <rect width="32" height="32" rx="6" fill="white"/>
