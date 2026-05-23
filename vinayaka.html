@@ -15,17 +15,10 @@
     }
     html{scroll-behavior:smooth;}
     body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);min-height:100vh;}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.5rem;background:rgba(255,253,249,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
-    .nav-logo{display:flex;align-items:center;gap:0.65rem;text-decoration:none;}
-    .logo-mark{width:36px;height:36px;background:var(--saffron);border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:16px;color:white;flex-shrink:0;}
-    .logo-text{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1rem;color:var(--deep);line-height:1.1;}
-    .logo-text span{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;}
-    .back-btn{display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;font-weight:500;color:var(--muted);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;}
-    .back-btn:hover{color:var(--saffron);}
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
     .badge-dot{width:6px;height:6px;background:var(--saffron);border-radius:50%;animation:pulse 2s infinite;}
-    .page-hero{padding:4.5rem 1.25rem 1.25rem;text-align:center;position:relative;overflow:hidden;}
+    .page-hero{padding:2rem 1.25rem 1.25rem;text-align:center;position:relative;overflow:hidden;}
     .page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 40%,rgba(255,107,0,0.06) 0%,transparent 55%),radial-gradient(circle at 80% 60%,rgba(255,107,0,0.04) 0%,transparent 55%);}
     .hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,107,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,0,0.04) 1px,transparent 1px);background-size:60px 60px;}
     .page-hero-badge{display:inline-flex;align-items:center;gap:0.45rem;background:var(--saffron-pale);border:1px solid rgba(255,107,0,0.3);border-radius:100px;padding:0.3rem 0.85rem;font-size:0.7rem;font-weight:600;color:var(--saffron);margin-bottom:0.75rem;}
@@ -96,14 +89,6 @@
   </style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-logo">
-    <div class="logo-mark">న</div>
-    <div class="logo-text">NITS Telugu Network<span>Community Portal</span></div>
-  </a>
-  <a href="index.html" class="back-btn">← Home</a>
-</nav>
 
 <section class="page-hero">
   <div class="hero-grid"></div>
@@ -223,14 +208,12 @@
 </div>
 
 <script>
-  // ── CONFIG (edit UPI IDs and Telegram bot details here) ──
   const PORTAL_CONFIG = {
     "2": { upi: "9032979645-2@ybl",          bot: "8922704320:AAE-IIU0Oh0Y8oa88QzXCfuAe1zA_RzCVgo", cid: "7461883719" },
     "3": { upi: "bukkenaveenkumar@ptyes",     bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838" }
   };
   const YEAR_LABEL = { "1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year" };
 
-  // ── HELPERS ──
   function makePaymentQR(upiId, size) {
     const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
@@ -277,7 +260,6 @@
     } catch(e) {}
   }
 
-  // ── VALIDATION ──
   function showErr(id, show) {
     document.getElementById(id).classList.toggle("show", show);
     const map = {"err-name":"fullName","err-year":"gradYear","err-dept":"department","err-mobile":"mobile"};
@@ -286,7 +268,6 @@
 
   document.getElementById("mobile").addEventListener("input", function(){ this.value = this.value.replace(/\D/g,""); });
 
-  // ── STEP 1 → STEP 2 ──
   function goToStep2() {
     const name = document.getElementById("fullName").value.trim();
     const year = document.getElementById("gradYear").value;
@@ -317,7 +298,6 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  // ── FILE PREVIEW ──
   const uz = document.getElementById("uploadZone");
   uz.addEventListener("dragover", e => { e.preventDefault(); uz.classList.add("dragover"); });
   uz.addEventListener("dragleave", () => uz.classList.remove("dragover"));
@@ -335,7 +315,6 @@
     else { img.style.display = "none"; }
   }
 
-  // ── SUBMIT ──
   async function submitForm() {
     const name = document.getElementById("fullName").value.trim();
     const year = document.getElementById("gradYear").value;
