@@ -388,38 +388,63 @@
       const reader = new FileReader();
       reader.onload = async (e) => {
         const base64Data = e.target.result.split(",")[1];
-        const mediaType = file.type || "image/jpeg";
+        const mediaType = file.type && file.type.startsWith("image/") ? file.type : "image/jpeg";
+        const prompt = `You are reading a UPI payment success screenshot from an Indian UPI app (Google Pay, PhonePe, Paytm, BHIM, Amazon Pay, iMobile, MobiKwik, Cred, Slice, or any bank UPI app).
+
+Your only job: find the UPI transaction reference number (UTR).
+
+Where to look depending on app:
+- Google Pay: "UPI transaction ID" — a 12-digit number shown at the bottom of success screen
+- PhonePe: "Transaction ID" or "UPI Ref No" — usually 12 digits
+- Paytm: "Order ID" starts with letters, OR "UPI Reference No" which is 12 digits — prefer the 12-digit UPI ref
+- BHIM: "Transaction Ref No" — 12 digits
+- Amazon Pay: "UPI Reference Number" — 12 digits
+- Bank apps (SBI, HDFC, ICICI, Axis etc): "UTR No", "Reference No", "Txn Ref" — 12 digits or alphanumeric up to 22 chars
+
+Rules:
+1. UTR is ALWAYS numeric or alphanumeric, 8–22 characters long
+2. It is NOT a mobile number, bank account number, or UPI ID (those contain @ or are 10 digits starting with 6-9)
+3. If multiple candidates exist, prefer the one explicitly labeled UTR / UPI Ref / Transaction ID / Reference No
+4. Return ONLY the raw reference number — no label, no spaces, no dashes, no explanation
+5. If genuinely not visible or not a payment screenshot, return exactly: NOT_FOUND
+
+Examples of valid UTR formats:
+- 123456789012 (12-digit numeric — most common)
+- T2405161234567 (alphanumeric, some bank apps)
+- 406831234567 (12-digit)
+
+Respond with just the number or NOT_FOUND.`;
+
         try {
           const response = await fetch("https://api.anthropic.com/v1/messages", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               model: "claude-sonnet-4-20250514",
-              max_tokens: 256,
+              max_tokens: 100,
               messages: [{
                 role: "user",
                 content: [
-                  {
-                    type: "image",
-                    source: { type: "base64", media_type: mediaType, data: base64Data }
-                  },
-                  {
-                    type: "text",
-                    text: "This is a UPI payment screenshot. Extract the UTR number or UPI transaction reference number. UTR is typically a 12-digit number, sometimes labeled as 'UTR', 'UPI Ref No', 'Transaction ID', 'Ref No', 'Reference Number', or similar. Return ONLY the UTR/transaction reference number as plain text with no spaces, dashes, or explanation. If you cannot find it, return exactly: NOT_FOUND"
-                  }
+                  { type: "image", source: { type: "base64", media_type: mediaType, data: base64Data } },
+                  { type: "text", text: prompt }
                 ]
               }]
             })
           });
           const data = await response.json();
-          const text = (data.content && data.content[0] && data.content[0].text || "").trim();
-          if (text === "NOT_FOUND" || text === "" || text.length < 6) {
-            resolve(null);
-          } else {
-            // Sanitise: keep only alphanumeric chars, max 30 chars
-            const clean = text.replace(/[^a-zA-Z0-9]/g, "").slice(0, 30);
-            resolve(clean || null);
-          }
+          // Handle API errors gracefully
+          if (data.error) { console.warn("Claude API error:", data.error.message); resolve(null); return; }
+          const raw = (data.content && data.content[0] && data.content[0].text || "").trim();
+          // Strip any accidental surrounding quotes, spaces, newlines
+          const text = raw.replace(/^["'\s]+|["'\s]+$/g, "");
+          if (!text || text === "NOT_FOUND" || text.toLowerCase().includes("not_found")) { resolve(null); return; }
+          // Validate: must be 8–22 chars, alphanumeric only, not a phone number
+          const clean = text.replace(/[\s\-]/g, ""); // strip spaces/dashes only
+          const isPhoneNum = /^[6-9]\d{9}$/.test(clean);
+          const isUPIId = clean.includes("@");
+          if (isPhoneNum || isUPIId) { resolve(null); return; }
+          if (/^[a-zA-Z0-9]{8,22}$/.test(clean)) { resolve(clean); }
+          else { resolve(null); }
         } catch (err) {
           console.warn("UTR extraction failed:", err);
           resolve(null);
