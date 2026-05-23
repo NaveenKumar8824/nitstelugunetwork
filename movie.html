@@ -382,77 +382,110 @@
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1F1F1F&bgcolor=FFFFFF&qzone=1`;
   }
 
-  // ── UTR AUTO-DETECTION via Claude API ──
+  // ── UTR AUTO-DETECTION via Google Cloud Vision OCR (free tier: 1000/month) ──
+  // 🔑 Set your Google Cloud Vision API key below
+  // Steps: console.cloud.google.com → Enable "Cloud Vision API" → Credentials → Create API Key
+  const GOOGLE_VISION_API_KEY = "AIzaSyBr82lhcuy8o2FcWukZNXJE2Qem8qSPlAg";
+
   async function extractUTRFromImage(file) {
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const base64Data = e.target.result.split(",")[1];
-        const mediaType = file.type && file.type.startsWith("image/") ? file.type : "image/jpeg";
-        const prompt = `You are reading a UPI payment success screenshot from an Indian UPI app (Google Pay, PhonePe, Paytm, BHIM, Amazon Pay, iMobile, MobiKwik, Cred, Slice, or any bank UPI app).
-
-Your only job: find the UPI transaction reference number (UTR).
-
-Where to look depending on app:
-- Google Pay: "UPI transaction ID" — a 12-digit number shown at the bottom of success screen
-- PhonePe: "Transaction ID" or "UPI Ref No" — usually 12 digits
-- Paytm: "Order ID" starts with letters, OR "UPI Reference No" which is 12 digits — prefer the 12-digit UPI ref
-- BHIM: "Transaction Ref No" — 12 digits
-- Amazon Pay: "UPI Reference Number" — 12 digits
-- Bank apps (SBI, HDFC, ICICI, Axis etc): "UTR No", "Reference No", "Txn Ref" — 12 digits or alphanumeric up to 22 chars
-
-Rules:
-1. UTR is ALWAYS numeric or alphanumeric, 8–22 characters long
-2. It is NOT a mobile number, bank account number, or UPI ID (those contain @ or are 10 digits starting with 6-9)
-3. If multiple candidates exist, prefer the one explicitly labeled UTR / UPI Ref / Transaction ID / Reference No
-4. Return ONLY the raw reference number — no label, no spaces, no dashes, no explanation
-5. If genuinely not visible or not a payment screenshot, return exactly: NOT_FOUND
-
-Examples of valid UTR formats:
-- 123456789012 (12-digit numeric — most common)
-- T2405161234567 (alphanumeric, some bank apps)
-- 406831234567 (12-digit)
-
-Respond with just the number or NOT_FOUND.`;
-
         try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 100,
-              messages: [{
-                role: "user",
-                content: [
-                  { type: "image", source: { type: "base64", media_type: mediaType, data: base64Data } },
-                  { type: "text", text: prompt }
-                ]
-              }]
-            })
-          });
+          const response = await fetch(
+            `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_VISION_API_KEY}`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                requests: [{
+                  image: { content: base64Data },
+                  features: [{ type: "TEXT_DETECTION", maxResults: 1 }]
+                }]
+              })
+            }
+          );
           const data = await response.json();
-          // Handle API errors gracefully
-          if (data.error) { console.warn("Claude API error:", data.error.message); resolve(null); return; }
-          const raw = (data.content && data.content[0] && data.content[0].text || "").trim();
-          // Strip any accidental surrounding quotes, spaces, newlines
-          const text = raw.replace(/^["'\s]+|["'\s]+$/g, "");
-          if (!text || text === "NOT_FOUND" || text.toLowerCase().includes("not_found")) { resolve(null); return; }
-          // Validate: must be 8–22 chars, alphanumeric only, not a phone number
-          const clean = text.replace(/[\s\-]/g, ""); // strip spaces/dashes only
-          const isPhoneNum = /^[6-9]\d{9}$/.test(clean);
-          const isUPIId = clean.includes("@");
-          if (isPhoneNum || isUPIId) { resolve(null); return; }
-          if (/^[a-zA-Z0-9]{8,22}$/.test(clean)) { resolve(clean); }
-          else { resolve(null); }
+          if (data.error) { console.warn("Vision API error:", data.error.message); resolve(null); return; }
+          const raw = data.responses?.[0]?.fullTextAnnotation?.text || "";
+          if (!raw) { resolve(null); return; }
+          resolve(parseUTRFromText(raw));
         } catch (err) {
-          console.warn("UTR extraction failed:", err);
+          console.warn("Google Vision OCR failed:", err);
           resolve(null);
         }
       };
       reader.onerror = () => resolve(null);
       reader.readAsDataURL(file);
     });
+  }
+
+  function parseUTRFromText(rawText) {
+    // Normalize: collapse whitespace, remove unicode junk
+    const text = rawText.replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\r/g, "\n");
+    const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+
+    // ── Priority patterns: labeled UTR/Ref lines (most reliable) ──
+    // Covers: GPay, PhonePe, Paytm, BHIM, Amazon Pay, all bank apps
+    const labeledPatterns = [
+      // "UPI transaction ID\n123456789012" or "UPI transaction ID: 123456789012"
+      /upi\s+transaction\s+id[:\s#]*([a-z0-9]{8,22})/i,
+      // "UPI Ref No" / "UPI Ref. No" / "UPI Reference No"
+      /upi\s+ref(?:erence)?(?:\.)?\s*(?:no\.?|number|#)?[:\s]*([a-z0-9]{8,22})/i,
+      // "Transaction ID" / "Txn ID"
+      /(?:transaction|txn)\s+id[:\s#]*([a-z0-9]{8,22})/i,
+      // "Transaction Ref" / "Txn Ref No"
+      /(?:transaction|txn)\s+ref(?:erence)?(?:\s+no\.?)?[:\s#]*([a-z0-9]{8,22})/i,
+      // "Reference No" / "Ref No" / "Ref. No"
+      /ref(?:erence)?\.?\s*(?:no\.?|number|#)[:\s]*([a-z0-9]{8,22})/i,
+      // "UTR No" / "UTR:" / "UTR #"
+      /\butr\b[:\s#.]*([a-z0-9]{8,22})/i,
+      // "Order ID" alphanumeric (Paytm style: starts with letters then digits)
+      /order\s+id[:\s#]*([a-z]{1,6}[0-9]{6,18})/i,
+      // "Payment ID" (Razorpay, some apps)
+      /payment\s+id[:\s#]*([a-z0-9]{8,22})/i,
+    ];
+
+    for (const pat of labeledPatterns) {
+      const m = text.match(pat);
+      if (m) {
+        const candidate = m[1].replace(/[\s\-]/g, "");
+        if (isValidUTR(candidate)) return candidate;
+      }
+    }
+
+    // ── Multi-line scan: label on one line, value on next ──
+    for (let i = 0; i < lines.length - 1; i++) {
+      const label = lines[i].toLowerCase();
+      const value = lines[i + 1].replace(/[\s\-]/g, "");
+      const isLabel = /(upi|transaction|txn|ref|utr|order|payment).*(id|no|number|ref)/i.test(label)
+                   || /^(utr|ref no|txn id|transaction id|upi ref)$/i.test(label.trim());
+      if (isLabel && isValidUTR(value)) return value;
+    }
+
+    // ── Fallback: find standalone 12-digit numbers (most common UTR format) ──
+    // Exclude phone numbers (10 digits starting 6-9) and amounts (short numbers)
+    const standalone12 = text.match(/\b(\d{12})\b/g) || [];
+    for (const num of standalone12) {
+      if (!/^[6-9]\d{9}$/.test(num)) return num; // not a phone number
+    }
+
+    // ── Last resort: any 8-22 alphanumeric block near a keyword ──
+    const nearKeyword = text.match(/(?:upi|utr|ref|txn|transaction)[\s\S]{0,40}?\b([a-z0-9]{8,22})\b/i);
+    if (nearKeyword && isValidUTR(nearKeyword[1])) return nearKeyword[1];
+
+    return null;
+  }
+
+  function isValidUTR(val) {
+    if (!val || typeof val !== "string") return false;
+    const v = val.replace(/[\s\-]/g, "");
+    if (!/^[a-zA-Z0-9]{8,22}$/.test(v)) return false;
+    if (/^[6-9]\d{9}$/.test(v)) return false;  // phone number
+    if (v.includes("@")) return false;            // UPI ID
+    if (/^\d{1,5}$/.test(v)) return false;       // too short, likely an amount
+    return true;
   }
 
   function setUTRStatus(status, text) {
