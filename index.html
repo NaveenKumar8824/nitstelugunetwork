@@ -70,6 +70,26 @@
     .event-card:hover .cta-arrow{transform:translateX(3px);}
     .about-strip{background:var(--deep);padding:2.25rem 1.5rem;text-align:center;}
     .about-strip p{font-size:0.92rem;color:rgba(255,255,255,0.5);font-weight:300;}
+
+    /* ── Compact Developer Credit Strip ── */
+    .dev-strip{background:#0B1F3A;border-top:1px solid rgba(0,207,255,0.15);}
+    .dev-strip-inner{max-width:1060px;margin:0 auto;padding:0.75rem 1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.6rem;}
+    .dev-strip-text{font-size:0.75rem;color:rgba(255,255,255,0.45);font-weight:400;}
+    .dev-strip-text strong{color:#00CFFF;font-weight:600;}
+    .dev-strip-icons{display:flex;gap:10px;align-items:center;}
+    .dsi{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:transform 0.2s;}
+    .dsi svg{width:14px;height:14px;}
+    .dsi:hover{transform:scale(1.15);}
+
+    @media(max-width:400px){.dev-strip-inner{justify-content:center;text-align:center;}}
+
+
+      background:#061428;
+      padding:3rem 1.5rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
     footer{border-top:1px solid var(--border);padding:1.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
     .footer-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:0.95rem;color:var(--deep);}
     .footer-logo span{color:var(--saffron);}
@@ -108,7 +128,7 @@
   </div>
   <div class="events-grid">
 
-    <!-- Vinayaka Card — rich Ganesha SVG illustration -->
+    <!-- Vinayaka Card -->
     <a href="vinayaka.html" class="event-card card-vinayaka">
       <div class="card-banner">
         <svg class="banner-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -120,13 +140,10 @@
             <radialGradient id="vCloth" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#e83030"/><stop offset="100%" stop-color="#900a0a"/></radialGradient>
             <radialGradient id="vModak" cx="40%" cy="30%" r="70%"><stop offset="0%" stop-color="#fff0cc"/><stop offset="100%" stop-color="#e8c870"/></radialGradient>
           </defs>
-          <!-- Deep green background -->
           <rect width="400" height="200" fill="url(#vBg)"/>
-          <!-- Mandala ring patterns behind Ganesha -->
           <circle cx="200" cy="90" r="78" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.18"/>
           <circle cx="200" cy="90" r="68" fill="none" stroke="#FFD700" stroke-width="0.5" stroke-opacity="0.22"/>
           <circle cx="200" cy="90" r="58" fill="none" stroke="#FFD700" stroke-width="0.8" stroke-opacity="0.28"/>
-          <!-- Mandala petals -->
           <g opacity="0.15" stroke="#FFD700" stroke-width="0.6" fill="none">
             <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25"/>
             <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(30 200 90)"/>
@@ -141,9 +158,7 @@
             <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(300 200 90)"/>
             <ellipse cx="200" cy="22" rx="6" ry="14" fill="#FFD700" fill-opacity="0.25" transform="rotate(330 200 90)"/>
           </g>
-          <!-- Divine halo glow -->
           <circle cx="200" cy="82" r="58" fill="url(#vHalo)"/>
-          <!-- Lotus petals base (seat) -->
           <ellipse cx="200" cy="178" rx="66" ry="14" fill="#1b5e35"/>
           <g fill="#e83888" opacity="0.85">
             <ellipse cx="148" cy="172" rx="14" ry="20" transform="rotate(-25 148 172)"/>
@@ -161,100 +176,72 @@
             <ellipse cx="226" cy="162" rx="11" ry="17" transform="rotate(8 226 162)"/>
             <ellipse cx="244" cy="168" rx="11" ry="17" transform="rotate(20 244 168)"/>
           </g>
-          <!-- Body / dhoti red -->
           <ellipse cx="200" cy="158" rx="44" ry="34" fill="url(#vCloth)"/>
-          <!-- Gold dhoti trim -->
           <ellipse cx="200" cy="158" rx="44" ry="34" fill="none" stroke="#FFD700" stroke-width="2" stroke-opacity="0.7"/>
-          <!-- Belly + torso -->
           <ellipse cx="200" cy="138" rx="36" ry="30" fill="url(#vSkin)"/>
-          <!-- Big belly circle -->
           <ellipse cx="200" cy="144" rx="26" ry="22" fill="#c87830" fill-opacity="0.4"/>
-          <!-- Navel dot -->
           <circle cx="200" cy="150" r="3" fill="#8B4513" opacity="0.6"/>
-          <!-- Gold necklace -->
           <path d="M170,118 Q200,132 230,118" fill="none" stroke="#FFD700" stroke-width="2.5" stroke-linecap="round"/>
           <circle cx="200" cy="131" r="4" fill="#FFD700"/>
           <circle cx="183" cy="126" r="2.5" fill="#FFD700"/>
           <circle cx="217" cy="126" r="2.5" fill="#FFD700"/>
-          <!-- Left arm (axe hand) -->
           <ellipse cx="156" cy="140" rx="13" ry="22" fill="url(#vSkin)" transform="rotate(-20 156 140)"/>
-          <!-- Axe -->
           <rect x="130" y="108" width="4" height="28" rx="2" fill="#CC8800"/>
           <path d="M118,98 L134,108 L134,122 Z" fill="#E0E0E0" stroke="#AAAAAA" stroke-width="0.5"/>
-          <!-- Right arm (blessing / lotus) -->
           <ellipse cx="244" cy="140" rx="13" ry="22" fill="url(#vSkin)" transform="rotate(20 244 140)"/>
-          <!-- Pink lotus in right hand -->
           <g transform="translate(260,120)">
             <ellipse cx="0" cy="4" rx="7" ry="10" fill="#FF6AAA" transform="rotate(-20 0 4)"/>
             <ellipse cx="0" cy="4" rx="7" ry="10" fill="#FF6AAA" transform="rotate(20 0 4)"/>
             <ellipse cx="0" cy="0" rx="5" ry="8" fill="#FFB0D0"/>
             <circle cx="0" cy="-1" r="4" fill="#FFE066"/>
           </g>
-          <!-- Elephant head -->
           <ellipse cx="200" cy="88" rx="38" ry="36" fill="url(#vSkin)"/>
-          <!-- Big ears -->
           <ellipse cx="164" cy="88" rx="22" ry="28" fill="#c87830"/>
           <ellipse cx="164" cy="88" rx="16" ry="22" fill="#e8a860" opacity="0.6"/>
           <ellipse cx="236" cy="88" rx="22" ry="28" fill="#c87830"/>
           <ellipse cx="236" cy="88" rx="16" ry="22" fill="#e8a860" opacity="0.6"/>
-          <!-- Forehead tilak -->
           <ellipse cx="200" cy="70" rx="5" ry="7" fill="#FF3333" opacity="0.85"/>
           <rect x="196" y="63" width="8" height="3" rx="1.5" fill="#FFD700"/>
-          <!-- Crown base -->
           <ellipse cx="200" cy="58" rx="28" ry="8" fill="#CC8800"/>
-          <!-- Crown spires -->
           <polygon points="185,58 182,30 188,58" fill="#FFD700"/>
           <polygon points="193,56 192,22 198,56" fill="#FFD700"/>
           <polygon points="200,55 200,18 206,55" fill="#FFD700"/>
           <polygon points="207,56 208,22 213,56" fill="#FFD700"/>
           <polygon points="215,58 218,30 221,58" fill="#FFD700"/>
-          <!-- Crown gems -->
           <circle cx="200" cy="40" r="5" fill="#CC0000"/>
           <circle cx="188" cy="46" r="3" fill="#0044CC"/>
           <circle cx="212" cy="46" r="3" fill="#0044CC"/>
-          <!-- Crown band with gems -->
           <rect x="173" y="56" width="54" height="9" rx="4" fill="#CC8800"/>
           <circle cx="186" cy="60" r="3" fill="#FF0000"/>
           <circle cx="200" cy="60" r="3.5" fill="#FF0000"/>
           <circle cx="214" cy="60" r="3" fill="#FF0000"/>
-          <!-- Eyes -->
           <ellipse cx="190" cy="86" rx="7" ry="6.5" fill="white"/>
           <ellipse cx="210" cy="86" rx="7" ry="6.5" fill="white"/>
           <circle cx="191" cy="86" r="4" fill="#1a0a00"/>
           <circle cx="211" cy="86" r="4" fill="#1a0a00"/>
           <circle cx="192.5" cy="84.5" r="1.5" fill="white"/>
           <circle cx="212.5" cy="84.5" r="1.5" fill="white"/>
-          <!-- Thick eyebrows -->
           <path d="M184,80 Q191,77 196,80" fill="none" stroke="#4a2000" stroke-width="2" stroke-linecap="round"/>
           <path d="M204,80 Q210,77 216,80" fill="none" stroke="#4a2000" stroke-width="2" stroke-linecap="round"/>
-          <!-- Trunk curling left with modak -->
           <path d="M196,100 Q188,114 182,122 Q174,132 170,140 Q164,150 170,156 Q176,162 183,158 Q190,154 188,146" fill="none" stroke="#c07030" stroke-width="11" stroke-linecap="round"/>
           <path d="M196,100 Q188,114 182,122 Q174,132 170,140 Q164,150 170,156 Q176,162 183,158 Q190,154 188,146" fill="none" stroke="#e8a860" stroke-width="8" stroke-linecap="round"/>
-          <!-- Trunk wrinkle lines -->
           <path d="M192,106 Q186,108 184,112" fill="none" stroke="#c07030" stroke-width="1" stroke-opacity="0.5"/>
           <path d="M187,116 Q181,118 179,123" fill="none" stroke="#c07030" stroke-width="1" stroke-opacity="0.5"/>
-          <!-- Modak in trunk tip -->
           <ellipse cx="187" cy="144" rx="10" ry="11" fill="url(#vModak)"/>
           <ellipse cx="187" cy="140" rx="8" ry="7" fill="#fff8e0"/>
           <path d="M183,143 Q187,148 191,143" fill="none" stroke="#CC8800" stroke-width="1" stroke-opacity="0.6"/>
-          <!-- Smile -->
           <path d="M193,96 Q200,101 207,96" fill="none" stroke="#7a3a00" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- Tusk (right, white) -->
           <path d="M212,98 Q226,104 228,114 Q228,120 222,118" fill="none" stroke="white" stroke-width="4" stroke-linecap="round"/>
           <path d="M212,98 Q226,104 228,114 Q228,120 222,118" fill="none" stroke="#f0f0e0" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Om symbol on left palm -->
           <text x="154" y="162" font-size="13" fill="#FFD700" text-anchor="middle" font-family="serif" opacity="0.9">ॐ</text>
-          <!-- Gold armlets -->
           <ellipse cx="167" cy="128" rx="10" ry="4" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(-20 167 128)"/>
           <ellipse cx="233" cy="128" rx="10" ry="4" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(20 233 128)"/>
-          <!-- Scattered flower dots (marigold) -->
           <circle cx="50" cy="40" r="5" fill="#FF8C00" opacity="0.5"/>
           <circle cx="350" cy="35" r="6" fill="#FF8C00" opacity="0.45"/>
           <circle cx="30" cy="140" r="4" fill="#FF6AAA" opacity="0.4"/>
           <circle cx="370" cy="150" r="5" fill="#FF6AAA" opacity="0.4"/>
           <circle cx="70" cy="170" r="3" fill="#FFD700" opacity="0.35"/>
           <circle cx="330" cy="168" r="4" fill="#FFD700" opacity="0.35"/>
-          <!-- Leaf decorations in corners -->
           <path d="M10,10 Q30,5 25,25 Q10,22 10,10Z" fill="#2d8a50" opacity="0.5"/>
           <path d="M390,10 Q370,5 375,25 Q390,22 390,10Z" fill="#2d8a50" opacity="0.5"/>
           <path d="M10,190 Q30,195 25,175 Q10,178 10,190Z" fill="#2d8a50" opacity="0.5"/>
@@ -271,7 +258,7 @@
       </div>
     </a>
 
-    <!-- Ugadi Card — traditional festival scene SVG -->
+    <!-- Ugadi Card -->
     <a href="ugadi.html" class="event-card card-ugadi">
       <div class="card-banner">
         <svg class="banner-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -282,14 +269,9 @@
             <radialGradient id="uDiya" cx="40%" cy="30%" r="60%"><stop offset="0%" stop-color="#CC6A10"/><stop offset="100%" stop-color="#8B3A00"/></radialGradient>
             <radialGradient id="uFlame" cx="50%" cy="20%" r="70%"><stop offset="0%" stop-color="#FFEE44"/><stop offset="60%" stop-color="#FF8800"/><stop offset="100%" stop-color="#CC2200"/></radialGradient>
           </defs>
-          <!-- Warm golden-yellow background -->
           <rect width="400" height="200" fill="url(#uSky)"/>
-          <!-- Subtle mandala pattern center -->
           <g opacity="0.12" stroke="#CC6600" stroke-width="0.7" fill="none">
-            <circle cx="200" cy="100" r="90"/>
-            <circle cx="200" cy="100" r="70"/>
-            <circle cx="200" cy="100" r="50"/>
-            <circle cx="200" cy="100" r="30"/>
+            <circle cx="200" cy="100" r="90"/><circle cx="200" cy="100" r="70"/><circle cx="200" cy="100" r="50"/><circle cx="200" cy="100" r="30"/>
           </g>
           <g opacity="0.1" fill="#CC6600">
             <polygon points="200,10 205,90 200,100 195,90" transform="rotate(0 200 100)"/>
@@ -305,11 +287,8 @@
             <polygon points="200,10 205,90 200,100 195,90" transform="rotate(300 200 100)"/>
             <polygon points="200,10 205,90 200,100 195,90" transform="rotate(330 200 100)"/>
           </g>
-          <!-- Mango leaf toran (top banner) -->
           <rect x="0" y="0" width="400" height="18" fill="#2d7a20" opacity="0.85"/>
-          <!-- Toran string -->
           <path d="M0,9 Q50,18 100,9 Q150,0 200,9 Q250,18 300,9 Q350,0 400,9" fill="none" stroke="#8B5A00" stroke-width="1.5"/>
-          <!-- Mango leaves on toran -->
           <g fill="#3aaa2a" opacity="0.9">
             <ellipse cx="30" cy="12" rx="9" ry="5" transform="rotate(-30 30 12)"/>
             <ellipse cx="55" cy="8" rx="9" ry="5" transform="rotate(10 55 8)"/>
@@ -327,39 +306,23 @@
             <ellipse cx="355" cy="7" rx="9" ry="5" transform="rotate(15 355 7)"/>
             <ellipse cx="380" cy="13" rx="9" ry="5" transform="rotate(-25 380 13)"/>
           </g>
-          <!-- Marigold flowers on toran -->
           <g fill="#FF8800">
-            <circle cx="20" cy="9" r="5"/>
-            <circle cx="65" cy="14" r="5"/>
-            <circle cx="110" cy="9" r="5"/>
-            <circle cx="155" cy="14" r="5"/>
-            <circle cx="200" cy="9" r="5.5"/>
-            <circle cx="245" cy="14" r="5"/>
-            <circle cx="290" cy="9" r="5"/>
-            <circle cx="335" cy="14" r="5"/>
-            <circle cx="380" cy="9" r="5"/>
+            <circle cx="20" cy="9" r="5"/><circle cx="65" cy="14" r="5"/><circle cx="110" cy="9" r="5"/>
+            <circle cx="155" cy="14" r="5"/><circle cx="200" cy="9" r="5.5"/><circle cx="245" cy="14" r="5"/>
+            <circle cx="290" cy="9" r="5"/><circle cx="335" cy="14" r="5"/><circle cx="380" cy="9" r="5"/>
           </g>
           <g fill="#FFDD00" opacity="0.7">
-            <circle cx="20" cy="9" r="3"/>
-            <circle cx="65" cy="14" r="3"/>
-            <circle cx="110" cy="9" r="3"/>
-            <circle cx="155" cy="14" r="3"/>
-            <circle cx="200" cy="9" r="3.5"/>
-            <circle cx="245" cy="14" r="3"/>
-            <circle cx="290" cy="9" r="3"/>
-            <circle cx="335" cy="14" r="3"/>
-            <circle cx="380" cy="9" r="3"/>
+            <circle cx="20" cy="9" r="3"/><circle cx="65" cy="14" r="3"/><circle cx="110" cy="9" r="3"/>
+            <circle cx="155" cy="14" r="3"/><circle cx="200" cy="9" r="3.5"/><circle cx="245" cy="14" r="3"/>
+            <circle cx="290" cy="9" r="3"/><circle cx="335" cy="14" r="3"/><circle cx="380" cy="9" r="3"/>
           </g>
-          <!-- Banana leaves left and right (ground level) -->
           <ellipse cx="40" cy="145" rx="30" ry="12" fill="#2aaa18" transform="rotate(-30 40 145)" opacity="0.8"/>
           <ellipse cx="28" cy="160" rx="30" ry="11" fill="#3aaa28" transform="rotate(-15 28 160)" opacity="0.75"/>
           <ellipse cx="360" cy="145" rx="30" ry="12" fill="#2aaa18" transform="rotate(30 360 145)" opacity="0.8"/>
           <ellipse cx="372" cy="160" rx="30" ry="11" fill="#3aaa28" transform="rotate(15 372 160)" opacity="0.75"/>
-          <!-- Mango branch left -->
           <path d="M20,20 Q40,50 50,80 Q60,110 55,140" fill="none" stroke="#5a3000" stroke-width="3" stroke-linecap="round"/>
           <path d="M50,80 Q30,90 20,100" fill="none" stroke="#5a3000" stroke-width="2" stroke-linecap="round"/>
           <path d="M55,110 Q38,115 30,125" fill="none" stroke="#5a3000" stroke-width="2" stroke-linecap="round"/>
-          <!-- Mangoes on left branch -->
           <g>
             <ellipse cx="18" cy="102" rx="9" ry="11" fill="#88CC00"/>
             <ellipse cx="17" cy="99" rx="6" ry="8" fill="#AAEE00"/>
@@ -368,11 +331,9 @@
             <ellipse cx="52" cy="142" rx="9" ry="11" fill="#FF8800"/>
             <ellipse cx="51" cy="139" rx="6" ry="8" fill="#FFAA44"/>
           </g>
-          <!-- Mango branch right -->
           <path d="M380,20 Q360,50 350,80 Q340,110 345,140" fill="none" stroke="#5a3000" stroke-width="3" stroke-linecap="round"/>
           <path d="M350,80 Q370,90 380,100" fill="none" stroke="#5a3000" stroke-width="2" stroke-linecap="round"/>
           <path d="M345,110 Q362,115 370,125" fill="none" stroke="#5a3000" stroke-width="2" stroke-linecap="round"/>
-          <!-- Mangoes on right branch -->
           <g>
             <ellipse cx="382" cy="102" rx="9" ry="11" fill="#88CC00"/>
             <ellipse cx="381" cy="99" rx="6" ry="8" fill="#AAEE00"/>
@@ -381,108 +342,76 @@
             <ellipse cx="348" cy="142" rx="9" ry="11" fill="#FF8800"/>
             <ellipse cx="347" cy="139" rx="6" ry="8" fill="#FFAA44"/>
           </g>
-          <!-- Kalash (brass pot) left of center -->
           <g transform="translate(110,80)">
-            <!-- Pot body -->
             <ellipse cx="0" cy="40" rx="22" ry="10" fill="#9a6800" opacity="0.5"/>
             <path d="M-20,40 Q-22,20 -16,8 Q-8,0 0,0 Q8,0 16,8 Q22,20 20,40 Z" fill="url(#uKalash)"/>
             <ellipse cx="0" cy="0" rx="16" ry="6" fill="#F5D06A"/>
-            <!-- Neck -->
             <rect x="-8" y="-12" width="16" height="14" rx="4" fill="#D4A040"/>
             <ellipse cx="0" cy="-12" rx="10" ry="4" fill="#F5D06A"/>
-            <!-- Mango leaves in kalash -->
             <ellipse cx="-6" cy="-20" rx="4" ry="10" fill="#3aaa28" transform="rotate(-20 -6 -20)"/>
             <ellipse cx="0" cy="-22" rx="4" ry="11" fill="#2aaa18"/>
             <ellipse cx="6" cy="-20" rx="4" ry="10" fill="#3aaa28" transform="rotate(20 6 -20)"/>
-            <!-- Coconut on top -->
             <ellipse cx="0" cy="-28" rx="11" ry="10" fill="#8B5A2A"/>
             <ellipse cx="0" cy="-30" rx="8" ry="8" fill="#A06A30"/>
             <circle cx="0" cy="-30" r="3" fill="#5a3010"/>
-            <!-- Pot decorations -->
             <path d="M-18,25 Q0,30 18,25" fill="none" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.7"/>
             <path d="M-20,32 Q0,37 20,32" fill="none" stroke="#FFD700" stroke-width="1" stroke-opacity="0.5"/>
           </g>
-          <!-- Ugadi Pachadi bowl center -->
           <g transform="translate(200,105)">
-            <!-- Bowl shadow -->
             <ellipse cx="0" cy="42" rx="32" ry="7" fill="#8B5A00" opacity="0.25"/>
-            <!-- Bowl body -->
             <path d="M-30,10 Q-32,35 0,42 Q32,35 30,10 Z" fill="url(#uBowl)"/>
             <ellipse cx="0" cy="10" rx="30" ry="10" fill="#D4A04A"/>
             <ellipse cx="0" cy="10" rx="28" ry="9" fill="#E8B860"/>
-            <!-- Bowl contents (pachadi) -->
             <ellipse cx="0" cy="10" rx="26" ry="8" fill="#CC7720"/>
-            <!-- Mango piece -->
             <ellipse cx="-8" cy="8" rx="7" ry="5" fill="#88CC00" transform="rotate(-15 -8 8)"/>
             <ellipse cx="-7" cy="7" rx="5" ry="3" fill="#AAEE22" transform="rotate(-15 -7 7)"/>
-            <!-- Jaggery cube -->
             <rect x="4" y="4" width="9" height="8" rx="2" fill="#CC8800"/>
             <rect x="5" y="5" width="7" height="6" rx="1" fill="#E8A020"/>
-            <!-- Neem flower -->
             <circle cx="-2" cy="14" r="5" fill="#CCDD44"/>
             <circle cx="-2" cy="14" r="3" fill="#EEF022"/>
-            <!-- Tamarind bits -->
             <ellipse cx="12" cy="14" rx="5" ry="3" fill="#8B4513" transform="rotate(20 12 14)"/>
             <ellipse cx="-14" cy="14" rx="4" ry="3" fill="#8B5513" transform="rotate(-10 -14 14)"/>
-            <!-- Salt -->
             <circle cx="8" cy="4" r="2" fill="white" opacity="0.6"/>
-            <!-- Bowl trim -->
             <ellipse cx="0" cy="10" rx="30" ry="10" fill="none" stroke="#FFD700" stroke-width="1.5" stroke-opacity="0.6"/>
           </g>
-          <!-- Diya (oil lamp) foreground left -->
           <g transform="translate(152,148)">
             <ellipse cx="0" cy="14" rx="16" ry="5" fill="#8B3A00" opacity="0.3"/>
             <path d="M-14,8 Q-15,14 0,16 Q15,14 14,8 Z" fill="url(#uDiya)"/>
             <ellipse cx="0" cy="8" rx="14" ry="5" fill="#E07030"/>
             <ellipse cx="0" cy="8" rx="11" ry="4" fill="#FFD060"/>
-            <!-- Oil -->
             <ellipse cx="0" cy="7" rx="9" ry="3" fill="#FFE080" opacity="0.7"/>
-            <!-- Wick -->
             <rect x="-1" y="-8" width="2" height="16" rx="1" fill="#8B6010"/>
-            <!-- Flame -->
             <ellipse cx="0" cy="-12" rx="4" ry="7" fill="url(#uFlame)"/>
             <ellipse cx="0" cy="-14" rx="2" ry="4" fill="#FFEE88"/>
-            <!-- Flame glow -->
             <ellipse cx="0" cy="-12" rx="8" ry="10" fill="#FF8800" opacity="0.12"/>
           </g>
-          <!-- Jaggery pieces right side -->
           <g transform="translate(265,150)">
             <rect x="0" y="0" width="14" height="12" rx="3" fill="#CC8800"/>
             <rect x="1" y="1" width="12" height="10" rx="2" fill="#E8A020"/>
             <rect x="18" y="4" width="11" height="10" rx="3" fill="#CC8800" transform="rotate(10 18 4)"/>
             <rect x="19" y="5" width="9" height="8" rx="2" fill="#E8A020" transform="rotate(10 19 5)"/>
           </g>
-          <!-- Jasmine flowers scattered -->
           <g fill="white" opacity="0.8">
-            <circle cx="88" cy="155" r="4"/>
-            <circle cx="84" cy="150" r="3"/>
-            <circle cx="92" cy="150" r="3"/>
-            <circle cx="310" cy="155" r="4"/>
-            <circle cx="306" cy="150" r="3"/>
-            <circle cx="314" cy="150" r="3"/>
-            <circle cx="170" cy="172" r="3"/>
-            <circle cx="230" cy="175" r="3.5"/>
+            <circle cx="88" cy="155" r="4"/><circle cx="84" cy="150" r="3"/><circle cx="92" cy="150" r="3"/>
+            <circle cx="310" cy="155" r="4"/><circle cx="306" cy="150" r="3"/><circle cx="314" cy="150" r="3"/>
+            <circle cx="170" cy="172" r="3"/><circle cx="230" cy="175" r="3.5"/>
           </g>
-          <!-- Marigold flowers scattered on ground -->
           <circle cx="75" cy="168" r="6" fill="#FF8800" opacity="0.7"/>
           <circle cx="75" cy="168" r="4" fill="#FFCC00" opacity="0.8"/>
           <circle cx="325" cy="168" r="6" fill="#FF8800" opacity="0.7"/>
           <circle cx="325" cy="168" r="4" fill="#FFCC00" opacity="0.8"/>
           <circle cx="135" cy="178" r="5" fill="#FF6600" opacity="0.65"/>
           <circle cx="265" cy="178" r="5" fill="#FF6600" opacity="0.65"/>
-          <!-- Rangoli corner left -->
           <g transform="translate(18,170)" opacity="0.55">
             <circle cx="0" cy="0" r="12" fill="none" stroke="#FF3366" stroke-width="1"/>
             <circle cx="0" cy="0" r="7" fill="none" stroke="#FF8800" stroke-width="1"/>
             <path d="M-12,0 L12,0 M0,-12 L0,12 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#FF3366" stroke-width="0.7"/>
           </g>
-          <!-- Rangoli corner right -->
           <g transform="translate(382,170)" opacity="0.55">
             <circle cx="0" cy="0" r="12" fill="none" stroke="#FF3366" stroke-width="1"/>
             <circle cx="0" cy="0" r="7" fill="none" stroke="#FF8800" stroke-width="1"/>
             <path d="M-12,0 L12,0 M0,-12 L0,12 M-8,-8 L8,8 M-8,8 L8,-8" stroke="#FF3366" stroke-width="0.7"/>
           </g>
-          <!-- Telugu text bottom -->
           <text x="200" y="196" font-size="10" fill="#8B4500" text-anchor="middle" font-family="serif" opacity="0.6" font-weight="bold">ఉగాది శుభాకాంక్షలు</text>
         </svg>
         <div class="card-banner-overlay"></div>
@@ -525,14 +454,57 @@
   </div>
 </section>
 
-<section class="about-strip" id="about">
-  <p>Where Telugu hearts meet at NIT Silchar — one community, endless memories.</p>
-</section>
+<!-- ── Compact Developer Credit Strip ── -->
+<div class="dev-strip" id="about">
+  <div class="dev-strip-inner">
+    <span class="dev-strip-text">Designed &amp; Developed by <strong>Naveen Kumar</strong> &lt;/&gt;</span>
+    <div class="dev-strip-icons">
+      <!-- Instagram official logo -->
+      <a href="https://www.instagram.com/naveennn_7" target="_blank" rel="noopener" class="dsi" title="Instagram">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+          <defs>
+            <radialGradient id="ig1" cx="30%" cy="107%" r="150%">
+              <stop offset="0%" stop-color="#fdf497"/>
+              <stop offset="5%" stop-color="#fdf497"/>
+              <stop offset="45%" stop-color="#fd5949"/>
+              <stop offset="60%" stop-color="#d6249f"/>
+              <stop offset="90%" stop-color="#285AEB"/>
+            </radialGradient>
+          </defs>
+          <rect width="24" height="24" rx="5" fill="url(#ig1)"/>
+          <rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="white" stroke-width="1.5"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/>
+          <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
+        </svg>
+      </a>
+      <!-- WhatsApp official logo -->
+      <a href="https://wa.me/919392920692" target="_blank" rel="noopener" class="dsi" title="WhatsApp">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+          <rect width="24" height="24" rx="5" fill="#25D366"/>
+          <path fill="white" d="M12 4.8A7.2 7.2 0 0 0 5.6 15.7L4.5 19.5l3.9-1.02A7.2 7.2 0 1 0 12 4.8zm0 13a5.76 5.76 0 0 1-2.94-.81l-.21-.12-2.18.57.59-2.13-.14-.22A5.76 5.76 0 1 1 12 17.8zm3.17-4.3c-.17-.09-1.02-.5-1.18-.56-.15-.06-.27-.09-.38.09s-.44.56-.54.67c-.1.12-.2.13-.38.04a4.68 4.68 0 0 1-1.38-.85 5.16 5.16 0 0 1-.95-1.18c-.1-.18-.01-.27.08-.36.08-.08.17-.2.26-.3.09-.1.12-.17.18-.29.06-.11.03-.21-.02-.3-.05-.08-.38-.93-.53-1.28-.13-.33-.28-.29-.38-.29h-.33c-.11 0-.3.04-.45.21-.15.17-.6.58-.6 1.41s.61 1.64.69 1.75c.09.12 1.2 1.82 2.89 2.55.4.17.72.28.96.36.4.12.77.1 1.06.06.32-.05 1-.4 1.14-.8.14-.39.14-.73.1-.8-.05-.07-.16-.12-.33-.2z"/>
+        </svg>
+      </a>
+      <!-- Gmail official logo -->
+      <a href="mailto:naveenkumarnaik69@gmail.com" class="dsi" title="Gmail">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+          <rect width="32" height="32" rx="6" fill="white"/>
+          <path d="M6 10h20v14H6z" fill="white"/>
+          <path d="M6 10l10 9 10-9" fill="none" stroke="#EA4335" stroke-width="1.5"/>
+          <rect x="6" y="10" width="2" height="14" fill="#34A853"/>
+          <rect x="24" y="10" width="2" height="14" fill="#FBBC05"/>
+          <path d="M6 10h2v2L6 13z" fill="#C5221F"/>
+          <path d="M26 10h-2v2l2 1z" fill="#C5221F"/>
+          <path d="M6 24h20" stroke="#ddd" stroke-width="0.5"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="footer-logo">NITS <span>Telugu</span> Network</div>
   <p>© 2026 NITS Telugu Network</p>
-  <p>Made with ❤️ by Telugu NITians</p>
+  <p>Made with ❤️</p>
 </footer>
 
 </body>
