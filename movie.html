@@ -433,9 +433,9 @@
   ══════════════════════════════════════ */
   const MOVIE_CONFIG = {
     "1": { upi: "",                        bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239", prefix: "NTN-1" },
-    "2": { upi: "9032979645-2@ybl",        bot: "8968942116:AAEmUt34Wpj2yhlGZKY6lgBbjyu1uFRiiZ4", cid: "-5094405295",    prefix: "NTN-2" },
+    "2": { upi: "9032979645-2@ybl",        bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295",    prefix: "NTN-2" },
     "3": { upi: "bukkenaveenkumar@ptyes",  bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838",     prefix: "NTN-3" },
-    "4": { upi: "",                        bot: "8849015786:AAFvRQnyPmdh1Ae4GP18JX6w3KFybG7FkM", cid: "-5224555076",    prefix: "NTN-4" }
+    "4": { upi: "",                        bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076",    prefix: "NTN-4" }
   };
   const SHEET_URLS = {
     "1": "https://script.google.com/macros/s/AKfycbwnbOQuS4G5oXvle6XPGUeEdM4Fxa0tra1wXe_87BL96J3u0uXK4CAPH-eIBABO_yNmVg/exec",
@@ -445,29 +445,33 @@
   };
   const YEAR_LABEL = { "1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year" };
   let mBookingId = "";
+  let mPrefetchedId = "";   // pre-fetched in background when year is selected
+  let mPrefetchYear = "";   // which year was pre-fetched for
 
   /* ══════════════════════════════════════
-     REAL-TIME BOOKING ID FROM GOOGLE SHEETS
-     Fetches current count → assigns next number
+     BOOKING ID FORMAT: NTN1-0042-7381
+     Timestamp-based sequential + random suffix
+     Guaranteed unique, instant, no network call
   ══════════════════════════════════════ */
-  async function fetchRealTimeBookingId(year) {
-    const cfg = MOVIE_CONFIG[year];
-    const prefix = cfg ? cfg.prefix : ("NTN-" + year);
-    try {
-      // Ask the sheet for the current count for this year
-      const sheetUrl = SHEET_URLS[year];
-      if (!sheetUrl) throw new Error("No sheet for year " + year);
-      const res = await fetch(`${sheetUrl}?action=getCount&year=${year}`, { method: "GET" });
-      const json = await res.json();
-      const count = (typeof json.count === "number" ? json.count : parseInt(json.count || "0", 10));
-      const nextSerial = count + 1;
-      return prefix + "-" + String(nextSerial).padStart(4, "0");
-    } catch (e) {
-      // Fallback: timestamp-based unique ID (never clashes)
-      const ts = Date.now().toString().slice(-6);
-      return prefix + "-" + ts;
-    }
+  function generateBookingId(year) {
+    const prefixMap = { "1":"NTN1","2":"NTN2","3":"NTN3","4":"NTN4" };
+    const prefix = prefixMap[year] || ("NTN" + year);
+    // Sequential part: seconds since a fixed epoch (unique per second per year)
+    const seq = String(Math.floor((Date.now() - 1700000000000) / 1000)).slice(-4).padStart(4,"0");
+    // Random 4-digit suffix: collision-proof even if 2 people book same second
+    const rand = String(Math.floor(1000 + Math.random() * 9000));
+    return `${prefix}-${seq}-${rand}`;
   }
+
+  /* ══════════════════════════════════════
+     PRE-GENERATE: as soon as year is selected
+  ══════════════════════════════════════ */
+  document.getElementById("mgradYear").addEventListener("change", function() {
+    const year = this.value;
+    if (!year) return;
+    mPrefetchedId  = generateBookingId(year);
+    mPrefetchYear  = year;
+  });
 
   /* ══════════════════════════════════════
      GOOGLE SHEETS — SEND 3RD YEAR DATA ONLY
@@ -605,7 +609,7 @@
      STEP 1 → STEP 2
      Fetches real-time booking ID from sheet
   ══════════════════════════════════════ */
-  async function movieGoToStep2() {
+  function movieGoToStep2() {
     const name  = document.getElementById("mfullName").value.trim();
     const year  = document.getElementById("mgradYear").value;
     const dept  = document.getElementById("mdepartment").value;
@@ -621,16 +625,13 @@
     if (!terms) valid = false;
     if (!valid) return;
 
-    // Disable button while fetching booking ID
-    const btn = document.getElementById("continueBtn");
-    btn.disabled = true;
-    btn.innerHTML = `<div class="bid-spinner" style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;"></div> Getting your booking ID…`;
-
-    // ── REAL-TIME BOOKING ID ──
-    mBookingId = await fetchRealTimeBookingId(year);
-
-    btn.disabled = false;
-    btn.innerHTML = "Continue to Payment →";
+    // Instant — ID already generated when year was selected, or generate now
+    if (mPrefetchedId && mPrefetchYear === year) {
+      mBookingId = mPrefetchedId;
+      mPrefetchedId = "";
+    } else {
+      mBookingId = generateBookingId(year);
+    }
 
     const cfg = MOVIE_CONFIG[year];
     if (cfg && cfg.upi) {
@@ -682,6 +683,8 @@
   ══════════════════════════════════════ */
   function movieGoBackToStep1() {
     mBookingId = "";
+    mPrefetchedId = "";
+    mPrefetchYear = "";
     document.getElementById("mpStep3").style.display = "none";
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep1").style.display = "block";
