@@ -21,8 +21,6 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
     @keyframes popIn{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
-
-    /* ── NEW: FLIP POP-UP ANIMATION ── */
     @keyframes flipIn{
       0%{transform:perspective(1000px) rotateY(-90deg) scale(0.8);opacity:0;}
       60%{transform:perspective(1000px) rotateY(15deg) scale(1.02);opacity:1;}
@@ -35,7 +33,6 @@
     .flip-in{animation:flipIn 0.8s cubic-bezier(0.34,1.56,0.64,1) both;}
     .fade-out{animation:fadeOutScale 0.4s ease forwards;}
 
-    /* ── COMPACT HERO ── */
     .movie-page-hero{padding:1.1rem 1.25rem 0.6rem;text-align:center;position:relative;overflow:hidden;}
     .movie-live-dot{width:5px;height:5px;background:#00C853;border-radius:50%;animation:pulse 1.5s infinite;}
     .movie-badge{display:inline-flex;align-items:center;gap:0.38rem;background:#EEF4FB;border:1px solid rgba(24,95,165,0.25);border-radius:100px;padding:0.22rem 0.7rem;font-size:0.65rem;font-weight:600;color:var(--accent-blue);margin-bottom:0.4rem;}
@@ -43,7 +40,6 @@
     .hero-title span{color:var(--accent-blue);}
     .hero-sub{font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:400;color:var(--muted);margin-bottom:0.75rem;}
 
-    /* ── COMPACT STEPS ── */
     .step-indicator{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto 0.85rem;max-width:240px;padding:0 1rem;}
     .step-wrap{position:relative;padding-bottom:14px;display:flex;flex-direction:column;align-items:center;}
     .step-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;border:2px solid var(--border);background:var(--white);color:var(--muted);transition:all 0.35s ease;position:relative;z-index:1;}
@@ -53,7 +49,6 @@
     .step-line.done{background:var(--accent-green);}
     .step-label{font-size:0.52rem;font-weight:500;color:var(--muted);text-align:center;margin-top:0.2rem;position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);white-space:nowrap;}
 
-    /* ── FORM ── */
     .form-container{max-width:380px;margin:0 auto;padding:0 1rem 3.5rem;}
     .form-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:1.1rem 1rem;box-shadow:0 4px 20px rgba(255,107,0,0.06);}
     .form-card-title{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;color:var(--deep);margin-bottom:0.14rem;}
@@ -77,6 +72,7 @@
     .checkbox-row label span{color:var(--saffron);font-weight:600;}
     .btn-primary{width:100%;padding:0.72rem;background:var(--saffron);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:0.9rem;}
     .btn-primary:hover{background:var(--saffron-light);transform:translateY(-1px);}
+    .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
     .qr-section{text-align:center;margin-bottom:0.75rem;}
     .qr-label{font-size:0.6rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.4rem;}
     .qr-box{display:inline-block;background:white;border:1.5px solid var(--border);border-radius:12px;padding:8px;box-shadow:0 2px 10px rgba(255,107,0,0.08);}
@@ -85,7 +81,6 @@
     .qr-unavail p{font-size:0.8rem;color:#b34800;font-weight:500;line-height:1.5;}
     .divider{border:none;border-top:1px solid var(--border);margin:0.75rem 0;}
 
-    /* ── COMPACT UPLOAD ── */
     .upload-zone{border:1.5px dashed var(--border);border-radius:10px;padding:0.65rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;background:var(--white);margin-bottom:0.25rem;position:relative;}
     .upload-zone:hover,.upload-zone.dragover{border-color:var(--saffron);background:var(--saffron-pale);}
     .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;}
@@ -100,257 +95,84 @@
     .submit-btn:hover:not(:disabled){background:#0c5e49;transform:translateY(-1px);}
     .submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 
-    /* ══════════════════════════════════════
-       ── BOOKMYSHOW EXACT-SIZE TICKET ──
-       ══════════════════════════════════════ */
+    /* Booking ID loading state */
+    .bid-loading{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:var(--muted);padding:0.4rem 0.6rem;background:var(--saffron-pale);border-radius:7px;margin-bottom:0.5rem;}
+    .bid-spinner{width:12px;height:12px;border:1.5px solid rgba(255,107,0,0.3);border-top-color:var(--saffron);border-radius:50%;animation:spin 0.7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
     .ticket-preview-label{text-align:center;font-size:0.61rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.65rem;}
     
-    .bms-ticket-wrap{
-      max-width:340px;
-      margin:0 auto 0.9rem;
-    }
-    .bms-ticket{
-      background:#fff;
-      border-radius:12px;
-      overflow:hidden;
-      box-shadow:0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);
-      position:relative;
-      width:100%;
-    }
+    .bms-ticket-wrap{max-width:340px;margin:0 auto 0.9rem;}
+    .bms-ticket{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.06);position:relative;width:100%;}
     
-    .bms-top{
-      background:linear-gradient(135deg, #1F2533 0%, #2A3142 100%);
-      padding:14px 14px 12px;
-      position:relative;
-      color:#fff;
-    }
-    .bms-top-row{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:8px;
-      margin-bottom:10px;
-    }
-    .bms-org-label{
-      font-size:8.5px;
-      font-weight:700;
-      color:rgba(255,255,255,0.45);
-      text-transform:uppercase;
-      letter-spacing:1.3px;
-      margin-bottom:3px;
-    }
-    .bms-movie-title{
-      font-family:'DM Sans',sans-serif;
-      font-weight:700;
-      font-size:15px;
-      color:#fff;
-      line-height:1.15;
-      letter-spacing:-0.01em;
-    }
-    .bms-status-badge{
-      background:rgba(248,68,100,0.18);
-      border:1px solid rgba(248,68,100,0.45);
-      border-radius:3px;
-      padding:3px 7px;
-      font-size:8.5px;
-      font-weight:700;
-      color:#FF7088;
-      letter-spacing:0.7px;
-      text-transform:uppercase;
-      flex-shrink:0;
-      white-space:nowrap;
-      line-height:1.2;
-    }
-    .bms-status-badge.confirmed{
-      background:rgba(0,200,83,0.18);
-      border-color:rgba(0,200,83,0.45);
-      color:#5DD879;
-    }
+    .bms-top{background:linear-gradient(135deg, #1F2533 0%, #2A3142 100%);padding:14px 14px 12px;position:relative;color:#fff;}
+    .bms-top-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+    .bms-org-label{font-size:8.5px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.3px;margin-bottom:3px;}
+    .bms-movie-title{font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:#fff;line-height:1.15;letter-spacing:-0.01em;}
+    .bms-status-badge{background:rgba(248,68,100,0.18);border:1px solid rgba(248,68,100,0.45);border-radius:3px;padding:3px 7px;font-size:8.5px;font-weight:700;color:#FF7088;letter-spacing:0.7px;text-transform:uppercase;flex-shrink:0;white-space:nowrap;line-height:1.2;}
+    .bms-status-badge.confirmed{background:rgba(0,200,83,0.18);border-color:rgba(0,200,83,0.45);color:#5DD879;}
     
-    .bms-meta-strip{
-      display:flex;
-      gap:10px;
-      padding-top:8px;
-      border-top:1px dashed rgba(255,255,255,0.12);
-    }
-    .bms-meta-item{
-      flex:1;
-      min-width:0;
-    }
-    .bms-meta-label{
-      font-size:7.5px;
-      font-weight:600;
-      color:rgba(255,255,255,0.5);
-      text-transform:uppercase;
-      letter-spacing:0.6px;
-      margin-bottom:2px;
-    }
-    .bms-meta-value{
-      font-size:11px;
-      font-weight:600;
-      color:#fff;
-      line-height:1.2;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+    .bms-meta-strip{display:flex;gap:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.12);}
+    .bms-meta-item{flex:1;min-width:0;}
+    .bms-meta-label{font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;}
+    .bms-meta-value{font-size:11px;font-weight:600;color:#fff;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
     
-    .bms-perf{
-      height:16px;
-      background:linear-gradient(135deg, #1F2533 0%, #2A3142 100%);
-      position:relative;
-      display:flex;
-      align-items:center;
-    }
-    .bms-perf::before,.bms-perf::after{
-      content:'';
-      width:16px;
-      height:16px;
-      border-radius:50%;
-      background:var(--surface);
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      box-shadow:inset 0 1px 2px rgba(0,0,0,0.15);
-    }
+    .bms-perf{height:16px;background:linear-gradient(135deg, #1F2533 0%, #2A3142 100%);position:relative;display:flex;align-items:center;}
+    .bms-perf::before,.bms-perf::after{content:'';width:16px;height:16px;border-radius:50%;background:var(--surface);position:absolute;top:50%;transform:translateY(-50%);box-shadow:inset 0 1px 2px rgba(0,0,0,0.15);}
     .bms-perf::before{left:-8px;}
     .bms-perf::after{right:-8px;}
-    .bms-perf-line{
-      flex:1;
-      margin:0 9px;
-      height:2px;
-      background-image:radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1.5px);
-      background-size:7px 2px;
-      background-repeat:repeat-x;
-      background-position:center;
-    }
+    .bms-perf-line{flex:1;margin:0 9px;height:2px;background-image:radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1.5px);background-size:7px 2px;background-repeat:repeat-x;background-position:center;}
     
-    .bms-qr-section{
-      background:#fff;
-      padding:13px 14px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .bms-qr-frame{
-      flex-shrink:0;
-      background:#fff;
-      border:1.5px solid #EAEAEA;
-      border-radius:7px;
-      padding:5px;
-      box-shadow:0 1px 4px rgba(0,0,0,0.04);
-    }
-    .bms-qr-frame img{
-      display:block;
-      width:95px;
-      height:95px;
-      border-radius:3px;
-    }
-    .bms-qr-info{
-      flex:1;
-      min-width:0;
-    }
-    .bms-booking-label{
-      font-size:8.5px;
-      font-weight:700;
-      color:#9AA0A6;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      margin-bottom:3px;
-    }
-    .bms-booking-id{
-      font-family:'DM Sans',sans-serif;
-      font-weight:700;
-      font-size:13px;
-      color:#1F2533;
-      letter-spacing:0.02em;
-      word-break:break-all;
-      line-height:1.15;
-    }
+    .bms-qr-section{background:#fff;padding:13px 14px;display:flex;align-items:center;gap:12px;}
+    .bms-qr-frame{flex-shrink:0;background:#fff;border:1.5px solid #EAEAEA;border-radius:7px;padding:5px;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+    .bms-qr-frame img{display:block;width:95px;height:95px;border-radius:3px;}
+    .bms-qr-info{flex:1;min-width:0;}
+    .bms-booking-label{font-size:8.5px;font-weight:700;color:#9AA0A6;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+    .bms-booking-id{font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;color:#1F2533;letter-spacing:0.02em;word-break:break-all;line-height:1.15;}
     
-    .bms-details{
-      padding:11px 14px 12px;
-      background:#FAFAFC;
-      border-top:1px solid #EFEFF3;
-    }
-    .bms-details-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:9px 12px;
-    }
-    .bms-detail-item .bms-meta-label{
-      color:#9AA0A6;
-    }
-    .bms-detail-value{
-      font-size:11.5px;
-      font-weight:600;
-      color:#1F2533;
-      line-height:1.25;
-      word-break:break-word;
-    }
+    .bms-details{padding:11px 14px 12px;background:#FAFAFC;border-top:1px solid #EFEFF3;}
+    .bms-details-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 12px;}
+    .bms-detail-item .bms-meta-label{color:#9AA0A6;}
+    .bms-detail-value{font-size:11.5px;font-weight:600;color:#1F2533;line-height:1.25;word-break:break-word;}
     
-    .bms-notice{
-      margin:9px 14px 12px;
-      background:linear-gradient(90deg, #FFF3E8 0%, #FFEBD8 100%);
-      border-left:3px solid var(--saffron);
-      border-radius:0 5px 5px 0;
-      padding:7px 9px;
-    }
-    .bms-notice p{
-      font-size:10px;
-      color:#B34800;
-      font-weight:500;
-      line-height:1.45;
-    }
+    .bms-notice{margin:9px 14px 12px;background:linear-gradient(90deg, #FFF3E8 0%, #FFEBD8 100%);border-left:3px solid var(--saffron);border-radius:0 5px 5px 0;padding:7px 9px;}
+    .bms-notice p{font-size:10px;color:#B34800;font-weight:500;line-height:1.45;}
     
-    .ticket-actions{
-      max-width:340px;
-      margin:0 auto;
-    }
+    .ticket-actions{max-width:340px;margin:0 auto;}
     .confirm-btn{width:100%;padding:0.78rem;background:var(--bms-red);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;letter-spacing:0.02em;box-shadow:0 4px 12px rgba(248,68,100,0.25);}
     .confirm-btn:hover:not(:disabled){background:#E53A5A;transform:translateY(-1px);box-shadow:0 6px 16px rgba(248,68,100,0.35);}
     .confirm-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
     .edit-btn{width:100%;padding:0.6rem;margin-top:0.5rem;background:transparent;color:var(--muted);border:1px solid rgba(0,0,0,0.1);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
     .edit-btn:hover{border-color:var(--saffron);color:var(--saffron);}
 
-    /* ── LOADING & SUCCESS ── */
     #loadingOverlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(255,253,249,0.9);backdrop-filter:blur(6px);align-items:center;justify-content:center;flex-direction:column;gap:0.8rem;}
     .spinner{width:36px;height:36px;border:2.5px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin 0.75s linear infinite;}
-    @keyframes spin{to{transform:rotate(360deg);}}
     #loadingOverlay p{font-size:0.8rem;font-weight:500;color:var(--muted);}
     
     #movieSuccessScreen{display:none;padding:1.25rem 1.25rem 3.5rem;}
-    
-    /* Success message (shown for 1 second) */
     #successMessageBlock{display:block;}
     .gpay-check{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,#00C853,#1B5E20);display:flex;align-items:center;justify-content:center;margin:0 auto 1.1rem;box-shadow:0 8px 24px rgba(0,200,83,0.28);animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;}
     .gpay-tick{stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.5s 0.4s ease forwards;}
     @keyframes drawTick{to{stroke-dashoffset:0;}}
     .movie-success-top{text-align:center;padding:2rem 0 0.85rem;}
     .success-verified-note{display:inline-flex;align-items:center;gap:0.4rem;background:#E8F5E9;border:1px solid rgba(0,200,83,0.3);border-radius:8px;padding:0.45rem 0.85rem;font-size:0.76rem;color:#1B5E20;font-weight:500;margin-bottom:0.8rem;animation:fadeUp 0.5s 0.55s ease both;}
-    
-    /* Ticket block (shown after 1 second with flip animation) */
     #ticketBlock{display:none;}
-    
     .download-btn{width:100%;padding:0.78rem;background:var(--bms-red);color:white;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;box-shadow:0 4px 12px rgba(248,68,100,0.25);}
     .download-btn:hover:not(:disabled){background:#E53A5A;transform:translateY(-1px);box-shadow:0 6px 16px rgba(248,68,100,0.35);}
     .download-btn:disabled{opacity:0.65;cursor:not-allowed;transform:none;}
     .movie-back-btn{width:100%;padding:0.62rem;background:transparent;color:var(--muted);border:1px solid rgba(0,0,0,0.1);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.4rem;text-decoration:none;}
     .movie-back-btn:hover{border-color:var(--saffron);color:var(--saffron);}
-
     .required-star{color:#e53e3e;margin-left:2px;}
   </style>
 </head>
 <body>
 
-<!-- HERO -->
 <section class="movie-page-hero">
   <div class="movie-badge"><div class="movie-live-dot"></div>Booking Open</div>
   <h1 class="hero-title">Movie <span>Tickets</span></h1>
   <p class="hero-sub">Telugu blockbusters for the NITS Telugu community</p>
 </section>
 
-<!-- STEP INDICATOR -->
 <div class="step-indicator" id="movieStepInd">
   <div class="step-wrap"><div class="step-dot active" id="mdot1">1</div><div class="step-label">Details</div></div>
   <div class="step-line" id="mline1"></div>
@@ -414,7 +236,7 @@
         </div>
         <div class="error-msg" id="merr-terms">Please accept to continue</div>
       </div>
-      <button class="btn-primary" onclick="movieGoToStep2()">Continue to Payment →</button>
+      <button class="btn-primary" id="continueBtn" onclick="movieGoToStep2()">Continue to Payment →</button>
     </div>
   </div>
 
@@ -433,7 +255,6 @@
         <p>🔔 Payment QR for your year will be shared by the admin shortly. Please contact the committee.</p>
       </div>
       <hr class="divider"/>
-
       <div class="form-group">
         <label class="form-label">Payment Screenshot<span class="required-star">*</span></label>
         <div class="upload-zone" id="mUploadZone">
@@ -448,12 +269,11 @@
         </div>
         <div class="error-msg" id="merr-proof">Please upload your payment screenshot to continue</div>
       </div>
-
       <button class="submit-btn" id="msubmitBtn" onclick="movieGoToStep3()">Preview Ticket →</button>
     </div>
   </div>
 
-  <!-- Step 3 — BMS Style Ticket -->
+  <!-- Step 3 -->
   <div id="mpStep3" style="display:none;">
     <p class="ticket-preview-label">Review your booking</p>
     <div class="bms-ticket-wrap">
@@ -520,14 +340,8 @@
 
 </div>
 
-<!-- ════════════════════════════════════
-     SUCCESS SCREEN — TWO STAGES
-     Stage 1: success message (1s)
-     Stage 2: ticket + buttons (flip in)
-     ════════════════════════════════════ -->
+<!-- SUCCESS SCREEN -->
 <div id="movieSuccessScreen">
-
-  <!-- STAGE 1: Success message (visible first 1 second) -->
   <div id="successMessageBlock">
     <div class="movie-success-top">
       <div class="gpay-check">
@@ -541,7 +355,6 @@
     </div>
   </div>
 
-  <!-- STAGE 2: Ticket + Buttons (flip in after 1 second) -->
   <div id="ticketBlock">
     <div class="bms-ticket-wrap">
       <div class="bms-ticket" id="mFinalTicket">
@@ -607,32 +420,98 @@
       <a href="index.html" class="movie-back-btn">← Back to Home</a>
     </div>
   </div>
-
 </div>
 
-<!-- Loading -->
 <div id="loadingOverlay">
   <div class="spinner"></div>
   <p id="loadingMsg">Submitting…</p>
 </div>
 
 <script>
+  /* ══════════════════════════════════════
+     CONFIG
+  ══════════════════════════════════════ */
   const MOVIE_CONFIG = {
-    "2": { upi: "9032979645-2@ybl",          bot: "8922704320:AAE-IIU0Oh0Y8oa88QzXCfuAe1zA_RzCVgo", cid: "7461883719", prefix: "NTN-2" },
-    "3": { upi: "bukkenaveenkumar@ptyes",     bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838", prefix: "NTN-3" }
+    "1": { upi: "",                        bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239", prefix: "NTN-1" },
+    "2": { upi: "9032979645-2@ybl",        bot: "8968942116:AAEmUt34Wpj2yhlGZKY6lgBbjyu1uFRiiZ4", cid: "-5094405295",    prefix: "NTN-2" },
+    "3": { upi: "bukkenaveenkumar@ptyes",  bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838",     prefix: "NTN-3" },
+    "4": { upi: "",                        bot: "8849015786:AAFvRQnyPmdh1Ae4GP18JX6w3KFybG7FkM", cid: "-5224555076",    prefix: "NTN-4" }
+  };
+  const SHEET_URLS = {
+    "1": "https://script.google.com/macros/s/AKfycbwnbOQuS4G5oXvle6XPGUeEdM4Fxa0tra1wXe_87BL96J3u0uXK4CAPH-eIBABO_yNmVg/exec",
+    "2": "https://script.google.com/macros/s/AKfycbzg4obR5ZOllB1N8Kpijj_rGNe0iJHOUXHsB8kngzzvTvL4Ej2p8wKLamAKzYF3-Dbm/exec",
+    "3": "https://script.google.com/macros/s/AKfycbzEkMQap3d_zqddGmpjAM18wPIugn4sSYEwYUydW-3Z2NoIOSXRueHofb6eQX6U23cq/exec",
+    "4": "https://script.google.com/macros/s/AKfycbxLDL_otis32OjHCmRwS4HXNbN3f_I_Yh3u00Qj3xeOMVdpZH9FenO8rHdSVV0TWinGdA/exec"
   };
   const YEAR_LABEL = { "1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year" };
   let mBookingId = "";
 
+  /* ══════════════════════════════════════
+     REAL-TIME BOOKING ID FROM GOOGLE SHEETS
+     Fetches current count → assigns next number
+  ══════════════════════════════════════ */
+  async function fetchRealTimeBookingId(year) {
+    const cfg = MOVIE_CONFIG[year];
+    const prefix = cfg ? cfg.prefix : ("NTN-" + year);
+    try {
+      // Ask the sheet for the current count for this year
+      const sheetUrl = SHEET_URLS[year];
+      if (!sheetUrl) throw new Error("No sheet for year " + year);
+      const res = await fetch(`${sheetUrl}?action=getCount&year=${year}`, { method: "GET" });
+      const json = await res.json();
+      const count = (typeof json.count === "number" ? json.count : parseInt(json.count || "0", 10));
+      const nextSerial = count + 1;
+      return prefix + "-" + String(nextSerial).padStart(4, "0");
+    } catch (e) {
+      // Fallback: timestamp-based unique ID (never clashes)
+      const ts = Date.now().toString().slice(-6);
+      return prefix + "-" + ts;
+    }
+  }
+
+  /* ══════════════════════════════════════
+     GOOGLE SHEETS — SEND 3RD YEAR DATA ONLY
+  ══════════════════════════════════════ */
+  async function sendToGoogleSheet(name, year, dept, mobile, bookingId) {
+    const sheetUrl = SHEET_URLS[year];
+    if (!sheetUrl) return; // Only years with a configured sheet URL are sent
+    const payload = {
+      action: "addBooking",
+      bookingId: bookingId,
+      name: name,
+      year: YEAR_LABEL[year] || year,
+      department: dept,
+      mobile: "+91" + mobile,
+      timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+      status: "Submitted"
+    };
+    try {
+      await fetch(sheetUrl, {
+        method: "POST",
+        mode: "no-cors", // Google Apps Script requires no-cors
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) {
+      console.warn("Sheet sync failed (non-critical):", e.message);
+    }
+  }
+
+  /* ══════════════════════════════════════
+     QR HELPERS
+  ══════════════════════════════════════ */
   function makePaymentQR(upiId, size) {
     const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
   }
   function makeTicketQR(name, year, dept, mobile, bid, size) {
-    const d = JSON.stringify({ id:bid, name, year, dept, mobile });
+    const d = JSON.stringify({ id: bid, name, year, dept, mobile });
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1F2533&bgcolor=FFFFFF&qzone=1`;
   }
 
+  /* ══════════════════════════════════════
+     FILE UPLOAD
+  ══════════════════════════════════════ */
   const muz = document.getElementById("mUploadZone");
   muz.addEventListener("dragover", e => { e.preventDefault(); muz.classList.add("dragover"); });
   muz.addEventListener("dragleave", () => muz.classList.remove("dragover"));
@@ -660,6 +539,9 @@
     }
   }
 
+  /* ══════════════════════════════════════
+     TELEGRAM
+  ══════════════════════════════════════ */
   async function sendToTelegram(botToken, chatId, caption, file) {
     const base = `https://api.telegram.org/bot${botToken}`;
     if (file) {
@@ -669,29 +551,27 @@
       fd.append("caption", caption);
       if (file.type.startsWith("image/")) {
         fd.append("photo", file, file.name);
-        const res = await fetch(`${base}/sendPhoto`, { method:"POST", body:fd });
+        const res = await fetch(`${base}/sendPhoto`, { method: "POST", body: fd });
         const json = await res.json();
         if (!json.ok) throw new Error(json.description || "sendPhoto failed");
       } else {
         fd.append("document", file, file.name);
-        const res = await fetch(`${base}/sendDocument`, { method:"POST", body:fd });
+        const res = await fetch(`${base}/sendDocument`, { method: "POST", body: fd });
         const json = await res.json();
         if (!json.ok) throw new Error(json.description || "sendDocument failed");
       }
-    } else {
-      const payload = { chat_id:chatId, text:caption, parse_mode:"Markdown" };
-      const res = await fetch(`${base}/sendMessage`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload) });
-      const json = await res.json();
-      if (!json.ok) throw new Error(json.description || "sendMessage failed");
     }
   }
 
+  /* ══════════════════════════════════════
+     SOUND
+  ══════════════════════════════════════ */
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       [[523.25,0,0.12],[659.25,0.1,0.12],[783.99,0.2,0.12],[1046.5,0.33,0.28]].forEach(([f,w,d]) => {
         const o = ctx.createOscillator(), g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination); o.type="sine";
+        o.connect(g); g.connect(ctx.destination); o.type = "sine";
         o.frequency.setValueAtTime(f, ctx.currentTime+w);
         g.gain.setValueAtTime(0, ctx.currentTime+w);
         g.gain.linearRampToValueAtTime(0.16, ctx.currentTime+w+0.02);
@@ -701,26 +581,18 @@
     } catch(e) {}
   }
 
-  function getNextSerial(year) {
-    const key = "ntn_serial_" + year;
-    const cur = parseInt(localStorage.getItem(key) || "0", 10);
-    const next = cur + 1;
-    localStorage.setItem(key, next);
-    return next;
-  }
-  function genBookingId(year) {
-    const cfg = MOVIE_CONFIG[year];
-    const prefix = cfg ? cfg.prefix : "NTN-" + year;
-    return prefix + "-" + String(getNextSerial(year)).padStart(4, "0");
-  }
-
+  /* ══════════════════════════════════════
+     VALIDATION HELPERS
+  ══════════════════════════════════════ */
   function showMErr(id, show) {
     document.getElementById(id).classList.toggle("show", show);
-    const map = {"merr-name":"mfullName","merr-year":"mgradYear","merr-dept":"mdepartment","merr-mobile":"mmobile"};
+    const map = { "merr-name":"mfullName","merr-year":"mgradYear","merr-dept":"mdepartment","merr-mobile":"mmobile" };
     if (map[id]) document.getElementById(map[id]).classList.toggle("error", show);
   }
 
-  document.getElementById("mmobile").addEventListener("input", function(){ this.value = this.value.replace(/\D/g,""); });
+  document.getElementById("mmobile").addEventListener("input", function() {
+    this.value = this.value.replace(/\D/g,"");
+  });
 
   function markStep(doneDot, doneLine, activeDot) {
     const d = document.getElementById(doneDot);
@@ -729,7 +601,11 @@
     document.getElementById(activeDot).classList.add("active");
   }
 
-  function movieGoToStep2() {
+  /* ══════════════════════════════════════
+     STEP 1 → STEP 2
+     Fetches real-time booking ID from sheet
+  ══════════════════════════════════════ */
+  async function movieGoToStep2() {
     const name  = document.getElementById("mfullName").value.trim();
     const year  = document.getElementById("mgradYear").value;
     const dept  = document.getElementById("mdepartment").value;
@@ -744,9 +620,20 @@
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
-    mBookingId = genBookingId(year);
+
+    // Disable button while fetching booking ID
+    const btn = document.getElementById("continueBtn");
+    btn.disabled = true;
+    btn.innerHTML = `<div class="bid-spinner" style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;"></div> Getting your booking ID…`;
+
+    // ── REAL-TIME BOOKING ID ──
+    mBookingId = await fetchRealTimeBookingId(year);
+
+    btn.disabled = false;
+    btn.innerHTML = "Continue to Payment →";
+
     const cfg = MOVIE_CONFIG[year];
-    if (cfg) {
+    if (cfg && cfg.upi) {
       document.getElementById("movieQRSection").style.display = "block";
       document.getElementById("movieQRUnavail").style.display = "none";
       document.getElementById("movieQRImg").src = makePaymentQR(cfg.upi, 180);
@@ -754,20 +641,22 @@
       document.getElementById("movieQRSection").style.display = "none";
       document.getElementById("movieQRUnavail").style.display = "block";
     }
+
     markStep("mdot1", "mline1", "mdot2");
     document.getElementById("mpStep1").style.display = "none";
     document.getElementById("mpStep2").style.display = "block";
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  /* ══════════════════════════════════════
+     STEP 2 → STEP 3
+  ══════════════════════════════════════ */
   function movieGoToStep3() {
     const file = document.getElementById("mproofFile").files[0];
-    let valid = true;
     if (!file) {
       document.getElementById("merr-proof").classList.add("show");
-      valid = false;
+      return;
     }
-    if (!valid) return;
 
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
@@ -785,24 +674,35 @@
     markStep("mdot2", "mline2", "mdot3");
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep3").style.display = "block";
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  /* ══════════════════════════════════════
+     BACK TO STEP 1 (no ID wasted — ID was real-time)
+  ══════════════════════════════════════ */
   function movieGoBackToStep1() {
-    const year = document.getElementById("mgradYear").value;
-    if (year) { const key = "ntn_serial_"+year; const cur = parseInt(localStorage.getItem(key)||"0",10); if(cur>0) localStorage.setItem(key,cur-1); }
     mBookingId = "";
     document.getElementById("mpStep3").style.display = "none";
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep1").style.display = "block";
-    ["mdot1","mdot2","mdot3"].forEach((id,i) => { const d=document.getElementById(id); d.className="step-dot"+(i===0?" active":""); d.textContent=i+1; });
+    ["mdot1","mdot2","mdot3"].forEach((id, i) => {
+      const d = document.getElementById(id);
+      d.className = "step-dot" + (i === 0 ? " active" : "");
+      d.textContent = i + 1;
+    });
     ["mline1","mline2"].forEach(id => document.getElementById(id).classList.remove("done"));
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  /* ══════════════════════════════════════
+     FINAL SUBMIT
+     1. Telegram (all years)
+     2. Google Sheet (2nd & 3rd year)
+  ══════════════════════════════════════ */
   async function movieSubmitForm() {
     const file = document.getElementById("mproofFile").files[0];
     if (!file) return;
+
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
     const dept = document.getElementById("mdepartment").value;
@@ -810,15 +710,24 @@
     const yl   = YEAR_LABEL[year] || year;
     const cfg  = MOVIE_CONFIG[year];
     const btn  = document.getElementById("mfinalSubmitBtn");
-    btn.disabled = true; btn.innerHTML = "⏳ Sending…";
+
+    btn.disabled = true;
+    btn.innerHTML = "⏳ Sending…";
     document.getElementById("loadingMsg").textContent = "Submitting your booking…";
     document.getElementById("loadingOverlay").style.display = "flex";
-    const caption = `*Movie Ticket Booking — NITS Telugu Network*\n\n*Booking ID:* \`${mBookingId}\`\n*Name:* ${name}\n*Year:* ${yl}\n*Branch:* ${dept}\n*Mobile:* +91 ${mob}\n*UPI:* ${cfg ? cfg.upi : "N/A"}`;
+
+    const caption = `*Movie Ticket Booking — NITS Telugu Network*\n\n*Booking ID:* \`${mBookingId}\`\n*Name:* ${name}\n*Year:* ${yl}\n*Branch:* ${dept}\n*Mobile:* +91 ${mob}${cfg && cfg.upi ? `\n*UPI:* ${cfg.upi}` : ""}`;
+
     try {
-      if (cfg) await sendToTelegram(cfg.bot, cfg.cid, caption, file);
+      // Run Telegram + Google Sheet simultaneously
+      const tasks = [];
+      if (cfg) tasks.push(sendToTelegram(cfg.bot, cfg.cid, caption, file));
+      if (SHEET_URLS[year]) tasks.push(sendToGoogleSheet(name, year, dept, mob, mBookingId));
+      await Promise.all(tasks);
+
       document.getElementById("loadingOverlay").style.display = "none";
 
-      // Fill ticket data
+      // Fill final ticket
       document.getElementById("ft-name").textContent = name;
       document.getElementById("ft-year").textContent = yl;
       document.getElementById("ft-dept").textContent = dept;
@@ -826,12 +735,11 @@
       document.getElementById("ft-booking-id").textContent = mBookingId;
       document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
 
-      // Hide form, show success screen
+      // Show success screen
       document.getElementById("movieFormContainer").style.display = "none";
       document.getElementById("movieStepInd").style.display = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
 
-      // STAGE 1: Show success message only
       const successBlock = document.getElementById("successMessageBlock");
       const ticketBlock  = document.getElementById("ticketBlock");
       successBlock.style.display = "block";
@@ -839,40 +747,39 @@
       successBlock.classList.remove("fade-out");
       ticketBlock.classList.remove("flip-in");
 
-      window.scrollTo({ top:0, behavior:"smooth" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
       playSuccessSound();
 
-      // STAGE 2: After 1 second → fade out success, flip in ticket
+      // Stage 2: fade out success → flip in ticket
       setTimeout(() => {
-        // Fade out success message
         successBlock.classList.add("fade-out");
-
         setTimeout(() => {
           successBlock.style.display = "none";
-
-          // Show ticket with flip pop-up animation
           ticketBlock.style.display = "block";
-          // Force reflow so animation re-triggers
           void ticketBlock.offsetWidth;
           ticketBlock.classList.add("flip-in");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 400);
+      }, 1000);
 
-          window.scrollTo({ top:0, behavior:"smooth" });
-        }, 400); // wait for fade-out animation to finish
-      }, 1000); // 1 second delay
-
-    } catch(err) {
+    } catch (err) {
       document.getElementById("loadingOverlay").style.display = "none";
-      btn.disabled = false; btn.innerHTML = "Confirm &amp; Submit";
+      btn.disabled = false;
+      btn.innerHTML = "Confirm &amp; Submit";
       alert(`❌ Submission failed: ${err.message}\n\nPlease check your internet connection and try again.`);
     }
   }
 
-  // ── DOWNLOAD TICKET — BMS Exact Size ──
+  /* ══════════════════════════════════════
+     DOWNLOAD TICKET
+  ══════════════════════════════════════ */
   async function downloadTicket() {
     const btn = document.getElementById("dlBtn");
     btn.innerHTML = "⏳ Preparing…"; btn.disabled = true;
     const qrImg = document.getElementById("ft-qr");
-    if (!qrImg.complete || !qrImg.naturalWidth) { await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; }); }
+    if (!qrImg.complete || !qrImg.naturalWidth) {
+      await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
+    }
     await new Promise(r => setTimeout(r, 400));
     const name   = document.getElementById("ft-name").textContent;
     const year   = document.getElementById("ft-year").textContent;
@@ -894,18 +801,9 @@
             <div style="background:rgba(0,200,83,0.18);border:1px solid rgba(0,200,83,0.45);border-radius:3px;padding:3px 7px;font-size:8.5px;font-weight:700;color:#5DD879;letter-spacing:0.7px;text-transform:uppercase;white-space:nowrap;line-height:1.2;">Submitted ✓</div>
           </div>
           <div style="display:flex;gap:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.12);">
-            <div style="flex:1;">
-              <div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Type</div>
-              <div style="font-size:11px;font-weight:600;color:#fff;">Telugu Film</div>
-            </div>
-            <div style="flex:1;">
-              <div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Venue</div>
-              <div style="font-size:11px;font-weight:600;color:#fff;">Gold Cinema</div>
-            </div>
-            <div style="flex:1;">
-              <div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Seat</div>
-              <div style="font-size:11px;font-weight:600;color:#fff;">Open</div>
-            </div>
+            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Type</div><div style="font-size:11px;font-weight:600;color:#fff;">Telugu Film</div></div>
+            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Venue</div><div style="font-size:11px;font-weight:600;color:#fff;">Gold Cinema</div></div>
+            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Seat</div><div style="font-size:11px;font-weight:600;color:#fff;">Open</div></div>
           </div>
         </div>
         <div style="height:16px;background:linear-gradient(135deg,#1F2533 0%,#2A3142 100%);position:relative;display:flex;align-items:center;">
@@ -924,22 +822,10 @@
         </div>
         <div style="padding:11px 14px 12px;background:#FAFAFC;border-top:1px solid #EFEFF3;">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px 12px;">
-            <div>
-              <div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Name</div>
-              <div style="font-size:11.5px;font-weight:600;color:#1F2533;">${name}</div>
-            </div>
-            <div>
-              <div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Mobile</div>
-              <div style="font-size:11.5px;font-weight:600;color:#1F2533;">${mobile}</div>
-            </div>
-            <div>
-              <div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Year</div>
-              <div style="font-size:11.5px;font-weight:600;color:#1F2533;">${year}</div>
-            </div>
-            <div>
-              <div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Department</div>
-              <div style="font-size:11.5px;font-weight:600;color:#1F2533;">${dept}</div>
-            </div>
+            <div><div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Name</div><div style="font-size:11.5px;font-weight:600;color:#1F2533;">${name}</div></div>
+            <div><div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Mobile</div><div style="font-size:11.5px;font-weight:600;color:#1F2533;">${mobile}</div></div>
+            <div><div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Year</div><div style="font-size:11.5px;font-weight:600;color:#1F2533;">${year}</div></div>
+            <div><div style="font-size:7.5px;font-weight:600;color:#9AA0A6;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Department</div><div style="font-size:11.5px;font-weight:600;color:#1F2533;">${dept}</div></div>
           </div>
         </div>
         <div style="margin:9px 14px 12px;background:linear-gradient(90deg,#FFF3E8 0%,#FFEBD8 100%);border-left:3px solid #FF6B00;border-radius:0 5px 5px 0;padding:7px 9px;">
