@@ -32,10 +32,13 @@
     .ugadi-content{position:relative;z-index:2;}
     .ugadi-badge{display:inline-flex;align-items:center;gap:0.5rem;background:linear-gradient(135deg,#FFF3E8,#FFE4C8);border:1px solid rgba(255,107,0,0.3);border-radius:100px;padding:0.38rem 1rem;font-size:0.76rem;font-weight:600;color:var(--saffron);margin-bottom:1.25rem;animation:fadeUp 0.6s ease both;box-shadow:0 2px 10px rgba(255,107,0,0.1);}
     .ugadi-badge-dot{width:6px;height:6px;background:var(--saffron);border-radius:50%;}
-    .ugadi-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.6rem,8vw,5rem);line-height:1;color:var(--deep);margin-bottom:0.35rem;animation:fadeUp 0.6s ease 0.1s both;}
+    /* TITLE — font changed to sans-serif, size reduced */
+    .ugadi-title{font-family:'DM Sans',sans-serif;font-weight:700;font-size:clamp(1.6rem,4vw,2.5rem);line-height:1.1;color:var(--deep);margin-bottom:0.35rem;animation:fadeUp 0.6s ease 0.1s both;}
     .ugadi-title .accent{color:var(--saffron);}
-    .ugadi-year{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(1.2rem,4vw,2rem);color:var(--muted);margin-bottom:1.75rem;animation:fadeUp 0.6s ease 0.2s both;}
-    .coming-soon-pill{display:inline-flex;align-items:center;gap:0.6rem;background:var(--deep);color:white;border-radius:100px;padding:0.55rem 1.3rem;font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.75rem;animation:fadeUp 0.6s ease 0.3s both;box-shadow:0 6px 20px rgba(26,10,0,0.18);}
+    /* SUB — font changed to sans-serif */
+    .ugadi-year{font-family:'DM Sans',sans-serif;font-weight:400;font-size:clamp(0.85rem,2vw,1rem);color:var(--muted);margin-bottom:1.75rem;animation:fadeUp 0.6s ease 0.2s both;}
+    /* COMING SOON — font changed to sans-serif */
+    .coming-soon-pill{display:inline-flex;align-items:center;gap:0.6rem;background:var(--deep);color:white;border-radius:100px;padding:0.55rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1.75rem;animation:fadeUp 0.6s ease 0.3s both;box-shadow:0 6px 20px rgba(26,10,0,0.18);}
     .cs-dot{width:7px;height:7px;background:#FFB347;border-radius:50%;animation:pulse 1.5s infinite;}
     .ugadi-divider{width:50px;height:3px;background:linear-gradient(to right,var(--saffron),var(--saffron-light));border-radius:2px;margin:0 auto 1.5rem;animation:fadeUp 0.6s ease 0.35s both;}
     .ugadi-desc{max-width:460px;margin:0 auto 0.85rem;font-size:1rem;font-weight:300;color:var(--muted);line-height:1.75;animation:fadeUp 0.6s ease 0.4s both;}
@@ -63,10 +66,9 @@
   <div class="ugadi-grid"></div>
   <div class="ugadi-image-strip">
     <svg viewBox="0 0 800 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-      <defs><radialGradient id="usBg" cx="50%" cy="30%" r="80%"><stop offset="0%" stop-color="#fff9e0"/><stop offset="100%" stop-color="#ffd97a"/></radialGradient></defs>
-      <rect width="800" height="280" fill="url(#usBg)"/>
-      <circle cx="650" cy="70" r="40" fill="#FFE566" opacity="0.9"/>
-      <rect x="0" y="258" width="800" height="22" fill="#e8c870" opacity="0.4"/>
+      <rect width="800" height="280" fill="#C03B01"/>
+      <circle cx="650" cy="70" r="40" fill="#a03000" opacity="0.5"/>
+      <rect x="0" y="258" width="800" height="22" fill="#a03000" opacity="0.4"/>
     </svg>
   </div>
   <div class="ugadi-content">
