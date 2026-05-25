@@ -219,115 +219,143 @@
 </div>
 
 <script>
+  // ── PORTAL CONFIG ──────────────────────────────────────────────────────────
+  // Each year entry: upi (for QR), bot (Telegram bot token), cid (chat id), sheet (GAS URL)
   const PORTAL_CONFIG = {
     "1": {
-      upi: null,
-      bot: "8819197305:AAGJp4WDvRMSp3N08-aBIk4vQp-KXlT4M4w",
-      cid: "-5118038347",
+      upi:   null,
+      bot:   "8819197305:AAGJp4WDvRMSp3N08-aBIk4vQp-KXlT4M4w",
+      cid:   "-5118038347",
       sheet: "https://script.google.com/macros/s/AKfycby5o4UsQDV2QUilgKHZN0LJpzxT23XV8P2Pf9Dskm7ZoE2B6T7R1mscuoEcoY_gHDFyEA/exec"
     },
     "2": {
-      upi: "9032979645-2@ybl",
-      bot: "8799571430:AAF5IdgvVQ2p_4m5HCz55VmPNf6Opi9K7Wg",
-      cid: "-5220299234",
+      upi:   "9032979645-2@ybl",
+      bot:   "8799571430:AAF5IdgvVQ2p_4m5HCz55VmPNf6Opi9K7Wg",
+      cid:   "-5220299234",
       sheet: "https://script.google.com/macros/s/AKfycbzpQ2HJrPgG7HXHUTlNkYTaNGUpvw5anhRmDOzVimM1D1hnYl4vAGi1mkjSqoEomOCCqw/exec"
     },
     "3": {
-      upi: "bukkenaveenkumar@ptyes",
-      bot: null,
-      cid: null,
+      upi:   "bukkenaveenkumar@ptyes",
+      bot:   "8544938126:AAFDigQ4Jo_24fDpKwdLuzmduNF2NBkpaw0",
+      cid:   "-5195232137",
       sheet: "https://script.google.com/macros/s/AKfycbziHPtJmbltFNuagGzksE0g7_MFNnU3dzo-TuTGpWiEMJ03j6etraHNHtMxHBK6fByY/exec"
     },
     "4": {
-      upi: null,
-      bot: null,
-      cid: null,
+      upi:   null,
+      bot:   "8642155301:AAHLMzIljuDdW6um1ysoBQhoUtSa5H94LaQ",
+      cid:   "-5230565755",
       sheet: "https://script.google.com/macros/s/AKfycbwfK-EO74K4X5jBNg9Sl5ZaUk4Fw54w2vN9vw9ZtdasNcHDzR-GgE09PblDySrHJZiL/exec"
     }
   };
-  const YEAR_LABEL = {"1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year"};
 
+  const YEAR_LABEL = { "1":"1st Year", "2":"2nd Year", "3":"3rd Year", "4":"4th Year" };
+
+  // ── QR helper ──────────────────────────────────────────────────────────────
   function makePaymentQR(upiId, size) {
     const d = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
   }
 
+  // ── Progress bar ───────────────────────────────────────────────────────────
   function setProgress(pct, title, sub) {
     document.getElementById("progressBar").style.width = pct + "%";
     if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
-    if (sub !== undefined)   document.getElementById("loaderSub").textContent = sub;
+    if (sub   !== undefined) document.getElementById("loaderSub").textContent   = sub;
   }
 
-  // ── Google Sheets: POST JSON as text/plain (no-cors) ──
-  // GAS doPost receives it via e.postData.contents → JSON.parse works fine
-  // text/plain avoids CORS preflight — this is the only browser→GAS method that works
+  // ── Google Sheets (no-cors, fire-and-forget) ───────────────────────────────
+  // GAS doPost reads e.postData.contents and JSON.parses it.
+  // text/plain avoids CORS preflight — the only browser→GAS approach that works.
   function sendToSheet(url, data) {
     fetch(url, {
-      method: "POST",
-      mode: "no-cors",          // skips preflight, response is opaque (unreadable) but request GOES through
-      headers: { "Content-Type": "text/plain" },  // must be text/plain NOT application/json to avoid preflight
-      body: JSON.stringify(data)
+      method:  "POST",
+      mode:    "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body:    JSON.stringify(data)
     }).catch(() => {});
   }
 
-  // ── Telegram text (awaited — fast ~300ms) ──
+  // ── Telegram: send text message (awaited) ──────────────────────────────────
   async function sendTelegramText(botToken, chatId, text) {
     const r = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method: "POST",
+      method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" })
+      body:    JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" })
     });
     const j = await r.json();
-    if (!j.ok) throw new Error(j.description || "Telegram failed");
+    if (!j.ok) throw new Error(j.description || "Telegram sendMessage failed");
   }
 
-  // ── Telegram photo (background, non-blocking) ──
+  // ── Telegram: send photo/document with caption (background, non-blocking) ──
+  // Always sends the screenshot+caption regardless of file type (image → sendPhoto, PDF → sendDocument).
   function sendTelegramPhoto(botToken, chatId, caption, file) {
-    const fd = new FormData();
-    fd.append("chat_id", chatId);
+    const fd  = new FormData();
+    fd.append("chat_id",    chatId);
     fd.append("parse_mode", "Markdown");
-    fd.append("caption", caption);
-    const key = file.type.startsWith("image/") ? "photo" : "document";
-    const ep  = file.type.startsWith("image/") ? "sendPhoto" : "sendDocument";
+    fd.append("caption",    caption);
+
+    const isImage = file.type.startsWith("image/");
+    const key     = isImage ? "photo"    : "document";
+    const ep      = isImage ? "sendPhoto": "sendDocument";
     fd.append(key, file, file.name);
-    fetch(`https://api.telegram.org/bot${botToken}/${ep}`, { method:"POST", body:fd }).catch(()=>{});
+
+    fetch(`https://api.telegram.org/bot${botToken}/${ep}`, {
+      method: "POST",
+      body:   fd
+    }).catch(() => {});   // background — never blocks UI
   }
 
+  // ── Success chime ──────────────────────────────────────────────────────────
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       [[523.25,0,0.12],[659.25,0.1,0.12],[783.99,0.2,0.12],[1046.5,0.33,0.28]].forEach(([f,w,d]) => {
         const o = ctx.createOscillator(), g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination); o.type="sine";
-        o.frequency.setValueAtTime(f, ctx.currentTime+w);
-        g.gain.setValueAtTime(0, ctx.currentTime+w);
-        g.gain.linearRampToValueAtTime(0.16, ctx.currentTime+w+0.02);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+w+d+0.1);
-        o.start(ctx.currentTime+w); o.stop(ctx.currentTime+w+d+0.15);
+        o.connect(g); g.connect(ctx.destination); o.type = "sine";
+        o.frequency.setValueAtTime(f, ctx.currentTime + w);
+        g.gain.setValueAtTime(0,    ctx.currentTime + w);
+        g.gain.linearRampToValueAtTime(0.16,   ctx.currentTime + w + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + w + d + 0.1);
+        o.start(ctx.currentTime + w);
+        o.stop (ctx.currentTime + w + d + 0.15);
       });
-    } catch(e){}
+    } catch(e) {}
   }
 
+  // ── Field validation helpers ───────────────────────────────────────────────
+  const FIELD_MAP = {
+    "err-name":   "fullName",
+    "err-year":   "gradYear",
+    "err-dept":   "department",
+    "err-mobile": "mobile",
+    "err-utr":    "utrId"
+  };
   function showErr(id, show) {
     document.getElementById(id).classList.toggle("show", show);
-    const map = {"err-name":"fullName","err-year":"gradYear","err-dept":"department","err-mobile":"mobile","err-utr":"utrId"};
-    if (map[id]) document.getElementById(map[id]).classList.toggle("error", show);
+    if (FIELD_MAP[id]) document.getElementById(FIELD_MAP[id]).classList.toggle("error", show);
   }
 
-  document.getElementById("mobile").addEventListener("input", function(){ this.value = this.value.replace(/\D/g,""); });
+  // Only allow digits in mobile field
+  document.getElementById("mobile").addEventListener("input", function() {
+    this.value = this.value.replace(/\D/g, "");
+  });
 
+  // ── Step 1 → Step 2 ────────────────────────────────────────────────────────
   function goToStep2() {
     const name = document.getElementById("fullName").value.trim();
     const year = document.getElementById("gradYear").value;
     const dept = document.getElementById("department").value;
     const mob  = document.getElementById("mobile").value.trim();
-    let valid = true;
-    showErr("err-name",  !name);               if (!name) valid = false;
-    showErr("err-year",  !year);               if (!year) valid = false;
-    showErr("err-dept",  !dept);               if (!dept) valid = false;
+    let valid  = true;
+
+    showErr("err-name",  !name);                if (!name) valid = false;
+    showErr("err-year",  !year);                if (!year) valid = false;
+    showErr("err-dept",  !dept);                if (!dept) valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showErr("err-mobile", !mobOk);             if (!mobOk) valid = false;
+    showErr("err-mobile", !mobOk);              if (!mobOk) valid = false;
     if (!valid) return;
+
+    // Show QR or unavailable notice
     const cfg = PORTAL_CONFIG[year];
     if (cfg && cfg.upi) {
       document.getElementById("portalQRSection").style.display = "block";
@@ -337,25 +365,34 @@
       document.getElementById("portalQRSection").style.display = "none";
       document.getElementById("portalQRUnavail").style.display = "block";
     }
-    document.getElementById("dot1").className = "step-dot done";
+
+    // Update step indicator
+    document.getElementById("dot1").className   = "step-dot done";
     document.getElementById("dot1").textContent = "✓";
     document.getElementById("line1").classList.add("done");
     document.getElementById("dot2").classList.add("active");
+
     document.getElementById("pStep1").style.display = "none";
     document.getElementById("pStep2").style.display = "block";
-    window.scrollTo({ top:0, behavior:"smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // ── Drag-and-drop on upload zone ───────────────────────────────────────────
   const uz = document.getElementById("uploadZone");
-  uz.addEventListener("dragover", e => { e.preventDefault(); uz.classList.add("dragover"); });
+  uz.addEventListener("dragover",  e => { e.preventDefault(); uz.classList.add("dragover"); });
   uz.addEventListener("dragleave", () => uz.classList.remove("dragover"));
   uz.addEventListener("drop", e => {
-    e.preventDefault(); uz.classList.remove("dragover");
-    if (e.dataTransfer.files[0]) { document.getElementById("proofFile").files = e.dataTransfer.files; previewFile({ target: document.getElementById("proofFile") }); }
+    e.preventDefault();
+    uz.classList.remove("dragover");
+    if (e.dataTransfer.files[0]) {
+      document.getElementById("proofFile").files = e.dataTransfer.files;
+      previewFile({ target: document.getElementById("proofFile") });
+    }
   });
 
   function previewFile(e) {
-    const file = e.target.files[0]; if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
     document.getElementById("fileName").textContent = file.name;
     document.getElementById("uploadPreview").style.display = "flex";
     document.getElementById("err-proof").classList.remove("show");
@@ -364,9 +401,12 @@
       const r = new FileReader();
       r.onload = ev => { img.src = ev.target.result; img.style.display = "inline-block"; };
       r.readAsDataURL(file);
-    } else { img.style.display = "none"; }
+    } else {
+      img.style.display = "none";
+    }
   }
 
+  // ── Submit ─────────────────────────────────────────────────────────────────
   async function submitForm() {
     const name = document.getElementById("fullName").value.trim();
     const year = document.getElementById("gradYear").value;
@@ -377,44 +417,51 @@
     const yl   = YEAR_LABEL[year] || year;
     const cfg  = PORTAL_CONFIG[year];
 
+    // Validate step-2 fields
     let valid = true;
-    showErr("err-utr", !utr);  if (!utr) valid = false;
+    showErr("err-utr", !utr);
+    if (!utr) valid = false;
     document.getElementById("err-proof").classList.toggle("show", !file);
     if (!file) valid = false;
     if (!valid) return;
 
+    // Disable button and show loader
     document.getElementById("submitBtn").disabled = true;
     document.getElementById("loadingOverlay").style.display = "flex";
-    setProgress(30, "Submitting…", "Please wait");
+    setProgress(20, "Submitting…", "Sending to Google Sheets");
 
-    const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
+    const ts = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
-    // ── 1. Google Sheets ──
+    // 1. Google Sheets (fire-and-forget, no-cors)
     sendToSheet(cfg.sheet, {
       name,
-      year: yl,
-      branch: dept,      // matches data.branch in your GAS doPost
-      mobile: mob,
+      year:      yl,
+      branch:    dept,
+      mobile:    mob,
       utr,
       timestamp: ts
     });
 
-    // Send photo with full details in caption (background — non-blocking)
+    setProgress(55, "Notifying team…", "Sending payment screenshot");
+
+    // 2. Telegram — screenshot + full caption (background, non-blocking)
+    //    Runs for ALL years that have a bot token and chat ID configured.
     if (cfg.bot && cfg.cid) {
       const caption =
         `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
-        `*Name:* ${name}\n` +
-        `*Year:* ${yl}\n` +
-        `*Branch:* ${dept}\n` +
-        `*Mobile:* +91 ${mob}\n` +
-        `*UTR/Txn ID:* \`${utr}\`\n` +
-        `*Time:* ${ts}`;
+        `*Name:*    ${name}\n` +
+        `*Year:*    ${yl}\n` +
+        `*Branch:*  ${dept}\n` +
+        `*Mobile:*  +91 ${mob}\n` +
+        `*UTR/Txn:* \`${utr}\`\n` +
+        `*Time:*    ${ts}`;
       sendTelegramPhoto(cfg.bot, cfg.cid, caption, file);
     }
 
-    setProgress(100, "Submitted!", "");
-    await new Promise(r => setTimeout(r, 300));
+    setProgress(100, "Submitted! 🎉", "");
+    await new Promise(r => setTimeout(r, 350));
 
+    // Show success screen
     document.getElementById("loadingOverlay").style.display = "none";
     document.getElementById("successNameMsg").textContent =
       `Thank you, ${name}! Your contribution has been recorded.`;
