@@ -223,7 +223,7 @@
   // Each year entry: upi (for QR), bot (Telegram bot token), cid (chat id), sheet (GAS URL)
   const PORTAL_CONFIG = {
     "1": {
-      upi:   null,
+      upi:   "8919531422-4@ibl",
       bot:   "8819197305:AAGJp4WDvRMSp3N08-aBIk4vQp-KXlT4M4w",
       cid:   "-5118038347",
       sheet: "https://script.google.com/macros/s/AKfycby5o4UsQDV2QUilgKHZN0LJpzxT23XV8P2Pf9Dskm7ZoE2B6T7R1mscuoEcoY_gHDFyEA/exec"
@@ -241,7 +241,7 @@
       sheet: "https://script.google.com/macros/s/AKfycbziHPtJmbltFNuagGzksE0g7_MFNnU3dzo-TuTGpWiEMJ03j6etraHNHtMxHBK6fByY/exec"
     },
     "4": {
-      upi:   null,
+      upi:   "varshitsai246@oksbi",
       bot:   "8642155301:AAHLMzIljuDdW6um1ysoBQhoUtSa5H94LaQ",
       cid:   "-5230565755",
       sheet: "https://script.google.com/macros/s/AKfycbwfK-EO74K4X5jBNg9Sl5ZaUk4Fw54w2vN9vw9ZtdasNcHDzR-GgE09PblDySrHJZiL/exec"
@@ -252,6 +252,7 @@
 
   // ── QR helper ──────────────────────────────────────────────────────────────
   function makePaymentQR(upiId, size) {
+    // No &am= (amount) param — user enters any amount they wish in their UPI app
     const d = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
   }
@@ -355,12 +356,12 @@
     showErr("err-mobile", !mobOk);              if (!mobOk) valid = false;
     if (!valid) return;
 
-    // Show QR or unavailable notice
+    // Show QR (already preloaded in cache) or unavailable notice
     const cfg = PORTAL_CONFIG[year];
     if (cfg && cfg.upi) {
       document.getElementById("portalQRSection").style.display = "block";
       document.getElementById("portalQRUnavail").style.display = "none";
-      document.getElementById("portalQRImg").src = makePaymentQR(cfg.upi, 175);
+      document.getElementById("portalQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 175);
     } else {
       document.getElementById("portalQRSection").style.display = "none";
       document.getElementById("portalQRUnavail").style.display = "block";
@@ -406,6 +407,18 @@
     }
   }
 
+  // ── Preload all QR images on page load so Step 2 shows them instantly ──────
+  const QR_CACHE = {};
+  (function preloadQRs() {
+    Object.entries(PORTAL_CONFIG).forEach(([year, cfg]) => {
+      if (!cfg.upi) return;
+      const url = makePaymentQR(cfg.upi, 175);
+      const img = new Image();
+      img.src = url;                  // browser fetches & caches immediately
+      QR_CACHE[year] = url;           // store url for quick lookup in goToStep2
+    });
+  })();
+
   // ── Submit ─────────────────────────────────────────────────────────────────
   async function submitForm() {
     const name = document.getElementById("fullName").value.trim();
@@ -426,47 +439,57 @@
     if (!valid) return;
 
     // Disable button and show loader
-    document.getElementById("submitBtn").disabled = true;
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
     document.getElementById("loadingOverlay").style.display = "flex";
     setProgress(20, "Submitting…", "Sending to Google Sheets");
 
     const ts = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 
-    // 1. Google Sheets (fire-and-forget, no-cors)
-    sendToSheet(cfg.sheet, {
-      name,
-      year:      yl,
-      branch:    dept,
-      mobile:    mob,
-      utr,
-      timestamp: ts
-    });
+    try {
+      // 1. Google Sheets (fire-and-forget, no-cors)
+      sendToSheet(cfg.sheet, {
+        name,
+        year:      yl,
+        branch:    dept,
+        mobile:    mob,
+        utr,
+        timestamp: ts
+      });
 
-    setProgress(55, "Notifying team…", "Sending payment screenshot");
+      setProgress(55, "Notifying team…", "Sending payment screenshot");
 
-    // 2. Telegram — screenshot + full caption (background, non-blocking)
-    //    Runs for ALL years that have a bot token and chat ID configured.
-    if (cfg.bot && cfg.cid) {
-      const caption =
-        `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
-        `*Name:*    ${name}\n` +
-        `*Year:*    ${yl}\n` +
-        `*Branch:*  ${dept}\n` +
-        `*Mobile:*  +91 ${mob}\n` +
-        `*UTR/Txn:* \`${utr}\`\n` +
-        `*Time:*    ${ts}`;
-      sendTelegramPhoto(cfg.bot, cfg.cid, caption, file);
+      // 2. Telegram — screenshot + full caption (background, non-blocking)
+      //    Runs for ALL years that have a bot token and chat ID configured.
+      if (cfg.bot && cfg.cid) {
+        const caption =
+          `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
+          `*Name:*    ${name}\n` +
+          `*Year:*    ${yl}\n` +
+          `*Branch:*  ${dept}\n` +
+          `*Mobile:*  +91 ${mob}\n` +
+          `*UTR/Txn:* \`${utr}\`\n` +
+          `*Time:*    ${ts}`;
+        sendTelegramPhoto(cfg.bot, cfg.cid, caption, file);
+      }
+
+      setProgress(100, "Submitted! 🎉", "");
+      await new Promise(r => setTimeout(r, 350));
+
+      // Show success screen
+      document.getElementById("loadingOverlay").style.display = "none";
+      document.getElementById("successNameMsg").textContent =
+        `Thank you, ${name}! Your contribution has been recorded.`;
+      document.getElementById("successScreen").style.display = "flex";
+      playSuccessSound();
+
+    } catch (err) {
+      // If anything throws, hide loader and re-enable button so user can retry
+      document.getElementById("loadingOverlay").style.display = "none";
+      btn.disabled = false;
+      setProgress(0, "Saving your details…", "Please wait a moment");
+      alert("Something went wrong. Please check your connection and try again.");
     }
-
-    setProgress(100, "Submitted! 🎉", "");
-    await new Promise(r => setTimeout(r, 350));
-
-    // Show success screen
-    document.getElementById("loadingOverlay").style.display = "none";
-    document.getElementById("successNameMsg").textContent =
-      `Thank you, ${name}! Your contribution has been recorded.`;
-    document.getElementById("successScreen").style.display = "flex";
-    playSuccessSound();
   }
 </script>
 </body>
