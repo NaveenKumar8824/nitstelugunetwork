@@ -17,6 +17,7 @@
     body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);min-height:100vh;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
     @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+    @keyframes spin{to{transform:rotate(360deg);}}
     .badge-dot{width:5px;height:5px;background:var(--saffron);border-radius:50%;animation:pulse 2s infinite;}
     .page-hero{padding:1rem 1rem 0.65rem;text-align:center;position:relative;overflow:hidden;}
     .page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 40%,rgba(255,107,0,0.05) 0%,transparent 55%);}
@@ -41,6 +42,7 @@
     .form-input{width:100%;padding:0.58rem 0.8rem;border:1.5px solid var(--border);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--text);background:var(--white);outline:none;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none;appearance:none;}
     .form-input:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(255,107,0,0.09);}
     .form-input.error{border-color:#e53e3e;}
+    .form-input.success{border-color:var(--accent-green);box-shadow:0 0 0 3px rgba(15,110,86,0.09);}
     .select-wrap{position:relative;}
     .select-wrap::after{content:'▾';position:absolute;right:0.8rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;font-size:0.75rem;}
     .error-msg{font-size:0.65rem;color:#e53e3e;margin-top:0.2rem;display:none;}
@@ -48,6 +50,25 @@
     .phone-wrap{position:relative;}
     .phone-flag{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--muted);pointer-events:none;font-weight:500;}
     input[type=tel]{padding-left:2.6rem!important;}
+
+    /* UTR field with spinner overlay */
+    .utr-wrap{position:relative;}
+    .utr-wrap .form-input{padding-right:2.6rem;}
+    .utr-spinner{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);display:none;width:16px;height:16px;border:2px solid rgba(255,107,0,0.2);border-top-color:var(--saffron);border-radius:50%;animation:spin 0.75s linear infinite;}
+    .utr-spinner.visible{display:block;}
+    .utr-check{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);display:none;color:var(--accent-green);font-size:1rem;line-height:1;}
+    .utr-check.visible{display:block;}
+
+    /* OCR status banner */
+    .ocr-status{margin-top:0.35rem;padding:0.35rem 0.6rem;border-radius:7px;font-size:0.67rem;font-weight:500;display:none;align-items:center;gap:0.35rem;line-height:1.35;}
+    .ocr-status.scanning{display:flex;background:#FFF8E1;color:#7A5200;border:1px solid rgba(255,160,0,0.25);}
+    .ocr-status.found{display:flex;background:#E8F5E9;color:#1B5E20;border:1px solid rgba(0,200,83,0.25);}
+    .ocr-status.not-found{display:flex;background:#FFF3E8;color:#7A3000;border:1px solid rgba(255,107,0,0.2);}
+    .ocr-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+    .ocr-status.scanning .ocr-dot{background:#FFA000;animation:pulse 1s infinite;}
+    .ocr-status.found .ocr-dot{background:#00C853;}
+    .ocr-status.not-found .ocr-dot{background:var(--saffron);}
+
     .btn-primary{width:100%;padding:0.7rem;background:var(--saffron);color:white;border:none;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:0.9rem;}
     .btn-primary:hover{background:var(--saffron-light);transform:translateY(-1px);}
     .qr-section{text-align:center;margin-bottom:0.7rem;}
@@ -169,20 +190,16 @@
         <p>🔔 Payment QR for your year will be shared by the admin shortly. Please contact the committee.</p>
       </div>
       <hr class="divider"/>
-      <div class="form-group">
-        <label class="form-label" for="utrId">UTR / Transaction ID</label>
-        <input class="form-input" type="text" id="utrId" placeholder="e.g. 412345678901" inputmode="numeric"/>
-        <div class="utr-note">Find this in your UPI app under payment history</div>
-        <div class="error-msg" id="err-utr">Please enter the transaction ID</div>
-      </div>
+
+      <!-- Upload FIRST so OCR can pre-fill UTR below -->
       <div class="form-group">
         <label class="form-label">Payment Screenshot</label>
         <div class="upload-zone" id="uploadZone">
-          <input type="file" id="proofFile" accept="image/*,.pdf" onchange="previewFile(event)"/>
+          <input type="file" id="proofFile" accept="image/*,.pdf" onchange="handleFileUpload(event)"/>
           <div class="upload-icon">📸</div>
           <div>
             <div class="upload-text"><span>Tap to upload</span> screenshot</div>
-            <div class="upload-hint">JPG, PNG or PDF · Max 5 MB</div>
+            <div class="upload-hint">JPG, PNG or PDF · Max 5 MB · UTR auto-detected</div>
           </div>
         </div>
         <div class="upload-preview" id="uploadPreview">
@@ -191,6 +208,22 @@
         </div>
         <div class="error-msg" id="err-proof">Please upload your payment screenshot</div>
       </div>
+
+      <div class="form-group">
+        <label class="form-label" for="utrId">UTR / Transaction ID</label>
+        <div class="utr-wrap">
+          <input class="form-input" type="text" id="utrId" placeholder="Upload screenshot — ID will auto-fill" inputmode="numeric"/>
+          <div class="utr-spinner" id="utrSpinner"></div>
+          <div class="utr-check" id="utrCheck">✓</div>
+        </div>
+        <div class="ocr-status" id="ocrStatus">
+          <div class="ocr-dot"></div>
+          <span id="ocrStatusText"></span>
+        </div>
+        <div class="utr-note">Find this in your UPI app under payment history · or enter manually</div>
+        <div class="error-msg" id="err-utr">Please enter the transaction ID</div>
+      </div>
+
       <button class="submit-btn" id="submitBtn" onclick="submitForm()">Submit Contribution</button>
     </div>
   </div>
@@ -218,9 +251,11 @@
   </div>
 </div>
 
+<!-- Tesseract.js from cdnjs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js"></script>
+
 <script>
   // ── PORTAL CONFIG ──────────────────────────────────────────────────────────
-  // Each year entry: upi (for QR), bot (Telegram bot token), cid (chat id), sheet (GAS URL)
   const PORTAL_CONFIG = {
     "1": {
       upi:   "8919531422-4@ibl",
@@ -252,67 +287,172 @@
 
   // ── QR helper ──────────────────────────────────────────────────────────────
   function makePaymentQR(upiId, size) {
-    // No &am= (amount) param — user enters any amount they wish in their UPI app
     const d = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
   }
 
+  // ── OCR: extract UTR/transaction ID from screenshot ────────────────────────
+  // Tries multiple regex patterns used by different UPI apps:
+  //   • 12-digit numeric UTR (IMPS/NEFT/RTGS)  e.g. 412345678901
+  //   • Google Pay style: "UPI Ref No." or "Transaction ID"
+  //   • PhonePe, Paytm, BHIM style references
+  //   • Any standalone 12-digit number
+  function extractUTRFromText(rawText) {
+    const text = rawText.replace(/\s+/g, ' ');
+
+    // Pattern 1: labelled UTR/Ref No (most reliable)
+    const labelledPatterns = [
+      /(?:UTR|UPI\s*Ref(?:erence)?\s*(?:No\.?|Number|ID)?|Ref(?:erence)?\s*(?:No\.?|Number|ID)|Txn(?:\.?\s*ID)?|Transaction\s*(?:ID|No\.?)|Order\s*ID|Payment\s*ID)\s*[:\-]?\s*([A-Z0-9]{8,22})/gi,
+    ];
+    for (const pat of labelledPatterns) {
+      const m = pat.exec(text);
+      if (m && m[1]) {
+        const val = m[1].replace(/\s/g, '');
+        if (/^\d{10,15}$/.test(val) || /^[A-Z]{2,4}\d{8,18}$/.test(val)) return val;
+      }
+    }
+
+    // Pattern 2: 12-digit standalone numeric (UPI UTR format)
+    const utr12 = text.match(/\b(\d{12})\b/g);
+    if (utr12 && utr12.length > 0) return utr12[0];
+
+    // Pattern 3: alphanumeric refs like "T2406141234567890" (PhonePe)
+    const alphanum = text.match(/\b([A-Z]{1,4}\d{10,18})\b/g);
+    if (alphanum && alphanum.length > 0) return alphanum[0];
+
+    // Pattern 4: 10-digit number (fallback)
+    const utr10 = text.match(/\b(\d{10,14})\b/g);
+    if (utr10 && utr10.length > 0) return utr10[0];
+
+    return null;
+  }
+
+  function setOcrStatus(state, text) {
+    const el = document.getElementById('ocrStatus');
+    const txt = document.getElementById('ocrStatusText');
+    el.className = 'ocr-status ' + state;
+    txt.textContent = text;
+  }
+
+  async function runOCR(file) {
+    const utrInput  = document.getElementById('utrId');
+    const spinner   = document.getElementById('utrSpinner');
+    const checkmark = document.getElementById('utrCheck');
+
+    // Show scanning state
+    spinner.classList.add('visible');
+    checkmark.classList.remove('visible');
+    utrInput.placeholder = 'Scanning screenshot…';
+    setOcrStatus('scanning', 'Reading your screenshot — please wait…');
+
+    try {
+      // Use Tesseract.js v5 API (createWorker → load → initialize → recognize)
+      const worker = await Tesseract.createWorker('eng', 1, {
+        // Disable verbose logger to keep console clean
+        logger: () => {}
+      });
+
+      const { data: { text } } = await worker.recognize(file);
+      await worker.terminate();
+
+      const utr = extractUTRFromText(text);
+
+      spinner.classList.remove('visible');
+
+      if (utr) {
+        utrInput.value = utr;
+        utrInput.classList.add('success');
+        utrInput.classList.remove('error');
+        checkmark.classList.add('visible');
+        setOcrStatus('found', `Transaction ID detected: ${utr}`);
+        document.getElementById('err-utr').classList.remove('show');
+      } else {
+        utrInput.placeholder = 'Could not detect — enter manually';
+        setOcrStatus('not-found', 'Could not auto-detect UTR. Please enter it manually below.');
+      }
+    } catch (err) {
+      spinner.classList.remove('visible');
+      utrInput.placeholder = 'OCR failed — enter manually';
+      setOcrStatus('not-found', 'OCR scan failed. Please enter your UTR manually.');
+    }
+  }
+
+  // ── File upload handler (preview + trigger OCR) ────────────────────────────
+  async function handleFileUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Preview
+    document.getElementById('fileName').textContent = file.name;
+    document.getElementById('uploadPreview').style.display = 'flex';
+    document.getElementById('err-proof').classList.remove('show');
+    const img = document.getElementById('previewImg');
+    if (file.type.startsWith('image/')) {
+      const r = new FileReader();
+      r.onload = ev => { img.src = ev.target.result; img.style.display = 'inline-block'; };
+      r.readAsDataURL(file);
+    } else {
+      img.style.display = 'none';
+    }
+
+    // Run OCR only on image files (not PDF — Tesseract doesn't parse PDFs)
+    if (file.type.startsWith('image/')) {
+      await runOCR(file);
+    } else {
+      setOcrStatus('not-found', 'PDF uploaded — please enter your UTR manually.');
+    }
+  }
+
   // ── Progress bar ───────────────────────────────────────────────────────────
   function setProgress(pct, title, sub) {
-    document.getElementById("progressBar").style.width = pct + "%";
-    if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
-    if (sub   !== undefined) document.getElementById("loaderSub").textContent   = sub;
+    document.getElementById('progressBar').style.width = pct + '%';
+    if (title !== undefined) document.getElementById('loaderTitle').textContent = title;
+    if (sub   !== undefined) document.getElementById('loaderSub').textContent   = sub;
   }
 
   // ── Google Sheets (no-cors, fire-and-forget) ───────────────────────────────
-  // GAS doPost reads e.postData.contents and JSON.parses it.
-  // text/plain avoids CORS preflight — the only browser→GAS approach that works.
   function sendToSheet(url, data) {
     fetch(url, {
-      method:  "POST",
-      mode:    "no-cors",
-      headers: { "Content-Type": "text/plain" },
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
       body:    JSON.stringify(data)
     }).catch(() => {});
   }
 
-  // ── Telegram: send text message (awaited) ──────────────────────────────────
+  // ── Telegram helpers ───────────────────────────────────────────────────────
   async function sendTelegramText(botToken, chatId, text) {
     const r = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ chat_id: chatId, text, parse_mode: "Markdown" })
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ chat_id: chatId, text, parse_mode: 'Markdown' })
     });
     const j = await r.json();
-    if (!j.ok) throw new Error(j.description || "Telegram sendMessage failed");
+    if (!j.ok) throw new Error(j.description || 'Telegram sendMessage failed');
   }
 
-  // ── Telegram: send photo/document with caption (background, non-blocking) ──
-  // Always sends the screenshot+caption regardless of file type (image → sendPhoto, PDF → sendDocument).
   function sendTelegramPhoto(botToken, chatId, caption, file) {
     const fd  = new FormData();
-    fd.append("chat_id",    chatId);
-    fd.append("parse_mode", "Markdown");
-    fd.append("caption",    caption);
-
-    const isImage = file.type.startsWith("image/");
-    const key     = isImage ? "photo"    : "document";
-    const ep      = isImage ? "sendPhoto": "sendDocument";
+    fd.append('chat_id',    chatId);
+    fd.append('parse_mode', 'Markdown');
+    fd.append('caption',    caption);
+    const isImage = file.type.startsWith('image/');
+    const key     = isImage ? 'photo'    : 'document';
+    const ep      = isImage ? 'sendPhoto': 'sendDocument';
     fd.append(key, file, file.name);
-
     fetch(`https://api.telegram.org/bot${botToken}/${ep}`, {
-      method: "POST",
+      method: 'POST',
       body:   fd
-    }).catch(() => {});   // background — never blocks UI
+    }).catch(() => {});
   }
 
-  // ── Success chime ──────────────────────────────────────────────────────────
+  // ── Success sound ──────────────────────────────────────────────────────────
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
       [[523.25,0,0.12],[659.25,0.1,0.12],[783.99,0.2,0.12],[1046.5,0.33,0.28]].forEach(([f,w,d]) => {
         const o = ctx.createOscillator(), g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination); o.type = "sine";
+        o.connect(g); g.connect(ctx.destination); o.type = 'sine';
         o.frequency.setValueAtTime(f, ctx.currentTime + w);
         g.gain.setValueAtTime(0,    ctx.currentTime + w);
         g.gain.linearRampToValueAtTime(0.16,   ctx.currentTime + w + 0.02);
@@ -325,129 +465,114 @@
 
   // ── Field validation helpers ───────────────────────────────────────────────
   const FIELD_MAP = {
-    "err-name":   "fullName",
-    "err-year":   "gradYear",
-    "err-dept":   "department",
-    "err-mobile": "mobile",
-    "err-utr":    "utrId"
+    'err-name':   'fullName',
+    'err-year':   'gradYear',
+    'err-dept':   'department',
+    'err-mobile': 'mobile',
+    'err-utr':    'utrId'
   };
   function showErr(id, show) {
-    document.getElementById(id).classList.toggle("show", show);
-    if (FIELD_MAP[id]) document.getElementById(FIELD_MAP[id]).classList.toggle("error", show);
+    document.getElementById(id).classList.toggle('show', show);
+    if (FIELD_MAP[id]) document.getElementById(FIELD_MAP[id]).classList.toggle('error', show);
   }
 
-  // Only allow digits in mobile field
-  document.getElementById("mobile").addEventListener("input", function() {
-    this.value = this.value.replace(/\D/g, "");
+  document.getElementById('mobile').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '');
+  });
+
+  // Clear success state on manual UTR edit
+  document.getElementById('utrId').addEventListener('input', function() {
+    document.getElementById('utrCheck').classList.remove('visible');
+    this.classList.remove('success');
+    document.getElementById('ocrStatus').className = 'ocr-status';
   });
 
   // ── Step 1 → Step 2 ────────────────────────────────────────────────────────
   function goToStep2() {
-    const name = document.getElementById("fullName").value.trim();
-    const year = document.getElementById("gradYear").value;
-    const dept = document.getElementById("department").value;
-    const mob  = document.getElementById("mobile").value.trim();
+    const name = document.getElementById('fullName').value.trim();
+    const year = document.getElementById('gradYear').value;
+    const dept = document.getElementById('department').value;
+    const mob  = document.getElementById('mobile').value.trim();
     let valid  = true;
 
-    showErr("err-name",  !name);                if (!name) valid = false;
-    showErr("err-year",  !year);                if (!year) valid = false;
-    showErr("err-dept",  !dept);                if (!dept) valid = false;
+    showErr('err-name',  !name);                if (!name) valid = false;
+    showErr('err-year',  !year);                if (!year) valid = false;
+    showErr('err-dept',  !dept);                if (!dept) valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showErr("err-mobile", !mobOk);              if (!mobOk) valid = false;
+    showErr('err-mobile', !mobOk);              if (!mobOk) valid = false;
     if (!valid) return;
 
-    // Show QR (already preloaded in cache) or unavailable notice
     const cfg = PORTAL_CONFIG[year];
     if (cfg && cfg.upi) {
-      document.getElementById("portalQRSection").style.display = "block";
-      document.getElementById("portalQRUnavail").style.display = "none";
-      document.getElementById("portalQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 175);
+      document.getElementById('portalQRSection').style.display = 'block';
+      document.getElementById('portalQRUnavail').style.display = 'none';
+      document.getElementById('portalQRImg').src = QR_CACHE[year] || makePaymentQR(cfg.upi, 175);
     } else {
-      document.getElementById("portalQRSection").style.display = "none";
-      document.getElementById("portalQRUnavail").style.display = "block";
+      document.getElementById('portalQRSection').style.display = 'none';
+      document.getElementById('portalQRUnavail').style.display = 'block';
     }
 
-    // Update step indicator
-    document.getElementById("dot1").className   = "step-dot done";
-    document.getElementById("dot1").textContent = "✓";
-    document.getElementById("line1").classList.add("done");
-    document.getElementById("dot2").classList.add("active");
+    document.getElementById('dot1').className   = 'step-dot done';
+    document.getElementById('dot1').textContent = '✓';
+    document.getElementById('line1').classList.add('done');
+    document.getElementById('dot2').classList.add('active');
 
-    document.getElementById("pStep1").style.display = "none";
-    document.getElementById("pStep2").style.display = "block";
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById('pStep1').style.display = 'none';
+    document.getElementById('pStep2').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ── Drag-and-drop on upload zone ───────────────────────────────────────────
-  const uz = document.getElementById("uploadZone");
-  uz.addEventListener("dragover",  e => { e.preventDefault(); uz.classList.add("dragover"); });
-  uz.addEventListener("dragleave", () => uz.classList.remove("dragover"));
-  uz.addEventListener("drop", e => {
+  const uz = document.getElementById('uploadZone');
+  uz.addEventListener('dragover',  e => { e.preventDefault(); uz.classList.add('dragover'); });
+  uz.addEventListener('dragleave', () => uz.classList.remove('dragover'));
+  uz.addEventListener('drop', e => {
     e.preventDefault();
-    uz.classList.remove("dragover");
+    uz.classList.remove('dragover');
     if (e.dataTransfer.files[0]) {
-      document.getElementById("proofFile").files = e.dataTransfer.files;
-      previewFile({ target: document.getElementById("proofFile") });
+      document.getElementById('proofFile').files = e.dataTransfer.files;
+      handleFileUpload({ target: document.getElementById('proofFile') });
     }
   });
 
-  function previewFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    document.getElementById("fileName").textContent = file.name;
-    document.getElementById("uploadPreview").style.display = "flex";
-    document.getElementById("err-proof").classList.remove("show");
-    const img = document.getElementById("previewImg");
-    if (file.type.startsWith("image/")) {
-      const r = new FileReader();
-      r.onload = ev => { img.src = ev.target.result; img.style.display = "inline-block"; };
-      r.readAsDataURL(file);
-    } else {
-      img.style.display = "none";
-    }
-  }
-
-  // ── Preload all QR images on page load so Step 2 shows them instantly ──────
+  // ── Preload QR images ──────────────────────────────────────────────────────
   const QR_CACHE = {};
   (function preloadQRs() {
     Object.entries(PORTAL_CONFIG).forEach(([year, cfg]) => {
       if (!cfg.upi) return;
       const url = makePaymentQR(cfg.upi, 175);
       const img = new Image();
-      img.src = url;                  // browser fetches & caches immediately
-      QR_CACHE[year] = url;           // store url for quick lookup in goToStep2
+      img.src = url;
+      QR_CACHE[year] = url;
     });
   })();
 
   // ── Submit ─────────────────────────────────────────────────────────────────
   async function submitForm() {
-    const name = document.getElementById("fullName").value.trim();
-    const year = document.getElementById("gradYear").value;
-    const dept = document.getElementById("department").value;
-    const mob  = document.getElementById("mobile").value.trim();
-    const utr  = document.getElementById("utrId").value.trim();
-    const file = document.getElementById("proofFile").files[0] || null;
+    const name = document.getElementById('fullName').value.trim();
+    const year = document.getElementById('gradYear').value;
+    const dept = document.getElementById('department').value;
+    const mob  = document.getElementById('mobile').value.trim();
+    const utr  = document.getElementById('utrId').value.trim();
+    const file = document.getElementById('proofFile').files[0] || null;
     const yl   = YEAR_LABEL[year] || year;
     const cfg  = PORTAL_CONFIG[year];
 
-    // Validate step-2 fields
     let valid = true;
-    showErr("err-utr", !utr);
+    showErr('err-utr', !utr);
     if (!utr) valid = false;
-    document.getElementById("err-proof").classList.toggle("show", !file);
+    document.getElementById('err-proof').classList.toggle('show', !file);
     if (!file) valid = false;
     if (!valid) return;
 
-    // Disable button and show loader
-    const btn = document.getElementById("submitBtn");
+    const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    document.getElementById("loadingOverlay").style.display = "flex";
-    setProgress(20, "Submitting…", "Sending to Google Sheets");
+    document.getElementById('loadingOverlay').style.display = 'flex';
+    setProgress(20, 'Submitting…', 'Sending to Google Sheets');
 
-    const ts = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+    const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     try {
-      // 1. Google Sheets (fire-and-forget, no-cors)
       sendToSheet(cfg.sheet, {
         name,
         year:      yl,
@@ -457,10 +582,8 @@
         timestamp: ts
       });
 
-      setProgress(55, "Notifying team…", "Sending payment screenshot");
+      setProgress(55, 'Notifying team…', 'Sending payment screenshot');
 
-      // 2. Telegram — screenshot + full caption (background, non-blocking)
-      //    Runs for ALL years that have a bot token and chat ID configured.
       if (cfg.bot && cfg.cid) {
         const caption =
           `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
@@ -473,22 +596,20 @@
         sendTelegramPhoto(cfg.bot, cfg.cid, caption, file);
       }
 
-      setProgress(100, "Submitted! 🎉", "");
+      setProgress(100, 'Submitted! 🎉', '');
       await new Promise(r => setTimeout(r, 350));
 
-      // Show success screen
-      document.getElementById("loadingOverlay").style.display = "none";
-      document.getElementById("successNameMsg").textContent =
+      document.getElementById('loadingOverlay').style.display = 'none';
+      document.getElementById('successNameMsg').textContent =
         `Thank you, ${name}! Your contribution has been recorded.`;
-      document.getElementById("successScreen").style.display = "flex";
+      document.getElementById('successScreen').style.display = 'flex';
       playSuccessSound();
 
     } catch (err) {
-      // If anything throws, hide loader and re-enable button so user can retry
-      document.getElementById("loadingOverlay").style.display = "none";
+      document.getElementById('loadingOverlay').style.display = 'none';
       btn.disabled = false;
-      setProgress(0, "Saving your details…", "Please wait a moment");
-      alert("Something went wrong. Please check your connection and try again.");
+      setProgress(0, 'Saving your details…', 'Please wait a moment');
+      alert('Something went wrong. Please check your connection and try again.');
     }
   }
 </script>
