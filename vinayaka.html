@@ -50,16 +50,12 @@
     .phone-wrap{position:relative;}
     .phone-flag{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);font-size:0.85rem;color:var(--muted);pointer-events:none;font-weight:500;}
     input[type=tel]{padding-left:2.6rem!important;}
-
-    /* UTR field with spinner overlay */
     .utr-wrap{position:relative;}
     .utr-wrap .form-input{padding-right:2.6rem;}
     .utr-spinner{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);display:none;width:16px;height:16px;border:2px solid rgba(255,107,0,0.2);border-top-color:var(--saffron);border-radius:50%;animation:spin 0.75s linear infinite;}
     .utr-spinner.visible{display:block;}
     .utr-check{position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);display:none;color:var(--accent-green);font-size:1rem;line-height:1;}
     .utr-check.visible{display:block;}
-
-    /* OCR status banner */
     .ocr-status{margin-top:0.35rem;padding:0.35rem 0.6rem;border-radius:7px;font-size:0.67rem;font-weight:500;display:none;align-items:center;gap:0.35rem;line-height:1.35;}
     .ocr-status.scanning{display:flex;background:#FFF8E1;color:#7A5200;border:1px solid rgba(255,160,0,0.25);}
     .ocr-status.found{display:flex;background:#E8F5E9;color:#1B5E20;border:1px solid rgba(0,200,83,0.25);}
@@ -68,7 +64,6 @@
     .ocr-status.scanning .ocr-dot{background:#FFA000;animation:pulse 1s infinite;}
     .ocr-status.found .ocr-dot{background:#00C853;}
     .ocr-status.not-found .ocr-dot{background:var(--saffron);}
-
     .btn-primary{width:100%;padding:0.7rem;background:var(--saffron);color:white;border:none;border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:background 0.2s,transform 0.15s;display:flex;align-items:center;justify-content:center;gap:0.4rem;margin-top:0.9rem;}
     .btn-primary:hover{background:var(--saffron-light);transform:translateY(-1px);}
     .qr-section{text-align:center;margin-bottom:0.7rem;}
@@ -191,7 +186,6 @@
       </div>
       <hr class="divider"/>
 
-      <!-- Upload FIRST so OCR can pre-fill UTR below -->
       <div class="form-group">
         <label class="form-label">Payment Screenshot</label>
         <div class="upload-zone" id="uploadZone">
@@ -251,8 +245,51 @@
   </div>
 </div>
 
-<!-- Tesseract.js from cdnjs -->
+<!-- Tesseract.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.1.0/tesseract.min.js"></script>
+
+<!-- ── Firebase SDK (ESM via CDN, loaded as module) ───────────────────────── -->
+<script type="module">
+  import { initializeApp }              from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyCSq9j_jc7GUF1IwLiE7woWyortHbc_ngQ",
+    authDomain:        "vinayaka-chavithi-366d9.firebaseapp.com",
+    projectId:         "vinayaka-chavithi-366d9",
+    storageBucket:     "vinayaka-chavithi-366d9.firebasestorage.app",
+    messagingSenderId: "745277095150",
+    appId:             "1:745277095150:web:f89f44540625859c0847ff",
+    measurementId:     "G-7SFSTDTF79"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  /**
+   * saveToFirestore — called from the global submitForm() after Sheets + Telegram.
+   * Non-blocking: success screen is never held back by this.
+   */
+  window.saveToFirestore = async function({ name, year, branch, mobile, utr, timestamp }) {
+    try {
+      const docRef = await addDoc(collection(db, "Contributions"), {
+        name,
+        year,
+        branch,
+        mobile,
+        utr,
+        paymentStatus: "Pending",
+        timestamp,                 // IST string from the form
+        createdAt: serverTimestamp() // server-side Firestore timestamp for accurate ordering
+      });
+      console.log("[Firebase] Contribution saved — doc ID:", docRef.id);
+    } catch (err) {
+      console.error("[Firebase] Failed to save contribution:", err);
+      // Intentionally swallowed — success screen already shown
+    }
+  };
+</script>
 
 <script>
   // ── PORTAL CONFIG ──────────────────────────────────────────────────────────
@@ -292,15 +329,9 @@
   }
 
   // ── OCR: extract UTR/transaction ID from screenshot ────────────────────────
-  // Tries multiple regex patterns used by different UPI apps:
-  //   • 12-digit numeric UTR (IMPS/NEFT/RTGS)  e.g. 412345678901
-  //   • Google Pay style: "UPI Ref No." or "Transaction ID"
-  //   • PhonePe, Paytm, BHIM style references
-  //   • Any standalone 12-digit number
   function extractUTRFromText(rawText) {
     const text = rawText.replace(/\s+/g, ' ');
 
-    // Pattern 1: labelled UTR/Ref No (most reliable)
     const labelledPatterns = [
       /(?:UTR|UPI\s*Ref(?:erence)?\s*(?:No\.?|Number|ID)?|Ref(?:erence)?\s*(?:No\.?|Number|ID)|Txn(?:\.?\s*ID)?|Transaction\s*(?:ID|No\.?)|Order\s*ID|Payment\s*ID)\s*[:\-]?\s*([A-Z0-9]{8,22})/gi,
     ];
@@ -312,15 +343,12 @@
       }
     }
 
-    // Pattern 2: 12-digit standalone numeric (UPI UTR format)
     const utr12 = text.match(/\b(\d{12})\b/g);
     if (utr12 && utr12.length > 0) return utr12[0];
 
-    // Pattern 3: alphanumeric refs like "T2406141234567890" (PhonePe)
     const alphanum = text.match(/\b([A-Z]{1,4}\d{10,18})\b/g);
     if (alphanum && alphanum.length > 0) return alphanum[0];
 
-    // Pattern 4: 10-digit number (fallback)
     const utr10 = text.match(/\b(\d{10,14})\b/g);
     if (utr10 && utr10.length > 0) return utr10[0];
 
@@ -339,24 +367,17 @@
     const spinner   = document.getElementById('utrSpinner');
     const checkmark = document.getElementById('utrCheck');
 
-    // Show scanning state
     spinner.classList.add('visible');
     checkmark.classList.remove('visible');
     utrInput.placeholder = 'Scanning screenshot…';
     setOcrStatus('scanning', 'Reading your screenshot — please wait…');
 
     try {
-      // Use Tesseract.js v5 API (createWorker → load → initialize → recognize)
-      const worker = await Tesseract.createWorker('eng', 1, {
-        // Disable verbose logger to keep console clean
-        logger: () => {}
-      });
-
+      const worker = await Tesseract.createWorker('eng', 1, { logger: () => {} });
       const { data: { text } } = await worker.recognize(file);
       await worker.terminate();
 
       const utr = extractUTRFromText(text);
-
       spinner.classList.remove('visible');
 
       if (utr) {
@@ -377,12 +398,11 @@
     }
   }
 
-  // ── File upload handler (preview + trigger OCR) ────────────────────────────
+  // ── File upload handler ────────────────────────────────────────────────────
   async function handleFileUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Preview
     document.getElementById('fileName').textContent = file.name;
     document.getElementById('uploadPreview').style.display = 'flex';
     document.getElementById('err-proof').classList.remove('show');
@@ -395,7 +415,6 @@
       img.style.display = 'none';
     }
 
-    // Run OCR only on image files (not PDF — Tesseract doesn't parse PDFs)
     if (file.type.startsWith('image/')) {
       await runOCR(file);
     } else {
@@ -480,7 +499,6 @@
     this.value = this.value.replace(/\D/g, '');
   });
 
-  // Clear success state on manual UTR edit
   document.getElementById('utrId').addEventListener('input', function() {
     document.getElementById('utrCheck').classList.remove('visible');
     this.classList.remove('success');
@@ -573,6 +591,7 @@
     const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     try {
+      // ── 1. Google Sheets (unchanged) ───────────────────────────────────────
       sendToSheet(cfg.sheet, {
         name,
         year:      yl,
@@ -584,6 +603,7 @@
 
       setProgress(55, 'Notifying team…', 'Sending payment screenshot');
 
+      // ── 2. Telegram (unchanged) ────────────────────────────────────────────
       if (cfg.bot && cfg.cid) {
         const caption =
           `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
@@ -594,6 +614,16 @@
           `*UTR/Txn:* \`${utr}\`\n` +
           `*Time:*    ${ts}`;
         sendTelegramPhoto(cfg.bot, cfg.cid, caption, file);
+      }
+
+      setProgress(80, 'Saving to database…', 'Storing in Firebase');
+
+      // ── 3. Firebase Firestore (non-blocking) ───────────────────────────────
+      // window.saveToFirestore is defined in the module <script> above.
+      // We call it with await but wrap in its own try/catch so any failure
+      // never blocks the success screen.
+      if (typeof window.saveToFirestore === 'function') {
+        await window.saveToFirestore({ name, year: yl, branch: dept, mobile: mob, utr, timestamp: ts });
       }
 
       setProgress(100, 'Submitted! 🎉', '');
