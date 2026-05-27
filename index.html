@@ -82,7 +82,6 @@
     .dsi{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:transform 0.2s;}
     .dsi svg{width:14px;height:14px;}
     .dsi:hover{transform:scale(1.15);}
-
     @media(max-width:400px){.dev-strip-inner{justify-content:center;text-align:center;}}
 
     footer{border-top:1px solid var(--border);padding:1.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;}
@@ -90,6 +89,164 @@
     .footer-logo span{color:var(--saffron);}
     footer p{font-size:0.75rem;color:var(--muted);}
     @media(max-width:640px){footer{flex-direction:column;text-align:center;padding:1.25rem 1rem;gap:0.35rem;}}
+
+    /* ══════════════════════════════════════════
+       Verified Booking Popup  (moved from movie.html)
+    ══════════════════════════════════════════ */
+    @keyframes vpFadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes vpSlideUp{
+      from{opacity:0;transform:translateY(36px) scale(0.95);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+    @keyframes vpShimmer{
+      0%{background-position:200% 0;}
+      100%{background-position:-200% 0;}
+    }
+    @keyframes vpPop{
+      0%{transform:scale(0);opacity:0;}
+      65%{transform:scale(1.15);opacity:1;}
+      100%{transform:scale(1);opacity:1;}
+    }
+    @keyframes drawTick{to{stroke-dashoffset:0;}}
+
+    #verifiedPopupOverlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:600;
+      background:rgba(10,5,0,0.6);
+      backdrop-filter:blur(7px);
+      -webkit-backdrop-filter:blur(7px);
+      align-items:center;
+      justify-content:center;
+      padding:1.25rem;
+      animation:vpFadeIn 0.3s ease both;
+    }
+    #verifiedPopupOverlay.show{display:flex;}
+
+    .vp-popup{
+      background:#fff;
+      border-radius:22px;
+      padding:2rem 1.5rem 1.7rem;
+      max-width:320px;
+      width:100%;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 28px 70px rgba(0,0,0,0.2),0 4px 18px rgba(0,0,0,0.08);
+      animation:vpSlideUp 0.5s cubic-bezier(0.34,1.4,0.64,1) both;
+    }
+    .vp-popup::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:4px;
+      background:linear-gradient(90deg,#00C853,#69F0AE,#00C853,#1B5E20);
+      background-size:300% 100%;
+      animation:vpShimmer 2.5s linear infinite;
+    }
+    .vp-popup::after{
+      content:'';
+      position:absolute;
+      top:-60px;right:-60px;
+      width:160px;height:160px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(0,200,83,0.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+    .vp-icon{
+      width:74px;height:74px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#00C853,#1B5E20);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 1rem;
+      box-shadow:0 10px 30px rgba(0,200,83,0.35);
+      animation:vpPop 0.55s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+      position:relative;z-index:1;
+    }
+    .vp-title{
+      font-family:'DM Sans',sans-serif;
+      font-weight:800;
+      font-size:1.15rem;
+      color:var(--deep);
+      margin-bottom:0.22rem;
+      line-height:1.25;
+    }
+    .vp-hello{
+      font-size:0.8rem;
+      color:var(--muted);
+      margin-bottom:1.1rem;
+      font-weight:400;
+      line-height:1.5;
+    }
+    .vp-hello strong{color:var(--text);font-weight:700;}
+    .vp-card{
+      background:linear-gradient(135deg,#F0FDF4,#DCFCE7);
+      border:1.5px solid rgba(0,200,83,0.22);
+      border-radius:13px;
+      padding:0.9rem 1rem;
+      margin-bottom:1rem;
+      text-align:left;
+    }
+    .vp-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:0.5rem;
+      padding:0.3rem 0;
+    }
+    .vp-row+.vp-row{border-top:1px solid rgba(0,200,83,0.12);}
+    .vp-row-label{
+      font-size:0.67rem;
+      font-weight:700;
+      color:#4B7A5C;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      flex-shrink:0;
+    }
+    .vp-row-value{
+      font-size:0.8rem;
+      font-weight:700;
+      color:#14532D;
+      word-break:break-all;
+      text-align:right;
+    }
+    .vp-status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:0.25rem;
+      background:rgba(0,200,83,0.15);
+      border:1px solid rgba(0,200,83,0.4);
+      border-radius:100px;
+      padding:0.2rem 0.65rem;
+      font-size:0.72rem;
+      font-weight:700;
+      color:#15803D;
+    }
+    .vp-note{
+      font-size:0.74rem;
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:1.1rem;
+    }
+    .vp-ok-btn{
+      width:100%;
+      padding:0.78rem;
+      background:linear-gradient(135deg,#00C853,#1B5E20);
+      color:white;
+      border:none;
+      border-radius:12px;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.9rem;
+      font-weight:700;
+      cursor:pointer;
+      letter-spacing:0.02em;
+      transition:transform 0.15s,box-shadow 0.15s;
+      box-shadow:0 4px 16px rgba(0,200,83,0.32);
+    }
+    .vp-ok-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,200,83,0.42);}
+    .vp-ok-btn:active{transform:translateY(0);}
+    /* ══ END Popup styles ══ */
   </style>
 </head>
 <body>
@@ -126,11 +283,7 @@
     <!-- Vinayaka Card -->
     <a href="vinayaka.html" class="event-card card-vinayaka">
       <div class="card-banner">
-        <img
-          class="banner-img"
-          src="vinayaka-banner.jpeg"
-          alt="Vinayaka Chavithi 2026"
-        />
+        <img class="banner-img" src="vinayaka-banner.jpeg" alt="Vinayaka Chavithi 2026"/>
         <div class="card-banner-overlay"></div>
         <div class="card-year-badge">2026</div>
       </div>
@@ -223,6 +376,104 @@
   <p>© 2026 NITS Telugu Network</p>
   <p>Made with ❤️</p>
 </footer>
+
+<!-- ══════════════════════════════════════════
+     Verified Booking Popup  (shown here on index.html)
+══════════════════════════════════════════ -->
+<div id="verifiedPopupOverlay">
+  <div class="vp-popup">
+    <div class="vp-icon">
+      <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
+        <path d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
+          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.55s 0.2s ease forwards;"/>
+      </svg>
+    </div>
+    <div class="vp-title">Booking Verified Successfully</div>
+    <p class="vp-hello">Hello, <strong id="vpName">—</strong></p>
+    <div class="vp-card">
+      <div class="vp-row">
+        <span class="vp-row-label">Booking ID</span>
+        <span class="vp-row-value" id="vpBookingId">—</span>
+      </div>
+      <div class="vp-row">
+        <span class="vp-row-label">Status</span>
+        <span class="vp-status-pill">✅ Verified</span>
+      </div>
+    </div>
+    <p class="vp-note">Your payment has been verified successfully.<br>Thank you for registering with NITS Telugu Network!</p>
+    <button class="vp-ok-btn" onclick="closeVerifiedPopup()">OK, Got it ✓</button>
+  </div>
+</div>
+
+<!-- Firebase: verified booking check runs on index.html -->
+<script type="module">
+  import { initializeApp, getApps, getApp }
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    updateDoc
+  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey:            "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
+    authDomain:        "movie-tickets-booking-a1545.firebaseapp.com",
+    projectId:         "movie-tickets-booking-a1545",
+    storageBucket:     "movie-tickets-booking-a1545.firebasestorage.app",
+    messagingSenderId: "557765260182",
+    appId:             "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
+    measurementId:     "G-GNNYBNTQFC"
+  };
+
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  /* Check if the user's booking has been verified by admin */
+  async function checkVerifiedBooking() {
+    const bookingId = localStorage.getItem("movieBookingId");
+    if (!bookingId) return;
+
+    try {
+      const q    = query(collection(db, "movieBookings"), where("bookingId", "==", bookingId));
+      const snap = await getDocs(q);
+      if (snap.empty) return;
+
+      const docSnap = snap.docs[0];
+      const data    = docSnap.data();
+
+      /* Only show if status is Verified AND popup hasn't been shown before */
+      if (data.status === "Verified" && !data.popupShown) {
+        document.getElementById("vpName").textContent      = data.name      || "Student";
+        document.getElementById("vpBookingId").textContent = data.bookingId || bookingId;
+
+        document.getElementById("verifiedPopupOverlay").classList.add("show");
+
+        /* Mark popupShown = true so it never shows again */
+        await updateDoc(doc(db, "movieBookings", docSnap.id), { popupShown: true });
+        console.log("✅ Verified popup shown on index.html for:", bookingId);
+      }
+    } catch (err) {
+      console.error("❌ Verified booking check failed:", err.message);
+    }
+  }
+
+  window.addEventListener("load", () => setTimeout(checkVerifiedBooking, 800));
+
+  window.closeVerifiedPopup = function() {
+    const overlay = document.getElementById("verifiedPopupOverlay");
+    overlay.style.transition = "opacity 0.3s ease";
+    overlay.style.opacity    = "0";
+    setTimeout(() => {
+      overlay.classList.remove("show");
+      overlay.style.opacity    = "";
+      overlay.style.transition = "";
+    }, 300);
+  };
+</script>
 
 </body>
 </html>
