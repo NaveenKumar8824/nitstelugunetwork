@@ -172,6 +172,167 @@
     .required-star{color:#e53e3e;margin-left:2px;}
     .file-size-warn{font-size:0.63rem;color:#e53e3e;margin-top:0.2rem;display:none;}
     .file-size-warn.show{display:block;}
+
+    /* ── CHANGED: Verified Booking Popup styles ── */
+    @keyframes vpFadeIn{from{opacity:0;}to{opacity:1;}}
+    @keyframes vpSlideUp{
+      from{opacity:0;transform:translateY(36px) scale(0.95);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+    @keyframes vpShimmer{
+      0%{background-position:200% 0;}
+      100%{background-position:-200% 0;}
+    }
+    @keyframes vpPop{
+      0%{transform:scale(0);opacity:0;}
+      65%{transform:scale(1.15);opacity:1;}
+      100%{transform:scale(1);opacity:1;}
+    }
+
+    #verifiedPopupOverlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:600;
+      background:rgba(10,5,0,0.6);
+      backdrop-filter:blur(7px);
+      -webkit-backdrop-filter:blur(7px);
+      align-items:center;
+      justify-content:center;
+      padding:1.25rem;
+      animation:vpFadeIn 0.3s ease both;
+    }
+    #verifiedPopupOverlay.show{display:flex;}
+
+    .vp-popup{
+      background:#fff;
+      border-radius:22px;
+      padding:2rem 1.5rem 1.7rem;
+      max-width:320px;
+      width:100%;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 28px 70px rgba(0,0,0,0.2),0 4px 18px rgba(0,0,0,0.08);
+      animation:vpSlideUp 0.5s cubic-bezier(0.34,1.4,0.64,1) both;
+    }
+    .vp-popup::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;
+      height:4px;
+      background:linear-gradient(90deg,#00C853,#69F0AE,#00C853,#1B5E20);
+      background-size:300% 100%;
+      animation:vpShimmer 2.5s linear infinite;
+    }
+    .vp-popup::after{
+      content:'';
+      position:absolute;
+      top:-60px;right:-60px;
+      width:160px;height:160px;
+      border-radius:50%;
+      background:radial-gradient(circle,rgba(0,200,83,0.07) 0%,transparent 70%);
+      pointer-events:none;
+    }
+
+    .vp-icon{
+      width:74px;height:74px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#00C853,#1B5E20);
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 1rem;
+      box-shadow:0 10px 30px rgba(0,200,83,0.35);
+      animation:vpPop 0.55s 0.1s cubic-bezier(0.34,1.56,0.64,1) both;
+      position:relative;z-index:1;
+    }
+
+
+    .vp-title{
+      font-family:'DM Sans',sans-serif;
+      font-weight:800;
+      font-size:1.15rem;
+      color:var(--deep);
+      margin-bottom:0.22rem;
+      line-height:1.25;
+    }
+    .vp-hello{
+      font-size:0.8rem;
+      color:var(--muted);
+      margin-bottom:1.1rem;
+      font-weight:400;
+      line-height:1.5;
+    }
+    .vp-hello strong{color:var(--text);font-weight:700;}
+
+    .vp-card{
+      background:linear-gradient(135deg,#F0FDF4,#DCFCE7);
+      border:1.5px solid rgba(0,200,83,0.22);
+      border-radius:13px;
+      padding:0.9rem 1rem;
+      margin-bottom:1rem;
+      text-align:left;
+    }
+    .vp-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:0.5rem;
+      padding:0.3rem 0;
+    }
+    .vp-row+.vp-row{border-top:1px solid rgba(0,200,83,0.12);}
+    .vp-row-label{
+      font-size:0.67rem;
+      font-weight:700;
+      color:#4B7A5C;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      flex-shrink:0;
+    }
+    .vp-row-value{
+      font-size:0.8rem;
+      font-weight:700;
+      color:#14532D;
+      word-break:break-all;
+      text-align:right;
+    }
+    .vp-status-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:0.25rem;
+      background:rgba(0,200,83,0.15);
+      border:1px solid rgba(0,200,83,0.4);
+      border-radius:100px;
+      padding:0.2rem 0.65rem;
+      font-size:0.72rem;
+      font-weight:700;
+      color:#15803D;
+    }
+
+    .vp-note{
+      font-size:0.74rem;
+      color:var(--muted);
+      line-height:1.6;
+      margin-bottom:1.1rem;
+    }
+
+    .vp-ok-btn{
+      width:100%;
+      padding:0.78rem;
+      background:linear-gradient(135deg,#00C853,#1B5E20);
+      color:white;
+      border:none;
+      border-radius:12px;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.9rem;
+      font-weight:700;
+      cursor:pointer;
+      letter-spacing:0.02em;
+      transition:transform 0.15s,box-shadow 0.15s;
+      box-shadow:0 4px 16px rgba(0,200,83,0.32);
+    }
+    .vp-ok-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,200,83,0.42);}
+    .vp-ok-btn:active{transform:translateY(0);}
+    /* ── END CHANGED ── */
   </style>
 </head>
 <body>
@@ -405,6 +566,34 @@
   </div>
 </div>
 
+<!-- CHANGED: Verified Booking Popup HTML -->
+<div id="verifiedPopupOverlay">
+  <div class="vp-popup">
+    <div class="vp-icon">
+      <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
+        <path d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
+          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.55s 0.2s ease forwards;"/>
+      </svg>
+    </div>
+    <div class="vp-title">Booking Verified Successfully</div>
+    <p class="vp-hello">Hello, <strong id="vpName">—</strong></p>
+    <div class="vp-card">
+      <div class="vp-row">
+        <span class="vp-row-label">Booking ID</span>
+        <span class="vp-row-value" id="vpBookingId">—</span>
+      </div>
+      <div class="vp-row">
+        <span class="vp-row-label">Status</span>
+        <span class="vp-status-pill">✅ Verified</span>
+      </div>
+    </div>
+    <p class="vp-note">Your payment has been verified successfully.<br>Thank you for registering with NITS Telugu Network!</p>
+    <button class="vp-ok-btn" onclick="closeVerifiedPopup()">OK, Got it ✓</button>
+  </div>
+</div>
+<!-- END CHANGED -->
+
+<!-- CHANGED: Firebase module — added getDocs, doc, updateDoc, where + popup check on load -->
 <script type="module">
   import { initializeApp, getApps, getApp }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -415,7 +604,11 @@
     onSnapshot,
     serverTimestamp,
     query,
-    orderBy
+    orderBy,
+    where,
+    getDocs,
+    doc,
+    updateDoc
   } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -432,6 +625,7 @@
   const db  = getFirestore(app);
   console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
 
+  /* ── saveToFirestore (unchanged) ── */
   window.saveToFirestore = async function(data) {
     const payload = {
       bookingId: data.bookingId || "",
@@ -448,21 +642,21 @@
     try {
       const docRef = await addDoc(collection(db, "movieBookings"), payload);
       console.log("✅ Firestore saved! Doc ID:", docRef.id);
+      /* CHANGED: save bookingId to localStorage so popup check works on next visit */
+      localStorage.setItem("movieBookingId", payload.bookingId);
       return docRef.id;
     } catch (err) {
-      console.error("❌ Firestore addDoc FAILED:");
-      console.error("   code   :", err.code);
-      console.error("   message:", err.message);
-      console.error("   full   :", err);
+      console.error("❌ Firestore addDoc FAILED:", err.code, err.message);
       return null;
     }
   };
 
+  /* ── Real-time listener (unchanged) ── */
   try {
     const q = query(collection(db, "movieBookings"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       const bookings = [];
-      snapshot.forEach(doc => bookings.push({ id: doc.id, ...doc.data() }));
+      snapshot.forEach(d => bookings.push({ id: d.id, ...d.data() }));
       console.log("🔴 Real-time update — movieBookings (" + bookings.length + " total):", bookings);
     }, (err) => {
       console.error("❌ onSnapshot error:", err.code, err.message);
@@ -476,7 +670,58 @@
   if (typeof window._firestoreReadyResolve === "function") {
     window._firestoreReadyResolve();
   }
+
+  /* ── CHANGED: Check for verified booking on page load ── */
+  async function checkVerifiedBooking() {
+    const bookingId = localStorage.getItem("movieBookingId");
+    if (!bookingId) return;
+
+    try {
+      const q = query(
+        collection(db, "movieBookings"),
+        where("bookingId", "==", bookingId)
+      );
+      const snap = await getDocs(q);
+      if (snap.empty) return;
+
+      const docSnap = snap.docs[0];
+      const data    = docSnap.data();
+
+      /* Only show if status is Verified AND popup hasn't been shown before */
+      if (data.status === "Verified" && !data.popupShown) {
+        /* Populate popup fields */
+        document.getElementById("vpName").textContent      = data.name      || "Student";
+        document.getElementById("vpBookingId").textContent = data.bookingId || bookingId;
+
+        /* Show the popup */
+        document.getElementById("verifiedPopupOverlay").classList.add("show");
+
+        /* Mark popupShown = true so it never shows again */
+        await updateDoc(doc(db, "movieBookings", docSnap.id), { popupShown: true });
+        console.log("✅ Verified popup shown & popupShown flag set for:", bookingId);
+      }
+    } catch (err) {
+      console.error("❌ Verified booking check failed:", err.message);
+    }
+  }
+
+  /* Run the check after a short delay to let the page settle */
+  window.addEventListener("load", () => setTimeout(checkVerifiedBooking, 800));
+
+  /* Expose close function to inline onclick */
+  window.closeVerifiedPopup = function() {
+    const overlay = document.getElementById("verifiedPopupOverlay");
+    overlay.style.transition = "opacity 0.3s ease";
+    overlay.style.opacity    = "0";
+    setTimeout(() => {
+      overlay.classList.remove("show");
+      overlay.style.opacity    = "";
+      overlay.style.transition = "";
+    }, 300);
+  };
+  /* ── END CHANGED ── */
 </script>
+<!-- END CHANGED -->
 
 <script>
   /* ── CONFIG ── */
@@ -503,13 +748,10 @@
   window.detectedUTR = "";
   let ocrRunning     = false;
 
-  /* ── BOOKING ID: year digit + 7 random uppercase alphanumeric chars ── */
   function generateBookingId(year) {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let rand = "";
-    for (let i = 0; i < 7; i++) {
-      rand += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+    for (let i = 0; i < 7; i++) rand += chars.charAt(Math.floor(Math.random() * chars.length));
     return `${year}${rand}`;
   }
 
@@ -520,26 +762,18 @@
     mPrefetchYear = year;
   });
 
-  /* ── PROGRESS BAR ── */
   function setProgress(pct, title, sub) {
     document.getElementById("progressBar").style.width = pct + "%";
     if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
     if (sub   !== undefined) document.getElementById("loaderSub").textContent   = sub;
   }
 
-  /* ── GOOGLE SHEETS ── */
   function sendToGoogleSheet(year, payload) {
     const url = SHEET_URLS[year];
     if (!url) return;
-    fetch(url, {
-      method:  "POST",
-      mode:    "no-cors",
-      headers: { "Content-Type": "text/plain" },
-      body:    JSON.stringify(payload)
-    }).catch(() => {});
+    fetch(url, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(payload) }).catch(() => {});
   }
 
-  /* ── QR HELPERS ── */
   function makePaymentQR(upiId, size) {
     const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
@@ -554,15 +788,11 @@
     Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
       if (!cfg.upi) return;
       const url = makePaymentQR(cfg.upi, 180);
-      const img = new Image();
-      img.src   = url;
+      const img = new Image(); img.src = url;
       QR_CACHE[year] = url;
     });
   })();
 
-  /* ── UTR DETECTION via Tesseract.js v5 ──
-     Only matches if a proper UTR/UPI label keyword is found.
-     NO fallback to random long strings. ── */
   function preprocessImageForOCR(file) {
     return new Promise((resolve) => {
       const img = new Image();
@@ -570,25 +800,16 @@
       img.onload = () => {
         const MAX = 1400;
         let w = img.naturalWidth, h = img.naturalHeight;
-        if (w > MAX || h > MAX) {
-          const ratio = Math.min(MAX / w, MAX / h);
-          w = Math.round(w * ratio);
-          h = Math.round(h * ratio);
-        }
-        const canvas  = document.createElement("canvas");
-        canvas.width  = w;
-        canvas.height = h;
-        const ctx     = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, w, h);
-        const imgData = ctx.getImageData(0, 0, w, h);
-        const d = imgData.data;
+        if (w > MAX || h > MAX) { const ratio = Math.min(MAX/w, MAX/h); w = Math.round(w*ratio); h = Math.round(h*ratio); }
+        const canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
+        const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, w, h);
+        const imgData = ctx.getImageData(0, 0, w, h); const d = imgData.data;
         for (let i = 0; i < d.length; i += 4) {
-          const gray    = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
-          const boosted = Math.min(255, Math.max(0, (gray - 128) * 1.6 + 128));
+          const gray = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
+          const boosted = Math.min(255, Math.max(0, (gray-128)*1.6+128));
           d[i] = d[i+1] = d[i+2] = boosted;
         }
-        ctx.putImageData(imgData, 0, 0);
-        URL.revokeObjectURL(url);
+        ctx.putImageData(imgData, 0, 0); URL.revokeObjectURL(url);
         canvas.toBlob(resolve, "image/png");
       };
       img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
@@ -596,7 +817,6 @@
     });
   }
 
-  /* Extract UTR — label-based patterns ONLY, no blind fallback */
   function extractUTR(text) {
     const patterns = [
       /UTR[:\s#]*([A-Z0-9]{10,30})/i,
@@ -605,68 +825,47 @@
       /Reference\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
       /RRN[:\s#]*([A-Z0-9]{10,30})/i
     ];
-    for (const p of patterns) {
-      const match = text.match(p);
-      if (match) return match[1].toUpperCase();
-    }
-    return null;  /* No fallback — never guess */
+    for (const p of patterns) { const m = text.match(p); if (m) return m[1].toUpperCase(); }
+    return null;
   }
 
   function setUTRStatus(type, message) {
     const el = document.getElementById("utrStatus");
-    el.className = `utr-status ${type}`;
-    el.textContent = message;
+    el.className = `utr-status ${type}`; el.textContent = message;
   }
 
   async function runOCROnFile(file) {
     if (!file || !file.type.startsWith("image/")) {
       setUTRStatus("not-found", "⚠️ Auto-detection not available for PDF. Please enter UTR manually.");
-      document.getElementById("msubmitBtn").disabled = false;
-      ocrRunning = false;
-      return;
+      document.getElementById("msubmitBtn").disabled = false; ocrRunning = false; return;
     }
-
-    ocrRunning = true;
-    document.getElementById("msubmitBtn").disabled = true;
+    ocrRunning = true; document.getElementById("msubmitBtn").disabled = true;
     setUTRStatus("detecting", "🔍 Detecting UTR…");
-
     try {
       const processedBlob = await preprocessImageForOCR(file);
-      const result = await Tesseract.recognize(processedBlob, "eng", {
-        logger: () => {}
-      });
-      const rawText = result.data.text;
-      console.log("OCR raw text:", rawText);
-
+      const result = await Tesseract.recognize(processedBlob, "eng", { logger: () => {} });
+      const rawText = result.data.text; console.log("OCR raw text:", rawText);
       const utr = extractUTR(rawText);
       if (utr) {
         window.detectedUTR = utr;
         const utrInput = document.getElementById("utrInput");
-        utrInput.value = utr;
-        utrInput.classList.add("auto-filled");
+        utrInput.value = utr; utrInput.classList.add("auto-filled");
         setUTRStatus("found", `✅ UTR Detected: ${utr}`);
-        console.log("UTR Detected:", utr);
       } else {
         window.detectedUTR = "";
         setUTRStatus("not-found", "⚠️ UTR not found. Please enter manually.");
-        console.log("UTR not detected — manual entry required");
       }
     } catch (err) {
-      console.error("OCR error:", err);
-      window.detectedUTR = "";
+      console.error("OCR error:", err); window.detectedUTR = "";
       setUTRStatus("not-found", "⚠️ OCR failed. Please enter UTR manually.");
     } finally {
-      ocrRunning = false;
-      document.getElementById("msubmitBtn").disabled = false;
+      ocrRunning = false; document.getElementById("msubmitBtn").disabled = false;
     }
   }
 
-  /* ── FILE UPLOAD ── */
   const MAX_FILE_BYTES = 5 * 1024 * 1024;
 
-  document.getElementById("mproofFile").addEventListener("change", function(e) {
-    handleMovieFileUpload(e);
-  });
+  document.getElementById("mproofFile").addEventListener("change", function(e) { handleMovieFileUpload(e); });
 
   const muz = document.getElementById("mUploadZone");
   muz.addEventListener("dragover",  e => { e.preventDefault(); muz.classList.add("dragover"); });
@@ -680,47 +879,33 @@
   });
 
   function handleMovieFileUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
+    const file = e.target.files[0]; if (!file) return;
     const sizeWarn = document.getElementById("merr-filesize");
     if (file.size > MAX_FILE_BYTES) {
       sizeWarn.classList.add("show");
       document.getElementById("merr-proof").classList.remove("show");
       document.getElementById("mUploadPreview").style.display = "none";
-      e.target.value = "";
-      return;
+      e.target.value = ""; return;
     }
     sizeWarn.classList.remove("show");
     document.getElementById("mFileName").textContent = file.name;
     document.getElementById("mUploadPreview").style.display = "flex";
     document.getElementById("merr-proof").classList.remove("show");
-
     const img = document.getElementById("mpreviewImg");
     if (file.type.startsWith("image/")) {
-      const r = new FileReader();
-      r.onload = ev => { img.src = ev.target.result; img.style.display = "block"; };
-      r.readAsDataURL(file);
-    } else {
-      img.style.display = "none";
-    }
-
+      const r = new FileReader(); r.onload = ev => { img.src = ev.target.result; img.style.display = "block"; }; r.readAsDataURL(file);
+    } else { img.style.display = "none"; }
     runOCROnFile(file);
   }
 
-  /* ── TELEGRAM ── */
   function sendToTelegram(botToken, chatId, caption, file) {
     const base = `https://api.telegram.org/bot${botToken}`;
-    const fd   = new FormData();
-    fd.append("chat_id",    chatId);
-    fd.append("parse_mode", "Markdown");
-    fd.append("caption",    caption);
+    const fd = new FormData(); fd.append("chat_id", chatId); fd.append("parse_mode", "Markdown"); fd.append("caption", caption);
     const isImage = file.type.startsWith("image/");
     fd.append(isImage ? "photo" : "document", file, file.name);
     fetch(`${base}/${isImage ? "sendPhoto" : "sendDocument"}`, { method:"POST", body:fd }).catch(() => {});
   }
 
-  /* ── SOUND ── */
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -736,16 +921,13 @@
     } catch(e) {}
   }
 
-  /* ── VALIDATION ── */
   function showMErr(id, show) {
     document.getElementById(id).classList.toggle("show", show);
     const map = { "merr-name":"mfullName","merr-year":"mgradYear","merr-dept":"mdepartment","merr-mobile":"mmobile" };
     if (map[id]) document.getElementById(map[id]).classList.toggle("error", show);
   }
 
-  document.getElementById("mmobile").addEventListener("input", function() {
-    this.value = this.value.replace(/\D/g, "");
-  });
+  document.getElementById("mmobile").addEventListener("input", function() { this.value = this.value.replace(/\D/g, ""); });
 
   function markStep(doneDot, doneLine, activeDot) {
     const d = document.getElementById(doneDot);
@@ -754,7 +936,6 @@
     document.getElementById(activeDot).classList.add("active");
   }
 
-  /* ── STEP 1 → STEP 2 ── */
   function movieGoToStep2() {
     const name  = document.getElementById("mfullName").value.trim();
     const year  = document.getElementById("mgradYear").value;
@@ -762,21 +943,17 @@
     const mob   = document.getElementById("mmobile").value.trim();
     const terms = document.getElementById("mtermsCheck").checked;
     let valid = true;
-    showMErr("merr-name",  !name);                    if (!name)  valid = false;
+    showMErr("merr-name",  !name);                   if (!name)  valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showMErr("merr-mobile", !mobOk);                  if (!mobOk) valid = false;
-    showMErr("merr-year",  !year);                    if (!year)  valid = false;
-    showMErr("merr-dept",  !dept);                    if (!dept)  valid = false;
+    showMErr("merr-mobile", !mobOk);                 if (!mobOk) valid = false;
+    showMErr("merr-year",  !year);                   if (!year)  valid = false;
+    showMErr("merr-dept",  !dept);                   if (!dept)  valid = false;
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
 
-    if (mPrefetchedId && mPrefetchYear === year) {
-      mBookingId    = mPrefetchedId;
-      mPrefetchedId = "";
-    } else {
-      mBookingId = generateBookingId(year);
-    }
+    if (mPrefetchedId && mPrefetchYear === year) { mBookingId = mPrefetchedId; mPrefetchedId = ""; }
+    else mBookingId = generateBookingId(year);
 
     const cfg = MOVIE_CONFIG[year];
     if (cfg && cfg.upi) {
@@ -787,62 +964,43 @@
       document.getElementById("movieQRSection").style.display = "none";
       document.getElementById("movieQRUnavail").style.display = "block";
     }
-
     markStep("mdot1", "mline1", "mdot2");
     document.getElementById("mpStep1").style.display = "none";
     document.getElementById("mpStep2").style.display = "block";
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ── STEP 2 → STEP 3 ── */
   function movieGoToStep3() {
-    if (ocrRunning) {
-      alert("⏳ UTR detection is still running. Please wait a moment.");
-      return;
-    }
+    if (ocrRunning) { alert("⏳ UTR detection is still running. Please wait a moment."); return; }
     const file = document.getElementById("mproofFile").files[0];
-    if (!file) {
-      document.getElementById("merr-proof").classList.add("show");
-      return;
-    }
-    if (file.size > MAX_FILE_BYTES) {
-      document.getElementById("merr-filesize").classList.add("show");
-      return;
-    }
-
+    if (!file) { document.getElementById("merr-proof").classList.add("show"); return; }
+    if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
     window.detectedUTR = document.getElementById("utrInput").value.trim();
-
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
     const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
-
     document.getElementById("t-name").textContent       = name;
     document.getElementById("t-year").textContent       = yl;
     document.getElementById("t-dept").textContent       = dept;
     document.getElementById("t-mobile").textContent     = "+91 " + mob;
     document.getElementById("t-booking-id").textContent = mBookingId;
     document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
-
     markStep("mdot2", "mline2", "mdot3");
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep3").style.display = "block";
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ── BACK TO STEP 1 ── */
   function movieGoBackToStep1() {
-    mBookingId    = "";
-    mPrefetchedId = "";
-    mPrefetchYear = "";
+    mBookingId = ""; mPrefetchedId = ""; mPrefetchYear = "";
     document.getElementById("mpStep3").style.display = "none";
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep1").style.display = "block";
     ["mdot1","mdot2","mdot3"].forEach((id, i) => {
       const d = document.getElementById(id);
-      d.className   = "step-dot" + (i === 0 ? " active" : "");
-      d.textContent = i + 1;
+      d.className = "step-dot" + (i === 0 ? " active" : ""); d.textContent = i + 1;
     });
     ["mline1","mline2"].forEach(id => document.getElementById(id).classList.remove("done"));
     document.getElementById("mproofFile").value = "";
@@ -855,15 +1013,10 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ── FINAL SUBMIT ── */
   async function movieSubmitForm() {
     const file = document.getElementById("mproofFile").files[0];
     if (!file) return;
-    if (file.size > MAX_FILE_BYTES) {
-      document.getElementById("merr-filesize").classList.add("show");
-      return;
-    }
-
+    if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
     const dept = document.getElementById("mdepartment").value;
@@ -872,137 +1025,72 @@
     const cfg  = MOVIE_CONFIG[year];
     const utr  = document.getElementById("utrInput").value.trim() || window.detectedUTR || "";
     const btn  = document.getElementById("mfinalSubmitBtn");
-
-    console.log("Selected Branch:", dept);
-
-    btn.disabled  = true;
-    btn.innerHTML = "⏳ Sending…";
+    btn.disabled = true; btn.innerHTML = "⏳ Sending…";
     document.getElementById("loadingOverlay").style.display = "flex";
     setProgress(20, "Saving your booking…", "Sending to all backends");
-
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
-
     try {
-      sendToGoogleSheet(year, {
-        action:    "addBooking",
-        bookingId: mBookingId,
-        name,
-        year:      yl,
-        branch:    dept,
-        mobile:    "+91" + mob,
-        utr,
-        timestamp: ts,
-        status:    "Submitted"
-      });
-
+      sendToGoogleSheet(year, { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, timestamp:ts, status:"Submitted" });
       setProgress(50, "Notifying team…", "Sending screenshot to admin");
-
       const caption =
         `*🎬 Movie Ticket Booking — NITS Telugu Network*\n\n` +
-        `*Booking ID:* \`${mBookingId}\`\n` +
-        `*Name:*    ${name}\n` +
-        `*Year:*    ${yl}\n` +
-        `*Branch:*  ${dept}\n` +
-        `*Mobile:*  +91 ${mob}\n` +
-        `*UTR:*     ${utr || "Not provided"}\n` +
-        `*UPI:*     ${cfg && cfg.upi ? cfg.upi : "N/A"}\n` +
-        `*Time:*    ${ts}`;
-      if (cfg && cfg.bot && cfg.cid) {
-        sendToTelegram(cfg.bot, cfg.cid, caption, file);
-      }
-
+        `*Booking ID:* \`${mBookingId}\`\n*Name:*    ${name}\n*Year:*    ${yl}\n*Branch:*  ${dept}\n` +
+        `*Mobile:*  +91 ${mob}\n*UTR:*     ${utr || "Not provided"}\n*UPI:*     ${cfg&&cfg.upi?cfg.upi:"N/A"}\n*Time:*    ${ts}`;
+      if (cfg && cfg.bot && cfg.cid) sendToTelegram(cfg.bot, cfg.cid, caption, file);
       setProgress(75, "Saving to database…", "Writing to Firestore");
-
       try {
         if (!window._firestoreIsReady) {
-          console.log("⏳ Waiting for Firebase module to finish loading…");
           await new Promise((resolve, reject) => {
             window._firestoreReadyResolve = resolve;
             setTimeout(() => reject(new Error("Firebase module did not load within 8 s")), 8000);
           });
         }
-
-        if (typeof window.saveToFirestore !== "function") {
-          throw new Error("saveToFirestore is not defined — Firebase module may have crashed");
-        }
-
-        const docId = await window.saveToFirestore({
-          bookingId: mBookingId,
-          name,
-          year:      yl,
-          branch:    dept,
-          mobile:    "+91" + mob,
-          utr,
-          status:    "Submitted",
-          timestamp: ts
-        });
-
-        if (docId) {
-          console.log("✅ Firestore confirmed! Doc ID:", docId);
-        } else {
-          console.warn("⚠️ Firestore returned null — check DevTools for ❌ errors above");
-        }
-      } catch (fsErr) {
-        console.error("❌ Firestore step failed (user still sees success):", fsErr.message);
-      }
+        if (typeof window.saveToFirestore !== "function") throw new Error("saveToFirestore not defined");
+        const docId = await window.saveToFirestore({ bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, status:"Submitted", timestamp:ts });
+        if (docId) console.log("✅ Firestore confirmed! Doc ID:", docId);
+        else console.warn("⚠️ Firestore returned null");
+      } catch (fsErr) { console.error("❌ Firestore step failed:", fsErr.message); }
 
       setProgress(100, "Done! 🎉", "");
       await new Promise(r => setTimeout(r, 350));
-
       document.getElementById("loadingOverlay").style.display = "none";
-
       document.getElementById("msuccessNameMsg").textContent =
         `Thank you, ${name}! Your booking (${mBookingId}) has been received. Admin will verify your payment and confirm your seat.`;
-
       document.getElementById("ft-name").textContent       = name;
       document.getElementById("ft-year").textContent       = yl;
       document.getElementById("ft-dept").textContent       = dept;
       document.getElementById("ft-mobile").textContent     = "+91 " + mob;
       document.getElementById("ft-booking-id").textContent = mBookingId;
       document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
-
       document.getElementById("movieFormContainer").style.display = "none";
       document.getElementById("movieStepInd").style.display       = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
-
       const successBlock = document.getElementById("successMessageBlock");
       const ticketBlock  = document.getElementById("ticketBlock");
-      successBlock.style.display = "block";
-      ticketBlock.style.display  = "none";
-      successBlock.classList.remove("fade-out");
-      ticketBlock.classList.remove("flip-in");
-
-      window.scrollTo({ top:0, behavior:"smooth" });
-      playSuccessSound();
-
+      successBlock.style.display = "block"; ticketBlock.style.display = "none";
+      successBlock.classList.remove("fade-out"); ticketBlock.classList.remove("flip-in");
+      window.scrollTo({ top:0, behavior:"smooth" }); playSuccessSound();
       setTimeout(() => {
         successBlock.classList.add("fade-out");
         setTimeout(() => {
-          successBlock.style.display = "none";
-          ticketBlock.style.display  = "block";
-          void ticketBlock.offsetWidth;
-          ticketBlock.classList.add("flip-in");
+          successBlock.style.display = "none"; ticketBlock.style.display = "block";
+          void ticketBlock.offsetWidth; ticketBlock.classList.add("flip-in");
           window.scrollTo({ top:0, behavior:"smooth" });
         }, 400);
       }, 1800);
-
     } catch (err) {
       document.getElementById("loadingOverlay").style.display = "none";
       setProgress(0, "Submitting…", "Please wait a moment");
-      btn.disabled  = false;
-      btn.innerHTML = "Confirm &amp; Submit";
+      btn.disabled = false; btn.innerHTML = "Confirm &amp; Submit";
       alert(`❌ Submission failed: ${err.message}\n\nPlease check your internet connection and try again.`);
     }
   }
 
-  /* ── DOWNLOAD TICKET ── */
   async function downloadTicket() {
-    const btn    = document.getElementById("dlBtn");
+    const btn = document.getElementById("dlBtn");
     btn.innerHTML = "⏳ Preparing…"; btn.disabled = true;
-    const qrImg  = document.getElementById("ft-qr");
-    if (!qrImg.complete || !qrImg.naturalWidth) {
-      await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
-    }
+    const qrImg = document.getElementById("ft-qr");
+    if (!qrImg.complete || !qrImg.naturalWidth) await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
     await new Promise(r => setTimeout(r, 400));
     const name   = document.getElementById("ft-name").textContent;
     const year   = document.getElementById("ft-year").textContent;
@@ -1010,8 +1098,7 @@
     const mobile = document.getElementById("ft-mobile").textContent;
     const bid    = document.getElementById("ft-booking-id").textContent;
     const qrSrc  = makeTicketQR(name, year, dept, mobile, bid, 360);
-
-    const clone = document.createElement("div");
+    const clone  = document.createElement("div");
     clone.style.cssText = "position:fixed;left:-9999px;top:0;width:340px;background:#F5F3EF;padding:16px;font-family:'DM Sans',Arial,sans-serif;z-index:-1;pointer-events:none;";
     clone.innerHTML = `
       <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12);width:100%;">
@@ -1058,16 +1145,10 @@
     document.body.appendChild(clone);
     await new Promise(r => requestAnimationFrame(() => setTimeout(r, 150)));
     try {
-      const canvas = await html2canvas(clone, {
-        scale:3, useCORS:true, allowTaint:true,
-        backgroundColor:"#F5F3EF", logging:false,
-        width:372, windowWidth:400, scrollX:0, scrollY:0
-      });
+      const canvas = await html2canvas(clone, { scale:3, useCORS:true, allowTaint:true, backgroundColor:"#F5F3EF", logging:false, width:372, windowWidth:400, scrollX:0, scrollY:0 });
       document.body.removeChild(clone);
-      const link = document.createElement("a");
-      link.download = bid + "-ticket.jpg";
-      link.href = canvas.toDataURL("image/jpeg", 0.95);
-      link.click();
+      const link = document.createElement("a"); link.download = bid + "-ticket.jpg";
+      link.href = canvas.toDataURL("image/jpeg", 0.95); link.click();
     } catch(e) {
       if (document.body.contains(clone)) document.body.removeChild(clone);
       alert("Download failed. Please take a screenshot instead.");
