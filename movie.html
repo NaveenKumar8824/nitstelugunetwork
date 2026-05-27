@@ -6,7 +6,6 @@
   <title>Movie Tickets — NITS Telugu Network</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- Tesseract.js v5 for real-time UTR OCR -->
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -98,7 +97,6 @@
     .submit-btn:hover:not(:disabled){background:#0c5e49;transform:translateY(-1px);}
     .submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 
-    /* UTR detection styles */
     .utr-status{margin-top:0.45rem;padding:0.4rem 0.65rem;border-radius:7px;font-size:0.72rem;font-weight:600;display:none;align-items:center;gap:0.35rem;line-height:1.4;}
     .utr-status.detecting{display:flex;background:#EEF4FB;color:var(--accent-blue);border:1px solid rgba(24,95,165,0.2);animation:ocrPulse 1.2s infinite;}
     .utr-status.found{display:flex;background:#E8F5E9;color:#1B5E20;border:1px solid rgba(27,94,32,0.2);}
@@ -148,7 +146,6 @@
     .edit-btn{width:100%;padding:0.6rem;margin-top:0.5rem;background:transparent;color:var(--muted);border:1px solid rgba(0,0,0,0.1);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
     .edit-btn:hover{border-color:var(--saffron);color:var(--saffron);}
 
-    /* Loading overlay */
     #loadingOverlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(255,253,249,0.92);backdrop-filter:blur(6px);align-items:center;justify-content:center;flex-direction:column;gap:0.8rem;}
     .loader-box{background:white;border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.75rem;text-align:center;width:260px;box-shadow:0 4px 24px rgba(255,107,0,0.1);}
     .loader-icon{font-size:1.8rem;margin-bottom:0.5rem;}
@@ -278,11 +275,7 @@
         </div>
         <div class="error-msg" id="merr-proof">Please upload your payment screenshot to continue</div>
         <div class="file-size-warn" id="merr-filesize">File too large. Please upload under 5 MB.</div>
-
-        <!-- UTR status indicator -->
         <div class="utr-status" id="utrStatus"></div>
-
-        <!-- UTR input field -->
         <div class="utr-input-wrap" id="utrInputWrap">
           <label for="utrInput">UTR / UPI Reference Number</label>
           <input type="text" id="utrInput" placeholder="Auto-detected or enter manually" autocomplete="off"/>
@@ -409,12 +402,6 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════════════════
-     FIREBASE — Single source of truth.
-     Exposes window.saveToFirestore (awaitable) and
-     window.firestoreReady (Promise) so the main script
-     can safely wait for the module before saving.
-════════════════════════════════════════════════════════════ -->
 <script type="module">
   import { initializeApp, getApps, getApp }
     from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -438,12 +425,10 @@
     measurementId:     "G-GNNYBNTQFC"
   };
 
-  /* ── Init once — never double-init ── */
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const db  = getFirestore(app);
   console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
 
-  /* ══ saveToFirestore — fully awaitable, full error output ══ */
   window.saveToFirestore = async function(data) {
     const payload = {
       bookingId: data.bookingId || "",
@@ -462,7 +447,6 @@
       console.log("✅ Firestore saved! Doc ID:", docRef.id);
       return docRef.id;
     } catch (err) {
-      /* Print full error so you can diagnose permissions / rules issues */
       console.error("❌ Firestore addDoc FAILED:");
       console.error("   code   :", err.code);
       console.error("   message:", err.message);
@@ -471,7 +455,6 @@
     }
   };
 
-  /* ══ Real-time listener — logs every change to console ══ */
   try {
     const q = query(collection(db, "movieBookings"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
@@ -486,28 +469,21 @@
     console.error("❌ Failed to attach listener:", err.message);
   }
 
-  /* ── Signal ready to any waiting submit call ── */
   window._firestoreIsReady = true;
   if (typeof window._firestoreReadyResolve === "function") {
     window._firestoreReadyResolve();
   }
 </script>
 
-<!-- ════════════════════════════════════════════════════════════
-     MAIN SCRIPT (non-module so it runs synchronously / globally)
-════════════════════════════════════════════════════════════ -->
 <script>
-  /* ──────────────────────────────────────────────────────────
-     CONFIG
-  ──────────────────────────────────────────────────────────── */
+  /* ── CONFIG ── */
   const MOVIE_CONFIG = {
-    "1": { upi: "8919531422-4@ibl",      bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239", prefix: "NTN1" },
-    "2": { upi: "9032979645-2@ybl",       bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295",    prefix: "NTN2" },
-    "3": { upi: "bukkenaveenkumar@ptyes", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838",     prefix: "NTN3" },
-    "4": { upi: "varshitsai246@oksbi",    bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076",    prefix: "NTN4" }
+    "1": { upi: "8919531422-4@ibl",      bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
+    "2": { upi: "9032979645-2@ybl",       bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
+    "3": { upi: "bukkenaveenkumar@ptyes", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"     },
+    "4": { upi: "varshitsai246@oksbi",    bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076"    }
   };
 
-  /* ── FIX: Correct year-specific Google Sheets URLs ── */
   const SHEET_URLS = {
     "1": "https://script.google.com/macros/s/AKfycbwnbOQuS4G5oXvle6XPGUeEdM4Fxa0tra1wXe_87BL96J3u0uXK4CAPH-eIBABO_yNmVg/exec",
     "2": "https://script.google.com/macros/s/AKfycbzg4obR5ZOllB1N8Kpijj_rGNe0iJHOUXHsB8kngzzvTvL4Ej2p8wKLamAKzYF3-Dbm/exec",
@@ -521,18 +497,17 @@
   let mPrefetchedId = "";
   let mPrefetchYear = "";
 
-  /* UTR state — shared globally */
   window.detectedUTR = "";
   let ocrRunning     = false;
 
-  /* ──────────────────────────────────────────────────────────
-     BOOKING ID
-  ──────────────────────────────────────────────────────────── */
+  /* ── BOOKING ID: year digit + 7 random uppercase alphanumeric chars ── */
   function generateBookingId(year) {
-    const prefix = { "1":"NTN1","2":"NTN2","3":"NTN3","4":"NTN4" }[year] || ("NTN"+year);
-    const ts   = String(Date.now()).slice(-6);
-    const rand = String(Math.floor(1000 + Math.random() * 9000));
-    return `${prefix}-${ts}-${rand}`;
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let rand = "";
+    for (let i = 0; i < 7; i++) {
+      rand += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `${year}${rand}`;
   }
 
   document.getElementById("mgradYear").addEventListener("change", function() {
@@ -542,19 +517,14 @@
     mPrefetchYear = year;
   });
 
-  /* ──────────────────────────────────────────────────────────
-     PROGRESS BAR
-  ──────────────────────────────────────────────────────────── */
+  /* ── PROGRESS BAR ── */
   function setProgress(pct, title, sub) {
     document.getElementById("progressBar").style.width = pct + "%";
     if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
     if (sub   !== undefined) document.getElementById("loaderSub").textContent   = sub;
   }
 
-  /* ──────────────────────────────────────────────────────────
-     GOOGLE SHEETS — text/plain + no-cors
-     FIX: payload now uses `branch: dept` (not `department: dept`)
-  ──────────────────────────────────────────────────────────── */
+  /* ── GOOGLE SHEETS ── */
   function sendToGoogleSheet(year, payload) {
     const url = SHEET_URLS[year];
     if (!url) return;
@@ -566,9 +536,7 @@
     }).catch(() => {});
   }
 
-  /* ──────────────────────────────────────────────────────────
-     QR HELPERS
-  ──────────────────────────────────────────────────────────── */
+  /* ── QR HELPERS ── */
   function makePaymentQR(upiId, size) {
     const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=1A0A00&bgcolor=FFFFFF&qzone=2`;
@@ -578,7 +546,6 @@
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=1F2533&bgcolor=FFFFFF&qzone=1`;
   }
 
-  /* Preload all 4 payment QRs on page load */
   const QR_CACHE = {};
   (function preloadQRs() {
     Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
@@ -590,13 +557,9 @@
     });
   })();
 
-  /* ──────────────────────────────────────────────────────────
-     REAL-TIME UTR DETECTION via Tesseract.js v5
-     Triggered immediately on file selection — no submit needed
-  ──────────────────────────────────────────────────────────── */
-  const UTR_KEYWORDS = /UTR|UPI\s*Ref|Transaction\s*I[dD]|Reference\s*No|RRN/i;
-
-  /* Pre-process image: resize + grayscale + contrast boost */
+  /* ── UTR DETECTION via Tesseract.js v5 ──
+     Only matches if a proper UTR/UPI label keyword is found.
+     NO fallback to random long strings. ── */
   function preprocessImageForOCR(file) {
     return new Promise((resolve) => {
       const img = new Image();
@@ -614,12 +577,10 @@
         canvas.height = h;
         const ctx     = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, w, h);
-
-        /* Grayscale + contrast boost */
         const imgData = ctx.getImageData(0, 0, w, h);
         const d = imgData.data;
         for (let i = 0; i < d.length; i += 4) {
-          const gray   = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
+          const gray    = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
           const boosted = Math.min(255, Math.max(0, (gray - 128) * 1.6 + 128));
           d[i] = d[i+1] = d[i+2] = boosted;
         }
@@ -632,26 +593,20 @@
     });
   }
 
-  /* Extract UTR from raw OCR text */
+  /* Extract UTR — label-based patterns ONLY, no blind fallback */
   function extractUTR(text) {
-    const lines = text.split(/\n/);
-    for (let i = 0; i < lines.length; i++) {
-      if (UTR_KEYWORDS.test(lines[i])) {
-        /* Try same line first */
-        const sameLine = lines[i].replace(UTR_KEYWORDS, "").replace(/[:\s]+/, "").trim();
-        const codeMatch = sameLine.match(/[A-Z0-9]{8,25}/i);
-        if (codeMatch) return codeMatch[0].toUpperCase();
-        /* Try next line */
-        if (i + 1 < lines.length) {
-          const nextLine = lines[i+1].trim();
-          const nextMatch = nextLine.match(/[A-Z0-9]{8,25}/i);
-          if (nextMatch) return nextMatch[0].toUpperCase();
-        }
-      }
+    const patterns = [
+      /UTR[:\s#]*([A-Z0-9]{10,30})/i,
+      /UPI\s*Ref(?:erence)?\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /Transaction\s*(?:ID|No|Number)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /Reference\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /RRN[:\s#]*([A-Z0-9]{10,30})/i
+    ];
+    for (const p of patterns) {
+      const match = text.match(p);
+      if (match) return match[1].toUpperCase();
     }
-    /* Fallback: look for a standalone long alphanumeric code that looks like a UTR */
-    const fallback = text.match(/\b[A-Z0-9]{12,22}\b/i);
-    return fallback ? fallback[0].toUpperCase() : null;
+    return null;  /* No fallback — never guess */
   }
 
   function setUTRStatus(type, message) {
@@ -662,7 +617,6 @@
 
   async function runOCROnFile(file) {
     if (!file || !file.type.startsWith("image/")) {
-      /* PDF or non-image — show manual entry only */
       setUTRStatus("not-found", "⚠️ Auto-detection not available for PDF. Please enter UTR manually.");
       document.getElementById("msubmitBtn").disabled = false;
       ocrRunning = false;
@@ -676,7 +630,7 @@
     try {
       const processedBlob = await preprocessImageForOCR(file);
       const result = await Tesseract.recognize(processedBlob, "eng", {
-        logger: () => {}   // suppress verbose logs
+        logger: () => {}
       });
       const rawText = result.data.text;
       console.log("OCR raw text:", rawText);
@@ -704,9 +658,7 @@
     }
   }
 
-  /* ──────────────────────────────────────────────────────────
-     FILE UPLOAD HANDLER — triggers OCR immediately on change
-  ──────────────────────────────────────────────────────────── */
+  /* ── FILE UPLOAD ── */
   const MAX_FILE_BYTES = 5 * 1024 * 1024;
 
   document.getElementById("mproofFile").addEventListener("change", function(e) {
@@ -750,13 +702,10 @@
       img.style.display = "none";
     }
 
-    /* ── Start OCR immediately — do NOT wait for submit ── */
     runOCROnFile(file);
   }
 
-  /* ──────────────────────────────────────────────────────────
-     TELEGRAM — fire-and-forget
-  ──────────────────────────────────────────────────────────── */
+  /* ── TELEGRAM ── */
   function sendToTelegram(botToken, chatId, caption, file) {
     const base = `https://api.telegram.org/bot${botToken}`;
     const fd   = new FormData();
@@ -768,9 +717,7 @@
     fetch(`${base}/${isImage ? "sendPhoto" : "sendDocument"}`, { method:"POST", body:fd }).catch(() => {});
   }
 
-  /* ──────────────────────────────────────────────────────────
-     SOUND
-  ──────────────────────────────────────────────────────────── */
+  /* ── SOUND ── */
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -786,9 +733,7 @@
     } catch(e) {}
   }
 
-  /* ──────────────────────────────────────────────────────────
-     VALIDATION HELPERS
-  ──────────────────────────────────────────────────────────── */
+  /* ── VALIDATION ── */
   function showMErr(id, show) {
     document.getElementById(id).classList.toggle("show", show);
     const map = { "merr-name":"mfullName","merr-year":"mgradYear","merr-dept":"mdepartment","merr-mobile":"mmobile" };
@@ -806,9 +751,7 @@
     document.getElementById(activeDot).classList.add("active");
   }
 
-  /* ──────────────────────────────────────────────────────────
-     STEP 1 → STEP 2
-  ──────────────────────────────────────────────────────────── */
+  /* ── STEP 1 → STEP 2 ── */
   function movieGoToStep2() {
     const name  = document.getElementById("mfullName").value.trim();
     const year  = document.getElementById("mgradYear").value;
@@ -816,11 +759,11 @@
     const mob   = document.getElementById("mmobile").value.trim();
     const terms = document.getElementById("mtermsCheck").checked;
     let valid = true;
-    showMErr("merr-name",  !name);                     if (!name)  valid = false;
+    showMErr("merr-name",  !name);                    if (!name)  valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showMErr("merr-mobile", !mobOk);                   if (!mobOk) valid = false;
-    showMErr("merr-year",  !year);                     if (!year)  valid = false;
-    showMErr("merr-dept",  !dept);                     if (!dept)  valid = false;
+    showMErr("merr-mobile", !mobOk);                  if (!mobOk) valid = false;
+    showMErr("merr-year",  !year);                    if (!year)  valid = false;
+    showMErr("merr-dept",  !dept);                    if (!dept)  valid = false;
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
@@ -848,9 +791,7 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ──────────────────────────────────────────────────────────
-     STEP 2 → STEP 3
-  ──────────────────────────────────────────────────────────── */
+  /* ── STEP 2 → STEP 3 ── */
   function movieGoToStep3() {
     if (ocrRunning) {
       alert("⏳ UTR detection is still running. Please wait a moment.");
@@ -866,7 +807,6 @@
       return;
     }
 
-    /* Read UTR from input (could be auto-filled or manually typed) */
     window.detectedUTR = document.getElementById("utrInput").value.trim();
 
     const name = document.getElementById("mfullName").value.trim();
@@ -888,9 +828,7 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ──────────────────────────────────────────────────────────
-     BACK TO STEP 1
-  ──────────────────────────────────────────────────────────── */
+  /* ── BACK TO STEP 1 ── */
   function movieGoBackToStep1() {
     mBookingId    = "";
     mPrefetchedId = "";
@@ -900,7 +838,7 @@
     document.getElementById("mpStep1").style.display = "block";
     ["mdot1","mdot2","mdot3"].forEach((id, i) => {
       const d = document.getElementById(id);
-      d.className  = "step-dot" + (i === 0 ? " active" : "");
+      d.className   = "step-dot" + (i === 0 ? " active" : "");
       d.textContent = i + 1;
     });
     ["mline1","mline2"].forEach(id => document.getElementById(id).classList.remove("done"));
@@ -914,14 +852,7 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
-  /* ──────────────────────────────────────────────────────────
-     FINAL SUBMIT
-     All three backends fire simultaneously:
-       1. Google Sheets (text/plain + no-cors, fire-and-forget)
-       2. Telegram (fire-and-forget)
-       3. Firestore (fire-and-forget, fast serverTimestamp)
-     FIX: payload uses `branch: dept` (not `department: dept`)
-  ──────────────────────────────────────────────────────────── */
+  /* ── FINAL SUBMIT ── */
   async function movieSubmitForm() {
     const file = document.getElementById("mproofFile").files[0];
     if (!file) return;
@@ -932,14 +863,13 @@
 
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
-    const dept = document.getElementById("mdepartment").value;  /* FIX: use dept as branch */
+    const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
     const cfg  = MOVIE_CONFIG[year];
     const utr  = document.getElementById("utrInput").value.trim() || window.detectedUTR || "";
     const btn  = document.getElementById("mfinalSubmitBtn");
 
-    /* ── FIX: Log selected branch before sending ── */
     console.log("Selected Branch:", dept);
 
     btn.disabled  = true;
@@ -950,13 +880,12 @@
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
 
     try {
-      /* ══ 1. Google Sheets — fire-and-forget, FIX: branch: dept ══ */
       sendToGoogleSheet(year, {
         action:    "addBooking",
         bookingId: mBookingId,
         name,
         year:      yl,
-        branch:    dept,           /* ← FIXED: was `department: dept` */
+        branch:    dept,
         mobile:    "+91" + mob,
         utr,
         timestamp: ts,
@@ -965,7 +894,6 @@
 
       setProgress(50, "Notifying team…", "Sending screenshot to admin");
 
-      /* ══ 2. Telegram — fire-and-forget ══ */
       const caption =
         `*🎬 Movie Ticket Booking — NITS Telugu Network*\n\n` +
         `*Booking ID:* \`${mBookingId}\`\n` +
@@ -982,9 +910,6 @@
 
       setProgress(75, "Saving to database…", "Writing to Firestore");
 
-      /* ══ 3. Firestore — await with ready-check ══
-         Module scripts load async. If the user submits before the
-         module finishes, we wait up to 8 s for it to signal ready. */
       try {
         if (!window._firestoreIsReady) {
           console.log("⏳ Waiting for Firebase module to finish loading…");
@@ -1015,7 +940,6 @@
           console.warn("⚠️ Firestore returned null — check DevTools for ❌ errors above");
         }
       } catch (fsErr) {
-        /* Log clearly but DO NOT block the user's success screen */
         console.error("❌ Firestore step failed (user still sees success):", fsErr.message);
       }
 
@@ -1027,7 +951,6 @@
       document.getElementById("msuccessNameMsg").textContent =
         `Thank you, ${name}! Your booking (${mBookingId}) has been received. Admin will verify your payment and confirm your seat.`;
 
-      /* Fill final ticket */
       document.getElementById("ft-name").textContent       = name;
       document.getElementById("ft-year").textContent       = yl;
       document.getElementById("ft-dept").textContent       = dept;
@@ -1035,7 +958,6 @@
       document.getElementById("ft-booking-id").textContent = mBookingId;
       document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
 
-      /* Show success screen */
       document.getElementById("movieFormContainer").style.display = "none";
       document.getElementById("movieStepInd").style.display       = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
@@ -1070,9 +992,7 @@
     }
   }
 
-  /* ──────────────────────────────────────────────────────────
-     DOWNLOAD TICKET
-  ──────────────────────────────────────────────────────────── */
+  /* ── DOWNLOAD TICKET ── */
   async function downloadTicket() {
     const btn    = document.getElementById("dlBtn");
     btn.innerHTML = "⏳ Preparing…"; btn.disabled = true;
