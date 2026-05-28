@@ -5,277 +5,284 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Movie Tickets — NITS Telugu Network</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
   
   <style>
     /* ==========================================================================
-       CSS VARIABLES & RESET (Apple / Premium Ultra-Compact Layout)
+       SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
        ========================================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --primary: #00C853;
+      --primary: #10B981;
       --secondary: #0EA5E9;
       --dark: #0F172A;
-      --text: #334155;
+      --surface: #FFFFFF;
+      --surface-card: #F8FAFC;
+      --ui-border: #E2E8F0;
+      --text: #1E293B;
       --muted: #64748B;
-      --bg: #F8FAFC;
-      --saffron: #FF6B00;
-      --saffron-light: #FF8C3A;
-      --saffron-pale: #FFF3E8;
-      --accent-green: #0F6E56;
-      --bms-red: #F84464;
+      --bms-red: #FF3366;
+      --bms-red-glow: rgba(255, 51, 102, 0.15);
+      --bg: #F1F5F9;
       
-      --surface: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --input-bg: rgba(255, 255, 255, 0.9);
-      --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.04);
-      --shadow-btn: 0 6px 20px rgba(15, 23, 42, 0.1);
-      
-      --font-main: 'DM Sans', sans-serif;
+      --font-display: 'Plus Jakarta Sans', sans-serif;
       --font-body: 'Inter', sans-serif;
-      --radius-lg: 18px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --shadow-premium: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; background-color: var(--bg); }
     body {
       font-family: var(--font-body);
       background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.5;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Ambient Glow Effects for Background */
-    body::before, body::after {
-      content: ''; position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.35; z-index: -1;
-      animation: floatOrbs 15s ease-in-out infinite alternate; pointer-events: none;
-    }
-    body::before { top: 5%; left: 5%; width: 40vw; height: 40vw; max-width: 400px; background: radial-gradient(circle, rgba(14, 165, 233, 0.12), transparent 70%); }
-    body::after { bottom: 5%; right: 5%; width: 50vw; height: 50vw; max-width: 500px; background: radial-gradient(circle, rgba(248, 68, 100, 0.08), transparent 70%); animation-delay: -5s; }
-
-    /* Keyframes */
+    /* Micro-Animations */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-    @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    @keyframes flipIn { 0% { transform: perspective(1000px) rotateY(-90deg) scale(0.95); opacity: 0; } 100% { transform: perspective(1000px) rotateY(0deg) scale(1); opacity: 1; } }
-    @keyframes fadeOutScale { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
+    @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    @keyframes popIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     @keyframes drawTick { to { stroke-dashoffset: 0; } }
-    @keyframes ocrPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-    @keyframes floatOrbs { 0% { transform: translate(0, 0); } 100% { transform: translate(20px, -20px); } }
 
-    .flip-in { animation: flipIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .fade-out { animation: fadeOutScale 0.3s ease forwards; }
+    .fade-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
     /* ==========================================================================
-       HERO SECTION (Optimized Space-Saving Sizing)
+       CINEMATIC COMPACT HEADER (Optimized Spacing)
        ========================================================================== */
-    .movie-page-hero { padding: 1.5rem 1rem 0.5rem; text-align: center; position: relative; z-index: 10; animation: fadeUp 0.5s ease both; }
-    .movie-badge { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 100px; padding: 0.25rem 0.65rem; font-family: var(--font-main); font-size: 0.65rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem; box-shadow: 0 2px 6px rgba(14, 165, 233, 0.03); }
-    .movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulse 1.5s infinite; box-shadow: 0 0 6px var(--primary); }
-    .hero-title { font-family: var(--font-main); font-weight: 800; font-size: 1.6rem; color: var(--dark); line-height: 1.1; margin-bottom: 0.15rem; letter-spacing: -0.02em; }
+    .movie-page-hero { padding: 1rem 1rem 0.5rem; text-align: center; }
+    .movie-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem; 
+      background: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 100px; 
+      padding: 0.2rem 0.5rem; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; 
+      color: #0369A1; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite ease-in-out; box-shadow: 0 0 6px var(--primary); }
+    
+    .hero-title { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--dark); line-height: 1.2; margin-bottom: 0.15rem; letter-spacing: -0.02em; }
     .hero-title span { color: var(--secondary); }
-    .hero-sub { font-size: 0.8rem; font-weight: 500; color: var(--muted); max-width: 320px; margin: 0 auto; }
+    .hero-sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); max-width: 320px; margin: 0 auto; }
 
     /* ==========================================================================
-       STEP INDICATOR (Highly Squeezed Mobile-View Layout)
+       COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
        ========================================================================== */
-    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0 auto 1rem; max-width: 280px; padding: 0 0.5rem; animation: fadeUp 0.5s ease 0.05s both; }
-    .step-wrap { position: relative; padding-bottom: 14px; display: flex; flex-direction: column; align-items: center; }
-    .step-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-main); font-size: 0.75rem; font-weight: 700; border: 2px solid #E2E8F0; background: #fff; color: #94A3B8; transition: all 0.3s ease; position: relative; z-index: 1; }
-    .step-dot.active { background: var(--secondary); border-color: var(--secondary); color: white; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); }
-    .step-dot.done { background: var(--primary); border-color: var(--primary); color: white; }
-    .step-line { flex: 1; height: 2px; background: #E2E8F0; transition: background 0.3s ease; min-width: 32px; margin-bottom: 14px; }
+    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0.5rem auto 0.75rem; max-width: 280px; padding: 0; }
+    .step-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+    .step-dot { 
+      width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; border: 1.5px solid var(--ui-border); 
+      background: #FFFFFF; color: var(--muted); transition: all 0.3s ease; position: relative; z-index: 1; 
+    }
+    .step-dot.active { background: var(--secondary); border-color: var(--secondary); color: #FFF; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2); }
+    .step-dot.done { background: var(--primary); border-color: var(--primary); color: #FFF; }
+    .step-line { flex: 1; height: 2px; background: var(--ui-border); transition: background 0.3s ease; margin-top: -10px; transform: translateY(10px); }
     .step-line.done { background: var(--primary); }
-    .step-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.25rem; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .step-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.2rem; white-space: nowrap; }
 
     /* ==========================================================================
-       FORM CONTAINER & CARDS (Optimized Padding & Fluid Gaps)
+       PREMIUM FORM & CARD INTERFACE
        ========================================================================== */
-    .form-container { max-width: 400px; margin: 0 auto; padding: 0 0.75rem 2.5rem; position: relative; z-index: 10; animation: fadeUp 0.5s ease 0.1s both; }
-    .form-card { background: var(--surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.25rem 1rem; box-shadow: var(--shadow-soft); }
-    .form-card-title { font-family: var(--font-main); font-weight: 800; font-size: 1.15rem; color: var(--dark); margin-bottom: 0.15rem; letter-spacing: -0.01em; }
-    .form-card-sub { font-size: 0.8rem; color: var(--muted); font-weight: 400; margin-bottom: 1rem; line-height: 1.4; }
+    .form-container { max-width: 400px; margin: 0 auto; padding: 0 0.5rem 1.5rem; width: 100%; }
+    .form-card { 
+      background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem; 
+      box-shadow: var(--shadow-premium); 
+    }
+    .form-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
+    .form-card-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
     
     .form-group { margin-bottom: 0.85rem; }
-    .form-label { display: block; font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    .form-input { width: 100%; padding: 0.7rem 0.85rem; border: 1px solid #CBD5E1; border-radius: 10px; font-family: var(--font-body); font-size: 0.9rem; color: var(--dark); background: var(--input-bg); outline: none; transition: all 0.25s ease; -webkit-appearance: none; appearance: none; }
-    .form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08); background: #fff; }
-    .form-input.error { border-color: var(--bms-red); box-shadow: 0 0 0 3px rgba(248, 68, 100, 0.08); }
+    .form-label { display: block; font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-input { 
+      width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
+      font-family: var(--font-body); font-size: 0.85rem; color: var(--text); background: #F8FAFC; 
+      outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none; 
+    }
+    .form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); background: #FFFFFF; }
+    .form-input.error { border-color: var(--bms-red); box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.1); }
     
-    .select-wrap { position: relative; }
-    .select-wrap::after { content: '▾'; position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 0.9rem; }
+    select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.9rem; padding-right: 2rem; }
     
-    .error-msg { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.25rem; font-weight: 500; display: none; }
+    .error-msg { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.2rem; font-weight: 500; display: none; }
     .error-msg.show { display: block; }
     
     .phone-wrap { position: relative; }
-    .phone-flag { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--muted); pointer-events: none; font-weight: 600; }
-    input[type=tel] { padding-left: 2.6rem !important; }
+    .phone-flag { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--muted); pointer-events: none; font-weight: 500; }
+    input[type=tel] { padding-left: 2.5rem !important; }
     
-    /* Custom Checkbox Frame */
-    .terms-compact { background: rgba(241, 245, 249, 0.5); border: 1px solid rgba(226, 232, 240, 0.7); border-radius: 10px; padding: 0.75rem; margin-bottom: 1rem; }
-    .checkbox-row { display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer; }
-    .checkbox-row input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
-    .checkbox-row label { font-size: 0.78rem; color: var(--text); line-height: 1.4; cursor: pointer; }
-    .checkbox-row label span { color: var(--bms-red); font-weight: 600; }
+    .terms-compact { background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; margin-bottom: 0.85rem; }
+    .checkbox-row { display: flex; align-items: flex-start; gap: 0.4rem; cursor: pointer; }
+    .checkbox-row input[type=checkbox] { width: 14px; height: 14px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+    .checkbox-row label { font-size: 0.75rem; color: var(--muted); line-height: 1.35; cursor: pointer; }
+    .checkbox-row label span { color: var(--bms-red); font-weight: 500; }
     
-    /* Fluid Squeezed Buttons */
-    .btn-primary, .submit-btn, .confirm-btn, .download-btn { width: 100%; padding: 0.75rem; color: white; border: none; border-radius: 11px; font-family: var(--font-main); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 0.4rem; letter-spacing: 0.01em; }
-    .btn-primary { background: var(--dark); box-shadow: var(--shadow-btn); }
-    .btn-primary:hover:not(:disabled) { background: #1e293b; transform: translateY(-1px); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-    
-    /* Payment QR Block */
-    .qr-section { text-align: center; margin-bottom: 1rem; }
-    .qr-label { font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-    .qr-box { display: inline-block; background: white; border: 1px solid #E2E8F0; border-radius: 14px; padding: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.03); }
-    .qr-box img { display: block; border-radius: 8px; width: 140px; height: 140px; }
-    .qr-unavail { padding: 1.25rem 1rem; text-align: center; background: #FFF7ED; border: 1.2px dashed #FDBA74; border-radius: 12px; margin-bottom: 1rem; }
-    .qr-unavail p { font-size: 0.85rem; color: #C2410C; font-weight: 500; line-height: 1.4; }
-    
-    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 1rem 0; }
-    
-    /* Shortened File Upload Zone */
-    .upload-zone { border: 2px dashed #CBD5E1; border-radius: 12px; padding: 0.85rem 0.75rem; text-align: center; cursor: pointer; transition: all 0.25s ease; background: rgba(255, 255, 255, 0.5); margin-bottom: 0.25rem; position: relative; }
-    .upload-zone:hover, .upload-zone.dragover { border-color: var(--secondary); background: rgba(14, 165, 233, 0.04); }
-    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .upload-icon { font-size: 1.2rem; margin-bottom: 0.25rem; color: var(--secondary); display: inline-flex; align-items: center; justify-content: center; }
-    .upload-icon svg { width: 22px; height: 22px; }
-    .upload-text { font-family: var(--font-main); font-size: 0.8rem; font-weight: 600; color: var(--dark); }
-    .upload-text span { color: var(--secondary); }
-    .upload-hint { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; }
-    
-    .upload-preview { margin-top: 0.5rem; display: none; align-items: center; gap: 0.5rem; background: #fff; padding: 0.4rem; border-radius: 8px; border: 1px solid #E2E8F0; }
-    .upload-preview img { width: 32px; height: 32px; border-radius: 6px; border: 1px solid #E2E8F0; object-fit: cover; }
-    .upload-preview .file-name { font-size: 0.75rem; color: var(--primary); font-weight: 600; word-break: break-all; }
-    
-    /* UTR Frame adjustments */
-    .submit-btn { background: var(--primary); box-shadow: 0 6px 16px rgba(0, 200, 83, 0.15); margin-top: 1rem; }
-    .submit-btn:hover:not(:disabled) { background: #00B049; transform: translateY(-1px); }
-    
-    .utr-status { margin-top: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; display: none; align-items: center; gap: 0.4rem; line-height: 1.3; font-family: var(--font-main); }
-    .utr-status.detecting { display: flex; background: #F0F9FF; color: var(--secondary); border: 1px solid rgba(14, 165, 233, 0.15); animation: ocrPulse 1.2s infinite; }
-    .utr-status.found { display: flex; background: #F0FDF4; color: #16A34A; border: 1px solid rgba(22, 163, 74, 0.15); }
-    .utr-status.not-found { display: flex; background: #FFF7ED; color: #EA580C; border: 1px solid rgba(234, 88, 12, 0.15); }
-    
-    .utr-input-wrap { margin-top: 0.75rem; }
-    .utr-input-wrap label { display: block; font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; color: var(--text); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
-    #utrInput { width: 100%; padding: 0.7rem 0.85rem; border: 1px solid #CBD5E1; border-radius: 10px; font-family: var(--font-body); font-size: 0.9rem; color: var(--dark); background: var(--input-bg); outline: none; transition: all 0.25s ease; }
-    #utrInput:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.08); background: #fff; }
-    #utrInput.auto-filled { border-color: var(--primary); background: #F0FDF4; font-weight: 600; }
+    /* Interactive Buttons */
+    .btn-primary, .submit-btn, .confirm-btn, .download-btn { 
+      width: 100%; padding: 0.65rem; color: #FFF; border: none; border-radius: var(--radius-md); 
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; cursor: pointer; 
+      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.3rem; 
+    }
+    .btn-primary { background: #FFFFFF; border: 1px solid var(--ui-border); color: var(--text); }
+    .btn-primary:hover:not(:disabled) { border-color: var(--secondary); background: #F0F9FF; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
     
     /* ==========================================================================
-       TICKET PREVIEW
+       COMPACT PAYMENT SECTION
        ========================================================================== */
-    .ticket-preview-label { text-align: center; font-family: var(--font-main); font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .qr-section { text-align: center; margin-bottom: 0.75rem; }
+    .qr-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .qr-box { display: inline-block; background: #FFF; border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--ui-border); box-shadow: 0 4px 12px rgba(15,23,42,0.03); }
+    .qr-box img { display: block; border-radius: 4px; width: 110px; height: 110px; }
+    .qr-unavail { padding: 0.75rem; text-align: center; background: #FFF7ED; border: 1px dashed #FED7AA; border-radius: var(--radius-md); margin-bottom: 0.75rem; }
+    .qr-unavail p { font-size: 0.75rem; color: #C2410C; font-weight: 400; }
     
-    .bms-ticket-wrap { max-width: 340px; margin: 0 auto 1.25rem; }
-    .bms-ticket { background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.03); position: relative; width: 100%; }
-    .bms-top { background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); padding: 14px 14px 12px; position: relative; color: #fff; }
-    .bms-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 10px; }
-    .bms-org-label { font-size: 8px; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 3px; }
-    .bms-movie-title { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 16px; color: #fff; line-height: 1.15; letter-spacing: -0.01em; }
-    .bms-status-badge { background: rgba(248,68,100,0.2); border: 1px solid rgba(248,68,100,0.4); border-radius: 4px; padding: 3px 6px; font-size: 8.5px; font-weight: 700; color: #FF7088; letter-spacing: 0.6px; text-transform: uppercase; flex-shrink: 0; white-space: nowrap; }
-    .bms-status-badge.confirmed { background: rgba(0,200,83,0.2); border-color: rgba(0,200,83,0.4); color: #4ADE80; }
-    .bms-meta-strip { display: flex; gap: 10px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.12); }
+    .divider { border: none; border-top: 1px solid var(--ui-border); margin: 0.85rem 0; }
+    
+    .upload-zone { 
+      border: 1.5px dashed #CBD5E1; border-radius: var(--radius-md); 
+      padding: 0.55rem; text-align: center; cursor: pointer; 
+      transition: all 0.2s ease; background: #F8FAFC; 
+      margin-bottom: 0.2rem; position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--secondary); background: #F0F9FF; }
+    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .upload-icon { color: var(--secondary); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .upload-icon svg { width: 15px; height: 15px; }
+    .upload-text { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; color: var(--text); }
+    .upload-text span { color: var(--secondary); font-weight: 600; }
+    .upload-hint { font-size: 0.62rem; color: var(--muted); margin-top: 0.1rem; text-align: center; }
+    
+    .upload-preview { margin-top: 0.35rem; display: none; align-items: center; gap: 0.35rem; background: #F1F5F9; padding: 0.3rem 0.45rem; border-radius: 6px; border: 1px solid var(--ui-border); }
+    .upload-preview img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
+    .upload-preview .file-name { font-size: 0.7rem; color: var(--primary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    
+    .submit-btn { background: var(--primary); color: #FFFFFF; font-weight: 700; margin-top: 0.75rem; }
+    .submit-btn:hover:not(:disabled) { background: #059669; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+    
+    .utr-status { margin-top: 0.35rem; padding: 0.3rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 500; display: none; align-items: center; gap: 0.3rem; font-family: var(--font-display); }
+    .utr-status.detecting { display: flex; background: #F0F9FF; color: #0369A1; border: 1px solid #B9E6FD; }
+    .utr-status.found { display: flex; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+    .utr-status.not-found { display: flex; background: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA; }
+    
+    .utr-input-wrap { margin-top: 0.65rem; }
+    #utrInput.auto-filled { border-color: var(--primary); background: #ECFDF5; font-weight: 600; color: #047857; }
+
+    /* ==========================================================================
+       PREMIUM LIGHT DESIGN TICKET (Refined Spacing)
+       ========================================================================== */
+    .ticket-preview-label { text-align: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; }
+    .bms-ticket-wrap { max-width: 340px; margin: 0 auto 1rem; width: 100%; }
+    
+    .bms-ticket { 
+      background: #FFFFFF; border-radius: var(--radius-lg); overflow: hidden; position: relative; width: 100%;
+      border: 1px solid var(--ui-border); box-shadow: var(--shadow-premium);
+    }
+    
+    .bms-top { padding: 1rem 1rem 0.85rem; position: relative; }
+    .bms-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+    .bms-org-label { font-size: 0.55rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1px; font-family: var(--font-display); }
+    .bms-movie-title { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--dark); line-height: 1.2; letter-spacing: -0.01em; }
+    
+    .bms-status-badge { 
+      background: #FEF3C7; border: 1px solid #FDE68A; 
+      border-radius: 4px; padding: 2px 5px; font-size: 0.6rem; font-weight: 700; color: #D97706; 
+      letter-spacing: 0.02em; text-transform: uppercase; font-family: var(--font-display);
+    }
+    .bms-status-badge.confirmed { background: #D1FAE5; border-color: #A7F3D0; color: #047857; }
+    
+    .bms-meta-strip { display: flex; gap: 8px; padding-top: 0.75rem; border-top: 1px dashed var(--ui-border); }
     .bms-meta-item { flex: 1; min-width: 0; }
-    .bms-meta-label { font-size: 7.5px; font-weight: 600; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 2px; }
-    .bms-meta-value { font-size: 11px; font-weight: 600; color: #fff; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .bms-perf { height: 16px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); position: relative; display: flex; align-items: center; }
-    .bms-perf::before, .bms-perf::after { content: ''; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); position: absolute; top: 50%; transform: translateY(-50%); box-shadow: inset 0 1px 3px rgba(0,0,0,0.08); }
+    .bms-meta-label { font-size: 0.55rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
+    .bms-meta-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    
+    /* Couplings */
+    .bms-perf { height: 14px; position: relative; display: flex; align-items: center; background: transparent; }
+    .bms-perf::before, .bms-perf::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; border: 1px solid var(--ui-border); }
     .bms-perf::before { left: -8px; }
     .bms-perf::after { right: -8px; }
-    .bms-perf-line { flex: 1; margin: 0 10px; height: 2px; background-image: radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1.5px); background-size: 7px 2px; background-repeat: repeat-x; background-position: center; }
-    .bms-qr-section { background: #fff; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
-    .bms-qr-frame { flex-shrink: 0; background: #fff; border: 1px solid #E2E8F0; border-radius: 8px; padding: 4px; }
-    .bms-qr-frame img { display: block; width: 85px; height: 85px; border-radius: 4px; }
-    .bms-qr-info { flex: 1; min-width: 0; }
-    .bms-booking-label { font-size: 8px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
-    .bms-booking-id { font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 14px; color: #0F172A; letter-spacing: 0.01em; word-break: break-all; line-height: 1.15; }
-    .bms-details { padding: 12px 14px 14px; background: #F8FAFC; border-top: 1px solid #F1F5F9; }
-    .bms-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 12px; }
-    .bms-detail-item .bms-meta-label { color: #64748B; font-size: 7.5px; }
-    .bms-detail-value { font-size: 11px; font-weight: 700; color: #0F172A; line-height: 1.2; word-break: break-word; }
-    .bms-notice { margin: 10px 14px 14px; background: linear-gradient(90deg, #F0F9FF 0%, #E0F2FE 100%); border-left: 3px solid var(--secondary); border-radius: 0 4px 4px 0; padding: 6px 10px; }
-    .bms-notice p { font-size: 9.5px; color: #0369A1; font-weight: 600; line-height: 1.4; }
-
-    .ticket-actions { max-width: 340px; margin: 0 auto; }
-    .confirm-btn { background: var(--bms-red); box-shadow: 0 6px 16px rgba(248, 68, 100, 0.15); }
-    .confirm-btn:hover:not(:disabled) { background: #E53A5A; transform: translateY(-1px); }
+    .bms-perf-line { flex: 1; margin: 0 10px; height: 1px; background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size: 5px 1px; background-repeat: repeat-x; }
     
-    .edit-btn, .movie-back-btn { width: 100%; padding: 0.75rem; margin-top: 0.5rem; background: transparent; color: var(--muted); border: 1px solid #CBD5E1; border-radius: 10px; font-family: var(--font-main); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.3rem; }
-    .edit-btn:hover, .movie-back-btn:hover { border-color: var(--dark); color: var(--dark); background: #F1F5F9; }
+    .bms-qr-section { padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem; background: #F8FAFC; }
+    .bms-qr-frame { flex-shrink: 0; background: #FFF; border-radius: var(--radius-md); padding: 4px; display: inline-block; border: 1px solid var(--ui-border); }
+    .bms-qr-frame img { display: block; width: 75px; height: 75px; border-radius: 4px; }
+    .bms-qr-info { flex: 1; min-width: 0; }
+    .bms-booking-label { font-size: 0.55rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
+    .bms-booking-id { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--dark); letter-spacing: 0.01em; line-height: 1.1; }
+    
+    .bms-details { padding: 0.85rem 1rem; background: #FFFFFF; border-top: 1px solid var(--ui-border); }
+    .bms-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+    .bms-detail-item .bms-meta-label { color: var(--muted); }
+    .bms-detail-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; word-break: break-word; }
+    
+    /* Elegant Ticket Notice Update */
+    .bms-notice { margin: 0 1rem 1rem; background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.5rem 0.65rem; text-align: center; }
+    .bms-notice p { font-size: 0.68rem; color: #64748B; font-weight: 400; line-height: 1.4; font-family: var(--font-body); }
+
+    .ticket-actions { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+    .confirm-btn { background: var(--bms-red); font-weight: 700; color: #FFFFFF; }
+    .confirm-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
+    
+    .edit-btn, .movie-back-btn { 
+      width: 100%; padding: 0.65rem; background: #FFFFFF; color: var(--muted); 
+      border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; cursor: pointer; 
+      transition: all 0.2s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.2rem; 
+    }
+    .edit-btn:hover, .movie-back-btn:hover { border-color: #94A3B8; color: var(--text); background: #F8FAFC; }
     
     /* ==========================================================================
-       SUCCESS SCREEN & OVERLAYS
+       SUCCESS COMPONENT
        ========================================================================== */
-    #movieSuccessScreen { display: none; padding: 1rem 0.75rem 3rem; max-width: 400px; margin: 0 auto; }
-    .gpay-check { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #059669); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: 0 10px 25px rgba(0, 200, 83, 0.2); animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-    .gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.5s 0.2s ease forwards; }
-    .movie-success-top { text-align: center; padding: 1rem 0 1rem; }
-    .success-verified-note { display: inline-flex; align-items: center; gap: 0.4rem; background: #F0FDF4; border: 1px solid rgba(22, 163, 74, 0.15); border-radius: var(--radius-pill); padding: 0.4rem 0.85rem; font-family: var(--font-main); font-size: 0.8rem; color: #16A34A; font-weight: 700; margin-bottom: 0.75rem; animation: fadeUp 0.5s 0.3s ease both; }
-    #msuccessNameMsg { font-size: 0.85rem; color: var(--muted); line-height: 1.5; max-width: 320px; margin: 0 auto 0.75rem; }
-    
-    .download-btn { background: var(--bms-red); box-shadow: 0 6px 16px rgba(248, 68, 100, 0.15); margin-bottom: 0.4rem; }
-    .download-btn:hover:not(:disabled) { background: #E53A5A; transform: translateY(-1px); }
-    
-    .required-star { color: var(--bms-red); margin-left: 2px; font-size: 0.85rem; }
-    .file-size-warn { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.25rem; font-weight: 500; display: none; }
-    .file-size-warn.show { display: block; }
-
-    /* Loader Overlay Layout */
-    #loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(8px); align-items: center; justify-content: center; flex-direction: column; gap: 0.75rem; }
-    .loader-box { background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.5rem; text-align: center; width: 260px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-    .loader-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-    .loader-title { font-family: var(--font-main); font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 0.2rem; }
-    .loader-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
-    .progress-bar-wrap { background: #E2E8F0; border-radius: 100px; height: 5px; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--secondary); border-radius: 100px; width: 0%; transition: width 0.5s ease; }
-
-    /* Verified Popup Framework */
-    #verifiedPopupOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.35); backdrop-filter: blur(10px); align-items: center; justify-content: center; padding: 1rem; }
-    #verifiedPopupOverlay.show { display: flex; animation: vpFadeIn 0.3s ease forwards; }
-    .vp-popup { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 20px; border: 1px solid var(--glass-border); padding: 2rem 1.5rem 1.5rem; max-width: 340px; width: 100%; text-align: center; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12); animation: vpSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .vp-popup::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--primary), #69F0AE); }
-    .vp-icon { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #059669); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; box-shadow: 0 10px 25px rgba(0, 200, 83, 0.25); animation: vpPop 0.5s 0.1s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-    .vp-title { font-family: var(--font-main); font-weight: 800; font-size: 1.2rem; color: var(--dark); margin-bottom: 0.4rem; letter-spacing: -0.01em; }
-    .vp-hello { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.25rem; }
-    .vp-hello strong { color: var(--dark); font-weight: 700; }
-    .vp-card { background: rgba(241, 245, 249, 0.7); border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 14px; padding: 1rem; margin-bottom: 1.25rem; text-align: left; }
-    .vp-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.4rem 0; }
-    .vp-row + .vp-row { border-top: 1px solid rgba(226, 232, 240, 0.7); }
-    .vp-row-label { font-family: var(--font-main); font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-    .vp-row-value { font-family: var(--font-main); font-size: 0.85rem; font-weight: 700; color: var(--dark); word-break: break-all; text-align: right; }
-    .vp-status-pill { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(0, 200, 83, 0.08); border: 1px solid rgba(0, 200, 83, 0.15); border-radius: 100px; padding: 0.25rem 0.65rem; font-family: var(--font-main); font-size: 0.72rem; font-weight: 800; color: #059669; }
-    .vp-note { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 1.25rem; }
-    .vp-ok-btn { width: 100%; padding: 0.85rem; background: var(--dark); color: white; border: none; border-radius: 12px; font-family: var(--font-main); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s ease; }
-    .vp-ok-btn:hover { background: #1e293b; transform: translateY(-1px); }
-
-    /* Global Mobile Form Fluid Scaling Layout config */
-    @media(max-width: 640px) {
-      .form-container { padding: 0 0.5rem 2rem; }
-      .form-card { padding: 1rem 0.85rem; }
-      .movie-page-hero { padding: 1rem 0.75rem 0.35rem; }
+    #movieSuccessScreen { display: none; padding: 0.5rem 0.5rem 2rem; max-width: 400px; margin: 0 auto; width: 100%; }
+    .gpay-check { 
+      width: 44px; height: 44px; border-radius: 50%; background: var(--primary); 
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; 
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; 
     }
+    .gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.4s 0.1s ease forwards; }
+    .movie-success-top { text-align: center; padding: 0.5rem 0; }
+    
+    .success-verified-note { 
+      display: inline-flex; align-items: center; gap: 0.25rem; background: #ECFDF5; 
+      border: 1px solid #A7F3D0; border-radius: 100px; padding: 0.25rem 0.75rem; 
+      font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight: 600; margin-bottom: 0.75rem; 
+    }
+    #msuccessNameMsg { font-size: 0.8rem; color: var(--muted); line-height: 1.4; max-width: 320px; margin: 0 auto 0.85rem; }
+    
+    .download-btn { background: var(--bms-red); font-weight: 700; margin-bottom: 0.2rem; }
+    .download-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
+
+    /* Screen Loader Styles */
+    #loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+    .loader-box { background: #FFFFFF; border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; width: 240px; box-shadow: var(--shadow-premium); }
+    .loader-icon { font-size: 1.75rem; margin-bottom: 0.3rem; }
+    .loader-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-bottom: 0.1rem; }
+    .loader-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
+    .progress-bar-wrap { background: #E2E8F0; border-radius: 100px; height: 4px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--secondary); border-radius: 100px; width: 0%; transition: width 0.3s ease; }
   </style>
 </head>
 <body>
 
-<section class="movie-page-hero">
+<section class="movie-page-hero fade-up">
   <div class="movie-badge"><div class="movie-live-dot"></div>Booking Open</div>
   <h1 class="hero-title">Movie <span>Tickets</span></h1>
   <p class="hero-sub">Telugu blockbusters for the NITS Telugu community</p>
 </section>
 
-<div class="step-indicator" id="movieStepInd">
+<div class="step-indicator fade-up" id="movieStepInd">
   <div class="step-wrap"><div class="step-dot active" id="mdot1">1</div><div class="step-label">Details</div></div>
   <div class="step-line" id="mline1"></div>
   <div class="step-wrap"><div class="step-dot" id="mdot2">2</div><div class="step-label">Payment</div></div>
@@ -283,19 +290,19 @@
   <div class="step-wrap"><div class="step-dot" id="mdot3">3</div><div class="step-label">Confirm</div></div>
 </div>
 
-<div class="form-container" id="movieFormContainer">
+<div class="form-container fade-up" id="movieFormContainer">
 
   <div id="mpStep1">
     <div class="form-card">
       <div class="form-card-title">Your Details</div>
-      <div class="form-card-sub">Fill in your info to proceed</div>
+      <div class="form-card-sub">Fill in your identity metrics to proceed</div>
       <div class="form-group">
-        <label class="form-label" for="mfullName">Name <span class="required-star">*</span></label>
+        <label class="form-label" for="mfullName">Name</label>
         <input class="form-input" type="text" id="mfullName" placeholder="Your full name" autocomplete="name"/>
         <div class="error-msg" id="merr-name">Please enter your name</div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="mgradYear">Year <span class="required-star">*</span></label>
+        <label class="form-label" for="mgradYear">Year</label>
         <div class="select-wrap">
           <select class="form-input" id="mgradYear">
             <option value="">Select year</option>
@@ -308,7 +315,7 @@
         <div class="error-msg" id="merr-year">Please select your year</div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="mdepartment">Department <span class="required-star">*</span></label>
+        <label class="form-label" for="mdepartment">Department</label>
         <div class="select-wrap">
           <select class="form-input" id="mdepartment">
             <option value="">Select department</option>
@@ -323,7 +330,7 @@
         <div class="error-msg" id="merr-dept">Please select your department</div>
       </div>
       <div class="form-group">
-        <label class="form-label" for="mmobile">Mobile Number <span class="required-star">*</span></label>
+        <label class="form-label" for="mmobile">Mobile Number</label>
         <div class="phone-wrap">
           <span class="phone-flag">+91</span>
           <input class="form-input" type="tel" id="mmobile" placeholder="10-digit number" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel-national"/>
@@ -337,18 +344,18 @@
         </div>
         <div class="error-msg" id="merr-terms">Please accept to continue</div>
       </div>
-      <button class="btn-primary" id="continueBtn" onclick="movieGoToStep2()">Continue to Payment →</button>
+      <button class="submit-btn" id="continueBtn" onclick="movieGoToStep2()">Continue to Payment →</button>
     </div>
   </div>
 
   <div id="mpStep2" style="display:none;">
     <div class="form-card">
       <div class="form-card-title">Scan &amp; Pay</div>
-      <div class="form-card-sub">Use any UPI app to complete your booking</div>
+      <div class="form-card-sub" id="paymentInstructionText">Please scan the QR code and pay the amount.</div>
       <div id="movieQRSection">
         <div class="qr-section">
-          <div class="qr-label">UPI QR Code</div>
-          <div class="qr-box"><img id="movieQRImg" src="" alt="UPI QR" width="180" height="180"/></div>
+          <div class="qr-label">UPI QR Gate</div>
+          <div class="qr-box"><img id="movieQRImg" src="" alt="UPI QR"/></div>
         </div>
       </div>
       <div id="movieQRUnavail" class="qr-unavail" style="display:none;">
@@ -356,25 +363,27 @@
       </div>
       <hr class="divider"/>
       <div class="form-group">
-        <label class="form-label">Payment Screenshot <span class="required-star">*</span></label>
+        <label class="form-label">Payment Screen Artifact</label>
+        
         <div class="upload-zone" id="mUploadZone">
           <input type="file" id="mproofFile" accept="image/*,.pdf"/>
           <div class="upload-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           </div>
-          <div class="upload-text"><span>Tap to upload</span> screenshot</div>
-          <div class="upload-hint">JPG, PNG or PDF · Max 5 MB · UTR auto-detected</div>
+          <div class="upload-text"><span>Tap to upload</span> payment screenshot</div>
         </div>
+        <div class="upload-hint">JPG, PNG or PDF · Max 5 MB · UTR auto-detected</div>
+        
         <div class="upload-preview" id="mUploadPreview">
           <img id="mpreviewImg" src="" alt="preview" style="display:none;"/>
           <div class="file-name" id="mFileName"></div>
         </div>
         <div class="error-msg" id="merr-proof">Please upload your payment screenshot to continue</div>
-        <div class="file-size-warn" id="merr-filesize">File too large. Please upload under 5 MB.</div>
+        <div class="file-size-warn" id="merr-filesize" style="font-size:0.7rem; color:var(--bms-red); margin-top:0.2rem; display:none;">File too large. Please upload under 5 MB.</div>
         <div class="utr-status" id="utrStatus"></div>
         <div class="utr-input-wrap" id="utrInputWrap">
-          <label for="utrInput">UTR / UPI Reference Number</label>
-          <input type="text" id="utrInput" placeholder="Auto-detected or enter manually" autocomplete="off"/>
+          <label class="form-label" for="utrInput">UTR / UPI Reference String</label>
+          <input class="form-input" type="text" id="utrInput" placeholder="Auto-detected or enter manually" autocomplete="off"/>
         </div>
       </div>
       <button class="submit-btn" id="msubmitBtn" onclick="movieGoToStep3()">Preview Ticket →</button>
@@ -382,26 +391,26 @@
   </div>
 
   <div id="mpStep3" style="display:none;">
-    <p class="ticket-preview-label">Review your booking</p>
+    <p class="ticket-preview-label">Review your system authorization</p>
     <div class="bms-ticket-wrap">
       <div class="bms-ticket" id="mPreviewTicket">
         <div class="bms-top">
           <div class="bms-top-row">
             <div>
               <div class="bms-org-label">NITS Telugu Network</div>
-              <div class="bms-movie-title">Movie Ticket</div>
+              <div class="bms-movie-title">Movie Pass</div>
             </div>
             <div class="bms-status-badge">Pending</div>
           </div>
           <div class="bms-meta-strip">
             <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
             <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
-            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
           </div>
         </div>
         <div class="bms-perf"><div class="bms-perf-line"></div></div>
         <div class="bms-qr-section">
-          <div class="bms-qr-frame"><img id="t-qr" src="" alt="QR" width="95" height="95"/></div>
+          <div class="bms-qr-frame"><img id="t-qr" src="" alt="QR"/></div>
           <div class="bms-qr-info">
             <div class="bms-booking-label">Booking ID</div>
             <div class="bms-booking-id" id="t-booking-id">—</div>
@@ -412,31 +421,31 @@
             <div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="t-name">—</div></div>
             <div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="t-mobile">—</div></div>
             <div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="t-year">—</div></div>
-            <div class="bms-detail-item"><div class="bms-meta-label">Department</div><div class="bms-detail-value" id="t-dept">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="t-dept">—</div></div>
           </div>
         </div>
-        <div class="bms-notice"><p>Present Your Ticket to the Distribution Team for Verification</p></div>
+        <div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
       </div>
     </div>
     <div class="ticket-actions">
-      <button class="confirm-btn" id="mfinalSubmitBtn" onclick="movieSubmitForm()">Confirm &amp; Submit</button>
-      <button class="edit-btn" onclick="movieGoBackToStep1()">← Edit Details</button>
+      <button class="confirm-btn" id="mfinalSubmitBtn" onclick="movieSubmitForm()">Confirm &amp; Commit</button>
+      <button class="edit-btn" onclick="movieGoBackToStep1()">← Revise Details</button>
     </div>
   </div>
 
 </div>
 
-<div id="movieSuccessScreen">
+<div id="movieSuccessScreen" class="fade-up">
   <div id="successMessageBlock">
     <div class="movie-success-top">
       <div class="gpay-check">
-        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
-          <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="24" height="24" viewBox="0 0 44 44" fill="none">
+          <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div style="font-family:var(--font-main);font-weight:800;font-size:1.4rem;color:var(--dark);margin-bottom:0.4rem;animation:fadeUp 0.5s 0.5s ease both;">Booking Submitted!</div>
-      <div class="success-verified-note">⏳ Admin will verify your payment shortly</div>
-      <div id="msuccessNameMsg" style="font-size:0.88rem;color:var(--muted);line-height:1.5;animation:fadeUp 0.5s 0.6s ease both;max-width:320px;margin:0 auto 1rem;">Your booking has been received.</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:1.25rem;color:var(--dark);margin-bottom:0.2rem;">Booking Logged!</div>
+      <div class="success-verified-note">⏳ Verification ledger check underway</div>
+      <div id="msuccessNameMsg">Your transaction parameter record has been processed.</div>
     </div>
   </div>
 
@@ -447,19 +456,19 @@
           <div class="bms-top-row">
             <div>
               <div class="bms-org-label">NITS Telugu Network</div>
-              <div class="bms-movie-title">Movie Ticket</div>
+              <div class="bms-movie-title">Movie Pass</div>
             </div>
-            <div class="bms-status-badge confirmed">Submitted ✓</div>
+            <div class="bms-status-badge confirmed">Committed ✓</div>
           </div>
           <div class="bms-meta-strip">
             <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
             <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
-            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
           </div>
         </div>
         <div class="bms-perf"><div class="bms-perf-line"></div></div>
         <div class="bms-qr-section">
-          <div class="bms-qr-frame"><img id="ft-qr" src="" alt="QR" width="95" height="95"/></div>
+          <div class="bms-qr-frame"><img id="ft-qr" src="" alt="QR"/></div>
           <div class="bms-qr-info">
             <div class="bms-booking-label">Booking ID</div>
             <div class="bms-booking-id" id="ft-booking-id">—</div>
@@ -470,18 +479,18 @@
             <div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="ft-name">—</div></div>
             <div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="ft-mobile">—</div></div>
             <div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="ft-year">—</div></div>
-            <div class="bms-detail-item"><div class="bms-meta-label">Department</div><div class="bms-detail-value" id="ft-dept">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="ft-dept">—</div></div>
           </div>
         </div>
-        <div class="bms-notice"><p>Present Your Ticket to the Distribution Team for Verification</p></div>
+        <div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
       </div>
     </div>
-    <div class="ticket-actions" style="margin-top:0.75rem;display:flex;flex-direction:column;gap:0;">
+    <div class="ticket-actions">
       <button class="download-btn" id="dlBtn" onclick="downloadTicket()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
-        Download Ticket
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        Download Pass
       </button>
-      <a href="index.html" class="movie-back-btn">← Back to Home</a>
+      <a href="index.html" class="movie-back-btn">← Back to Dashboard</a>
     </div>
   </div>
 </div>
@@ -489,37 +498,9 @@
 <div id="loadingOverlay">
   <div class="loader-box">
     <div class="loader-icon">🎬</div>
-    <div class="loader-title" id="loaderTitle">Submitting…</div>
-    <div class="loader-sub" id="loaderSub">Please wait a moment</div>
+    <div class="loader-title" id="loaderTitle">Processing…</div>
+    <div class="loader-sub" id="loaderSub">Parsing operational buffers</div>
     <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
-  </div>
-</div>
-
-<div id="verifiedPopupOverlay">
-  <div class="vp-popup">
-    <div class="vp-icon">
-      <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
-        <path d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
-          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.55s 0.2s ease forwards;"/>
-      </svg>
-    </div>
-    <div class="vp-title">Booking Verified Successfully</div>
-    <p class="vp-hello">Hello, <strong id="vpName">—</strong></p>
-    <div class="vp-card">
-      <div class="vp-row">
-        <span class="vp-row-label">Booking ID</span>
-        <span class="vp-row-value" id="vpBookingId">—</span>
-      </div>
-      <div class="vp-row">
-        <span class="vp-row-label">Status</span>
-        <span class="vp-status-pill">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
-          Verified
-        </span>
-      </div>
-    </div>
-    <p class="vp-note">Your payment has been verified successfully.<br>Thank you for registering with NITS Telugu Network!</p>
-    <button class="vp-ok-btn" onclick="closeVerifiedPopup()">Got it ✓</button>
   </div>
 </div>
 
@@ -554,7 +535,6 @@
   const db  = getFirestore(app);
   console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
 
-  /* ── saveToFirestore (unchanged) ── */
   window.saveToFirestore = async function(data) {
     const payload = {
       bookingId: data.bookingId || "",
@@ -567,11 +547,8 @@
       timestamp: data.timestamp || "",
       createdAt: serverTimestamp()
     };
-    console.log("📤 Firestore → writing payload:", payload);
     try {
       const docRef = await addDoc(collection(db, "movieBookings"), payload);
-      console.log("✅ Firestore saved! Doc ID:", docRef.id);
-      /* save bookingId to localStorage so popup check works on next visit */
       localStorage.setItem("movieBookingId", payload.bookingId);
       return docRef.id;
     } catch (err) {
@@ -580,17 +557,14 @@
     }
   };
 
-  /* ── Real-time listener (unchanged) ── */
   try {
     const q = query(collection(db, "movieBookings"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       const bookings = [];
       snapshot.forEach(d => bookings.push({ id: d.id, ...d.data() }));
-      console.log("🔴 Real-time update — movieBookings (" + bookings.length + " total):", bookings);
     }, (err) => {
       console.error("❌ onSnapshot error:", err.code, err.message);
     });
-    console.log("👂 Real-time listener attached to movieBookings");
   } catch (err) {
     console.error("❌ Failed to attach listener:", err.message);
   }
@@ -599,63 +573,13 @@
   if (typeof window._firestoreReadyResolve === "function") {
     window._firestoreReadyResolve();
   }
-
-  /* ── Check for verified booking on page load ── */
-  async function checkVerifiedBooking() {
-    const bookingId = localStorage.getItem("movieBookingId");
-    if (!bookingId) return;
-
-    try {
-      const q = query(
-        collection(db, "movieBookings"),
-        where("bookingId", "==", bookingId)
-      );
-      const snap = await getDocs(q);
-      if (snap.empty) return;
-
-      const docSnap = snap.docs[0];
-      const data    = docSnap.data();
-
-      /* Only show if status is Verified AND popup hasn't been shown before */
-      if (data.status === "Verified" && !data.popupShown) {
-        /* Populate popup fields */
-        document.getElementById("vpName").textContent      = data.name      || "Student";
-        document.getElementById("vpBookingId").textContent = data.bookingId || bookingId;
-
-        /* Show the popup */
-        document.getElementById("verifiedPopupOverlay").classList.add("show");
-
-        /* Mark popupShown = true so it never shows again */
-        await updateDoc(doc(db, "movieBookings", docSnap.id), { popupShown: true });
-        console.log("✅ Verified popup shown & popupShown flag set for:", bookingId);
-      }
-    } catch (err) {
-      console.error("❌ Verified booking check failed:", err.message);
-    }
-  }
-
-  window.addEventListener("load", () => setTimeout(checkVerifiedBooking, 800));
-
-  window.closeVerifiedPopup = function() {
-    const overlay = document.getElementById("verifiedPopupOverlay");
-    overlay.style.transition = "opacity 0.4s ease, backdrop-filter 0.4s ease";
-    overlay.style.opacity    = "0";
-    overlay.style.backdropFilter = "blur(0px)";
-    setTimeout(() => {
-      overlay.classList.remove("show");
-      overlay.style.opacity    = "";
-      overlay.style.transition = "";
-      overlay.style.backdropFilter = "";
-    }, 400);
-  };
 </script>
 
 <script>
-  /* ── CONFIG ── */
   const MOVIE_CONFIG = {
     "1": { upi: "8919531422-4@ibl",     bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
-    "2": { upi: "9032979645-2@ybl",       bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
-    "3": { upi: "bukkenaveenkumar@ptyes", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"      },
+    "2": { upi: "9032979645-2@ybl",     bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
+    "3": { upi: "bukkenaveenkumar@ptyes", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"       },
     "4": { upi: "varshitsai246@oksbi",    bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076"    }
   };
 
@@ -714,7 +638,7 @@
   (function preloadQRs() {
     Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
       if (!cfg.upi) return;
-      const url = makePaymentQR(cfg.upi, 180);
+      const url = makePaymentQR(cfg.upi, 120);
       const img = new Image(); img.src = url;
       QR_CACHE[year] = url;
     });
@@ -767,24 +691,24 @@
       document.getElementById("msubmitBtn").disabled = false; ocrRunning = false; return;
     }
     ocrRunning = true; document.getElementById("msubmitBtn").disabled = true;
-    setUTRStatus("detecting", "🔍 Detecting UTR…");
+    setUTRStatus("detecting", "🔍 Running UTR Deep Parser Scan…");
     try {
       const processedBlob = await preprocessImageForOCR(file);
       const result = await Tesseract.recognize(processedBlob, "eng", { logger: () => {} });
-      const rawText = result.data.text; console.log("OCR raw text:", rawText);
+      const rawText = result.data.text;
       const utr = extractUTR(rawText);
       if (utr) {
         window.detectedUTR = utr;
         const utrInput = document.getElementById("utrInput");
         utrInput.value = utr; utrInput.classList.add("auto-filled");
-        setUTRStatus("found", `✅ UTR Detected: ${utr}`);
+        setUTRStatus("found", `✅ UTR Matrix Detected: ${utr}`);
       } else {
         window.detectedUTR = "";
-        setUTRStatus("not-found", "⚠️ UTR not found. Please enter manually.");
+        setUTRStatus("not-found", "⚠️ UTR string missing. Enter manually.");
       }
     } catch (err) {
-      console.error("OCR error:", err); window.detectedUTR = "";
-      setUTRStatus("not-found", "⚠️ OCR failed. Please enter UTR manually.");
+      window.detectedUTR = "";
+      setUTRStatus("not-found", "⚠️ Vision processing fault. Enter manually.");
     } finally {
       ocrRunning = false; document.getElementById("msubmitBtn").disabled = false;
     }
@@ -870,11 +794,11 @@
     const mob   = document.getElementById("mmobile").value.trim();
     const terms = document.getElementById("mtermsCheck").checked;
     let valid = true;
-    showMErr("merr-name",  !name);                    if (!name)  valid = false;
+    showMErr("merr-name",   !name);                      if (!name)  valid = false;
     const mobOk = /^\d{10}$/.test(mob);
     showMErr("merr-mobile", !mobOk);                  if (!mobOk) valid = false;
-    showMErr("merr-year",  !year);                    if (!year)  valid = false;
-    showMErr("merr-dept",  !dept);                    if (!dept)  valid = false;
+    showMErr("merr-year",   !year);                     if (!year)  valid = false;
+    showMErr("merr-dept",   !dept);                     if (!dept)  valid = false;
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
@@ -886,7 +810,7 @@
     if (cfg && cfg.upi) {
       document.getElementById("movieQRSection").style.display = "block";
       document.getElementById("movieQRUnavail").style.display = "none";
-      document.getElementById("movieQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 180);
+      document.getElementById("movieQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 120);
     } else {
       document.getElementById("movieQRSection").style.display = "none";
       document.getElementById("movieQRUnavail").style.display = "block";
@@ -898,7 +822,7 @@
   }
 
   function movieGoToStep3() {
-    if (ocrRunning) { alert("⏳ UTR detection is still running. Please wait a moment."); return; }
+    if (ocrRunning) { alert("⏳ System tracking verification thread active. Please wait."); return; }
     const file = document.getElementById("mproofFile").files[0];
     if (!file) { document.getElementById("merr-proof").classList.add("show"); return; }
     if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
@@ -913,7 +837,7 @@
     document.getElementById("t-dept").textContent       = dept;
     document.getElementById("t-mobile").textContent     = "+91 " + mob;
     document.getElementById("t-booking-id").textContent = mBookingId;
-    document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
+    document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
     markStep("mdot2", "mline2", "mdot3");
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep3").style.display = "block";
@@ -954,133 +878,129 @@
     const btn  = document.getElementById("mfinalSubmitBtn");
     btn.disabled = true; btn.innerHTML = "⏳ Sending…";
     document.getElementById("loadingOverlay").style.display = "flex";
-    setProgress(20, "Saving your booking…", "Sending to all backends");
+    setProgress(20, "Saving allocation parameters…", "Routing transaction vectors");
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
     try {
       sendToGoogleSheet(year, { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, timestamp:ts, status:"Submitted" });
-      setProgress(50, "Notifying team…", "Sending screenshot to admin");
+      setProgress(50, "Notifying system admin…", "Transferring receipt snapshot file");
       const caption =
         `*🎬 Movie Ticket Booking — NITS Telugu Network*\n\n` +
         `*Booking ID:* \`${mBookingId}\`\n*Name:* ${name}\n*Year:* ${yl}\n*Branch:* ${dept}\n` +
         `*Mobile:* +91 ${mob}\n*UTR:* ${utr || "Not provided"}\n*UPI:* ${cfg&&cfg.upi?cfg.upi:"N/A"}\n*Time:* ${ts}`;
       if (cfg && cfg.bot && cfg.cid) sendToTelegram(cfg.bot, cfg.cid, caption, file);
-      setProgress(75, "Saving to database…", "Writing to Firestore");
+      setProgress(75, "Committing database state…", "Writing to Firestore cluster");
       try {
         if (!window._firestoreIsReady) {
           await new Promise((resolve, reject) => {
             window._firestoreReadyResolve = resolve;
-            setTimeout(() => reject(new Error("Firebase module did not load within 8 s")), 8000);
+            setTimeout(() => reject(new Error("Database write initialization error timed out")), 8000);
           });
         }
-        if (typeof window.saveToFirestore !== "function") throw new Error("saveToFirestore not defined");
-        const docId = await window.saveToFirestore({ bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, status:"Submitted", timestamp:ts });
-        if (docId) console.log("✅ Firestore confirmed! Doc ID:", docId);
-        else console.warn("⚠️ Firestore returned null");
+        await window.saveToFirestore({ bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, status:"Submitted", timestamp:ts });
       } catch (fsErr) { console.error("❌ Firestore step failed:", fsErr.message); }
 
       setProgress(100, "Done! 🎉", "");
       await new Promise(r => setTimeout(r, 350));
       document.getElementById("loadingOverlay").style.display = "none";
       document.getElementById("msuccessNameMsg").textContent =
-        `Thank you, ${name}! Your booking (${mBookingId}) has been received. Admin will verify your payment and confirm your seat.`;
+        `Thank you, ${name}! Your allocation request (${mBookingId}) has been successfully processed into our validation registry.`;
       document.getElementById("ft-name").textContent       = name;
       document.getElementById("ft-year").textContent       = yl;
       document.getElementById("ft-dept").textContent       = dept;
       document.getElementById("ft-mobile").textContent     = "+91 " + mob;
       document.getElementById("ft-booking-id").textContent = mBookingId;
-      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 95);
+      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
       document.getElementById("movieFormContainer").style.display = "none";
       document.getElementById("movieStepInd").style.display       = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
       const successBlock = document.getElementById("successMessageBlock");
       const ticketBlock  = document.getElementById("ticketBlock");
       successBlock.style.display = "block"; ticketBlock.style.display = "none";
-      successBlock.classList.remove("fade-out"); ticketBlock.classList.remove("flip-in");
       window.scrollTo({ top:0, behavior:"smooth" }); playSuccessSound();
       setTimeout(() => {
-        successBlock.classList.add("fade-out");
-        setTimeout(() => {
-          successBlock.style.display = "none"; ticketBlock.style.display = "block";
-          void ticketBlock.offsetWidth; ticketBlock.classList.add("flip-in");
-          window.scrollTo({ top:0, behavior:"smooth" });
-        }, 400);
+        successBlock.style.display = "none"; ticketBlock.style.display = "block";
+        window.scrollTo({ top:0, behavior:"smooth" });
       }, 1800);
     } catch (err) {
       document.getElementById("loadingOverlay").style.display = "none";
-      setProgress(0, "Submitting…", "Please wait a moment");
-      btn.disabled = false; btn.innerHTML = "Confirm &amp; Submit";
-      alert(`❌ Submission failed: ${err.message}\n\nPlease check your internet connection and try again.`);
+      setProgress(0, "Processing…", "");
+      btn.disabled = false; btn.innerHTML = "Confirm &amp; Commit";
+      alert(`❌ Buffer execution fault: ${err.message}`);
     }
   }
 
   async function downloadTicket() {
     const btn = document.getElementById("dlBtn");
-    btn.innerHTML = "⏳ Preparing…"; btn.disabled = true;
+    btn.innerHTML = "⏳ Rendering Pass…"; btn.disabled = true;
     const qrImg = document.getElementById("ft-qr");
     if (!qrImg.complete || !qrImg.naturalWidth) await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
     await new Promise(r => setTimeout(r, 400));
+    
     const name   = document.getElementById("ft-name").textContent;
     const year   = document.getElementById("ft-year").textContent;
     const dept   = document.getElementById("ft-dept").textContent;
     const mobile = document.getElementById("ft-mobile").textContent;
     const bid    = document.getElementById("ft-booking-id").textContent;
     const qrSrc  = makeTicketQR(name, year, dept, mobile, bid, 360);
+    
     const clone  = document.createElement("div");
-    clone.style.cssText = "position:fixed;left:-9999px;top:0;width:340px;background:#F8FAFC;padding:16px;font-family:'DM Sans',Arial,sans-serif;z-index:-1;pointer-events:none;";
+    clone.style.cssText = "position:fixed;left:-9999px;top:0;width:360px;background:#F1F5F9;padding:20px;font-family:'Inter',Arial,sans-serif;z-index:-1;pointer-events:none;box-sizing:border-box;";
+    
     clone.innerHTML = `
-      <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12);width:100%;">
-        <div style="background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);padding:14px 14px 12px;color:#fff;">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;">
+      <div style="background:#FFFFFF; border-radius:16px; border:1px solid #E2E8F0; overflow:hidden; width:100%; box-sizing:border-box; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+        <div style="padding:20px 20px 16px; position:relative; box-sizing:border-box;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:12px;">
             <div>
-              <div style="font-size:8.5px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.3px;margin-bottom:3px;">NITS Telugu Network</div>
-              <div style="font-weight:700;font-size:15px;color:#fff;line-height:1.15;">Movie Ticket</div>
+              <div style="font-size:10px; font-weight:700; color:#0EA5E9; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; font-family:'Plus Jakarta Sans',sans-serif;">NITS Telugu Network</div>
+              <div style="font-weight:800; font-size:20px; color:#1E293B; line-height:1.2; letter-spacing:-0.01em; font-family:'Plus Jakarta Sans',sans-serif;">Movie Pass</div>
             </div>
-            <div style="background:rgba(0,200,83,0.18);border:1px solid rgba(0,200,83,0.45);border-radius:3px;padding:3px 7px;font-size:8.5px;font-weight:700;color:#4ADE80;letter-spacing:0.7px;text-transform:uppercase;white-space:nowrap;line-height:1.2;">Submitted ✓</div>
+            <div style="background:#D1FAE5; border:1px solid #A7F3D0; border-radius:4px; padding:4px 8px; font-size:10px; font-weight:700; color:#047857; letter-spacing:0.02em; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap;">Committed ✓</div>
           </div>
-          <div style="display:flex;gap:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.15);">
-            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Type</div><div style="font-size:11px;font-weight:600;color:#fff;">Telugu Film</div></div>
-            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Venue</div><div style="font-size:11px;font-weight:600;color:#fff;">Gold Cinema</div></div>
-            <div style="flex:1;"><div style="font-size:7.5px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Seat</div><div style="font-size:11px;font-weight:600;color:#fff;">Open</div></div>
-          </div>
-        </div>
-        <div style="height:16px;background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);position:relative;display:flex;align-items:center;">
-          <div style="position:absolute;left:-8px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:#F8FAFC;"></div>
-          <div style="position:absolute;right:-8px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:#F8FAFC;"></div>
-          <div style="flex:1;margin:0 12px;height:2px;background-image:radial-gradient(circle,rgba(255,255,255,0.3) 1px,transparent 1.5px);background-size:7px 2px;background-repeat:repeat-x;background-position:center;"></div>
-        </div>
-        <div style="background:#fff;padding:13px 14px;display:flex;align-items:center;gap:12px;">
-          <div style="flex-shrink:0;background:#fff;border:1.5px solid #EAEAEA;border-radius:7px;padding:5px;">
-            <img src="${qrSrc}" width="95" height="95" style="display:block;border-radius:3px;" crossorigin="anonymous"/>
-          </div>
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:8.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Booking ID</div>
-            <div style="font-weight:800;font-size:14px;color:#0F172A;letter-spacing:0.02em;word-break:break-all;line-height:1.15;">${bid}</div>
+          <div style="display:flex; gap:12px; padding-top:14px; border-top:1px dashed #E2E8F0; box-sizing:border-box;">
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Type</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Telugu Film</div></div>
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Venue</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Gold Cinema</div></div>
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Seat</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Open Track</div></div>
           </div>
         </div>
-        <div style="padding:11px 14px 12px;background:#FAFAFC;border-top:1px solid #EFEFF3;">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px 12px;">
-            <div><div style="font-size:7.5px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Name</div><div style="font-size:11.5px;font-weight:700;color:#0F172A;">${name}</div></div>
-            <div><div style="font-size:7.5px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Mobile</div><div style="font-size:11.5px;font-weight:700;color:#0F172A;">${mobile}</div></div>
-            <div><div style="font-size:7.5px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Year</div><div style="font-size:11.5px;font-weight:700;color:#0F172A;">${year}</div></div>
-            <div><div style="font-size:7.5px;font-weight:600;color:#64748B;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">Department</div><div style="font-size:11.5px;font-weight:700;color:#0F172A;">${dept}</div></div>
+        <div style="height:16px; position:relative; display:flex; align-items:center; background:transparent;">
+          <div style="position:absolute; left:-9px; top:50%; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; background:#F1F5F9; border:1px solid #E2E8F0;"></div>
+          <div style="position:absolute; right:-9px; top:50%; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; background:#F1F5F9; border:1px solid #E2E8F0;"></div>
+          <div style="flex:1; margin:0 16px; height:1px; background-image:radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size:6px 1px; background-repeat:repeat-x;"></div>
+        </div>
+        <div style="padding:16px 20px; display:flex; align-items:center; gap:16px; background:#F8FAFC; box-sizing:border-box;">
+          <div style="flex-shrink:0; background:#FFFFFF; border-radius:8px; padding:4px; display:inline-block; border:1px solid #E2E8F0;">
+            <img src="${qrSrc}" width="80" height="80" style="display:block; border-radius:4px;" crossorigin="anonymous"/>
+          </div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:9px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Booking ID</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:18px; color:#1E293B; letter-spacing:0.01em; line-height:1.1;">${bid}</div>
           </div>
         </div>
-        <div style="margin:9px 14px 12px;background:linear-gradient(90deg,#F0F9FF 0%,#E0F2FE 100%);border-left:3px solid #0EA5E9;border-radius:0 5px 5px 0;padding:7px 9px;">
-          <p style="font-size:10px;color:#0369A1;font-weight:600;line-height:1.45;margin:0;">Present Your Ticket to the Distribution Team for Verification</p>
+        <div style="padding:16px 20px; background:#FFFFFF; border-top:1px solid #E2E8F0; box-sizing:border-box;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; box-sizing:border-box;">
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Name</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${name}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Mobile</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${mobile}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Year</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${year}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Branch</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${dept}</div></div>
+          </div>
+        </div>
+        <div style="margin:0 20px 20px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px; text-align:center; box-sizing:border-box;">
+          <p style="font-size:9px; color:#64748B; font-weight:400; line-height:1.4; margin:0;">Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p>
         </div>
       </div>`;
+      
     document.body.appendChild(clone);
-    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 150)));
+    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 200)));
     try {
-      const canvas = await html2canvas(clone, { scale:3, useCORS:true, allowTaint:true, backgroundColor:"#F8FAFC", logging:false, width:372, windowWidth:400, scrollX:0, scrollY:0 });
+      const canvas = await html2canvas(clone, { scale:3, useCORS:true, allowTaint:true, backgroundColor:"#F1F5F9", logging:false, width:360, windowWidth:360, scrollX:0, scrollY:0 });
       document.body.removeChild(clone);
-      const link = document.createElement("a"); link.download = bid + "-ticket.jpg";
+      const link = document.createElement("a"); link.download = bid + "-pass.jpg";
       link.href = canvas.toDataURL("image/jpeg", 0.95); link.click();
     } catch(e) {
       if (document.body.contains(clone)) document.body.removeChild(clone);
-      alert("Download failed. Please take a screenshot instead.");
+      alert("Render pipeline fault. Please capture a display screenshot instead.");
     }
-    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Download Ticket`;
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Download Pass`;
     btn.disabled = false;
   }
 </script>
