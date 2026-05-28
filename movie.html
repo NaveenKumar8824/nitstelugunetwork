@@ -10,7 +10,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -34,6 +34,7 @@
       --bms-red-glow: rgba(255, 51, 102, 0.15);
       --bg: #F1F5F9;
       
+      --font-heading: 'Poppins', sans-serif;
       --font-display: 'Plus Jakarta Sans', sans-serif;
       --font-body: 'Inter', sans-serif;
       --radius-lg: 16px;
@@ -72,9 +73,21 @@
     }
     .movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite ease-in-out; box-shadow: 0 0 6px var(--primary); }
     
-    .hero-title { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; color: var(--dark); line-height: 1.2; margin-bottom: 0.15rem; letter-spacing: -0.02em; }
+    .hero-title { 
+      font-family: var(--font-heading); 
+      font-weight: 800; 
+      font-size: 1.65rem; 
+      color: var(--dark); 
+      line-height: 1.15; 
+      margin-bottom: 0.25rem; 
+      letter-spacing: -0.035em; 
+    }
     .hero-title span { color: var(--secondary); }
     .hero-sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); max-width: 320px; margin: 0 auto; }
+
+    @media (max-width: 360px) {
+      .hero-title { font-size: 1.5rem; }
+    }
 
     /* ==========================================================================
        COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
@@ -958,50 +971,65 @@
           </div>
           <div style="display:flex; gap:12px; padding-top:14px; border-top:1px dashed #E2E8F0; box-sizing:border-box;">
             <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Type</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Telugu Film</div></div>
-            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Venue</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Gold Cinema</div></div>
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Venue</div><div style="font-size:12px; font-weight:600; color:#1E293B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gold Cinema</div></div>
             <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Seat</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Open Track</div></div>
           </div>
         </div>
-        <div style="height:16px; position:relative; display:flex; align-items:center; background:transparent;">
-          <div style="position:absolute; left:-9px; top:50%; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; background:#F1F5F9; border:1px solid #E2E8F0;"></div>
-          <div style="position:absolute; right:-9px; top:50%; transform:translateY(-50%); width:16px; height:16px; border-radius:50%; background:#F1F5F9; border:1px solid #E2E8F0;"></div>
-          <div style="flex:1; margin:0 16px; height:1px; background-image:radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size:6px 1px; background-repeat:repeat-x;"></div>
+        
+        <div style="height:14px; position:relative; display:flex; align-items:center; background:transparent;">
+          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; left:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; right:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+          <div style="flex:1; margin:0 10px; height:1px; background-image:radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size:5px 1px; background-repeat:repeat-x;"></div>
         </div>
-        <div style="padding:16px 20px; display:flex; align-items:center; gap:16px; background:#F8FAFC; box-sizing:border-box;">
-          <div style="flex-shrink:0; background:#FFFFFF; border-radius:8px; padding:4px; display:inline-block; border:1px solid #E2E8F0;">
-            <img src="${qrSrc}" width="80" height="80" style="display:block; border-radius:4px;" crossorigin="anonymous"/>
+        
+        <div style="padding:16px 20px; display:flex; align-items:center; gap:20px; background:#F8FAFC; box-sizing:border-box;">
+          <div style="background:#FFF; border-radius:12px; padding:6px; display:inline-block; border:1px solid #E2E8F0; flex-shrink:0;">
+            <img src="${qrSrc}" style="display:block; width:100px; height:100px; border-radius:4px;"/>
           </div>
           <div style="flex:1; min-width:0;">
-            <div style="font-size:9px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Booking ID</div>
-            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:18px; color:#1E293B; letter-spacing:0.01em; line-height:1.1;">${bid}</div>
+            <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; font-family:'Plus Jakarta Sans',sans-serif;">Booking ID</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:22px; color:#0F172A; letter-spacing:0.01em; line-height:1.1; word-break:break-all;">${bid}</div>
           </div>
         </div>
-        <div style="padding:16px 20px; background:#FFFFFF; border-top:1px solid #E2E8F0; box-sizing:border-box;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 14px; box-sizing:border-box;">
-            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Name</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${name}</div></div>
-            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Mobile</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${mobile}</div></div>
-            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Year</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${year}</div></div>
-            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:2px; font-family:'Plus Jakarta Sans',sans-serif;">Branch</div><div style="font-size:12px; font-weight:600; color:#1E293B;">${dept}</div></div>
+        
+        <div style="padding:18px 20px; background:#FFFFFF; border-top:1px solid #E2E8F0; box-sizing:border-box;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 16px;">
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Name</div><div style="font-size:13px; font-weight:600; color:#1E293B; word-break:break-word;">${name}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Mobile</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${mobile}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Year</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${year}</div></div>
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Branch</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${dept}</div></div>
           </div>
         </div>
-        <div style="margin:0 20px 20px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:8px; padding:10px; text-align:center; box-sizing:border-box;">
-          <p style="font-size:9px; color:#64748B; font-weight:400; line-height:1.4; margin:0;">Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p>
+        
+        <div style="margin:0 16px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:10px; text-align:center; box-sizing:border-box;">
+          <p style="font-size:10px; color:#64748B; font-weight:400; line-height:1.4; margin:0;">Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p>
         </div>
-      </div>`;
-      
+      </div>
+    `;
+    
     document.body.appendChild(clone);
-    await new Promise(r => requestAnimationFrame(() => setTimeout(r, 200)));
+    
     try {
-      const canvas = await html2canvas(clone, { scale:3, useCORS:true, allowTaint:true, backgroundColor:"#F1F5F9", logging:false, width:360, windowWidth:360, scrollX:0, scrollY:0 });
+      const canvas = await html2canvas(clone, {
+        useCORS: true,
+        allowTaint: true,
+        scale: 3,
+        backgroundColor: "#F1F5F9",
+        windowWidth: 360,
+        windowHeight: clone.offsetHeight
+      });
+      
+      const link = document.createElement("a");
+      link.download = `MoviePass-${bid}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    } catch (e) {
+      alert("Render failed. Please take a screenshot of the pass directly.");
+    } finally {
       document.body.removeChild(clone);
-      const link = document.createElement("a"); link.download = bid + "-pass.jpg";
-      link.href = canvas.toDataURL("image/jpeg", 0.95); link.click();
-    } catch(e) {
-      if (document.body.contains(clone)) document.body.removeChild(clone);
-      alert("Render pipeline fault. Please capture a display screenshot instead.");
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Download Pass`;
+      btn.disabled = false;
     }
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Download Pass`;
-    btn.disabled = false;
   }
 </script>
 </body>
