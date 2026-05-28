@@ -146,7 +146,7 @@
     }
 
     /* ==========================================================================
-       HERO SECTION WITH ANIMATED MOVEMENT
+       HERO SECTION WITH PREMIUM GRADIENT ORBS
        ========================================================================== */
     .hero {
       min-height: 100vh;
@@ -161,15 +161,16 @@
       background: transparent;
     }
 
-    /* AI Style Fluid Aurora Backdrop Wrapper */
+    /* Premium Fluid AI-Inspired Aurora Backdrop */
     .hero-gradient-wrapper {
       position: absolute;
       inset: 0;
       z-index: -3;
       overflow: hidden;
       background-color: var(--bg);
-      filter: blur(80px);
-      opacity: 0.65;
+      filter: blur(90px);
+      opacity: 0.75;
+      pointer-events: none;
     }
 
     .hero-blob {
@@ -179,48 +180,60 @@
       will-change: transform;
     }
 
-    /* Teal Orb */
+    /* Teal Orb - Left Middle */
     .blob-teal {
-      top: 15%;
-      left: 10%;
+      top: 10%;
+      left: -5%;
       width: 45vw;
       height: 45vw;
       max-width: 500px;
-      background: radial-gradient(circle, rgba(13, 148, 136, 0.3) 0%, transparent 75%);
-      animation: fluidMovementOne 22s infinite alternate ease-in-out;
+      background: radial-gradient(circle, rgba(13, 148, 136, 0.25) 0%, transparent 70%);
+      animation: fluidMovementOne 28s infinite alternate ease-in-out;
     }
 
-    /* Cyan Orb */
+    /* Cyan Orb - Top Right */
     .blob-cyan {
-      top: 25%;
-      right: 5%;
+      top: -5%;
+      right: -5%;
       width: 50vw;
       height: 50vw;
       max-width: 550px;
-      background: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, transparent 75%);
-      animation: fluidMovementTwo 26s infinite alternate ease-in-out 2s;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, transparent 70%);
+      animation: fluidMovementTwo 32s infinite alternate ease-in-out 1.5s;
     }
 
-    /* Green Orb */
+    /* Green Orb - Bottom Left */
     .blob-green {
-      bottom: 10%;
-      left: 20%;
+      bottom: -5%;
+      left: 10%;
+      width: 42vw;
+      height: 42vw;
+      max-width: 460px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+      animation: fluidMovementThree 25s infinite alternate ease-in-out 3s;
+    }
+
+    /* Light Blue Orb - Center Right */
+    .blob-blue {
+      bottom: 20%;
+      right: 15%;
       width: 40vw;
       height: 40vw;
       max-width: 450px;
-      background: radial-gradient(circle, rgba(34, 197, 94, 0.2) 0%, transparent 75%);
-      animation: fluidMovementThree 20s infinite alternate ease-in-out 4s;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.18) 0%, transparent 70%);
+      animation: fluidMovementOne 30s infinite alternate-reverse ease-in-out 0.5s;
     }
 
-    /* Light Blue / Glow Orb */
-    .blob-blue {
-      bottom: 15%;
-      right: 25%;
-      width: 45vw;
-      height: 45vw;
-      max-width: 500px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%);
-      animation: fluidMovementOne 28s infinite alternate-reverse ease-in-out 1s;
+    /* Soft White Glow Orb - Ambient Core */
+    .blob-white {
+      top: 30%;
+      left: 35%;
+      width: 35vw;
+      height: 35vw;
+      max-width: 400px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 65%);
+      mix-blend-mode: screen;
+      animation: fluidMovementTwo 22s infinite alternate ease-in-out 4s;
     }
 
     .hero-grid {
@@ -231,8 +244,8 @@
         linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
         linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
       background-size: 40px 40px;
-      mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
-      -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
+      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
     }
 
     .hero-badge {
@@ -602,22 +615,22 @@
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
     @keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-    /* Micro-Fluid Fluid Gradients Motion Logic */
+    /* Refined Fluid Floating Aurora Core Movement Logic */
     @keyframes fluidMovementOne {
       0% { transform: translate(0px, 0px) scale(1); }
-      33% { transform: translate(30px, -40px) scale(1.08); }
-      66% { transform: translate(-20px, 20px) scale(0.95); }
+      33% { transform: translate(40px, -50px) scale(1.05); }
+      66% { transform: translate(-30px, 30px) scale(0.96); }
       100% { transform: translate(0px, 0px) scale(1); }
     }
     @keyframes fluidMovementTwo {
       0% { transform: translate(0px, 0px) scale(1); }
-      50% { transform: translate(-40px, 30px) scale(1.1); }
+      50% { transform: translate(-50px, 40px) scale(1.08); }
       100% { transform: translate(0px, 0px) scale(1); }
     }
     @keyframes fluidMovementThree {
-      0% { transform: translate(0px, 0px) scale(0.95); }
-      50% { transform: translate(25px, -25px) scale(1.05); }
-      100% { transform: translate(0px, 0px) scale(0.95); }
+      0% { transform: translate(0px, 0px) scale(0.96); }
+      50% { transform: translate(35px, -35px) scale(1.04); }
+      100% { transform: translate(0px, 0px) scale(0.96); }
     }
 
     /* ==========================================================================
@@ -662,12 +675,13 @@
 </nav>
 
 <section class="hero">
-  <!-- Glowing Animated Fluid Aurora Base Structure -->
+  <!-- Glowing Animated Fluid Aurora Base Structure (With Premium Orbs Added) -->
   <div class="hero-gradient-wrapper">
     <div class="hero-blob blob-teal"></div>
     <div class="hero-blob blob-cyan"></div>
     <div class="hero-blob blob-green"></div>
     <div class="hero-blob blob-blue"></div>
+    <div class="hero-blob blob-white"></div>
   </div>
   
   <div class="hero-grid"></div>
