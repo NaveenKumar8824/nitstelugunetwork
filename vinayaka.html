@@ -5,37 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Vinayaka Chavithi 2026 — NITS Telugu Network</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap" rel="stylesheet"/>
   
   <style>
     /* ==========================================================================
-       CSS VARIABLES & RESET (Apple / Premium Ultra-Compact Layout)
+       CORE RESET & DESIGN SYSTEM (Fintech Minimalist White Theme)
        ========================================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
-      --primary: #00C853;
-      --secondary: #0EA5E9;
+      --primary: #02BD58;
+      --primary-glow: rgba(2, 189, 88, 0.1);
       --dark: #0F172A;
       --text: #334155;
       --muted: #64748B;
-      --bg: #F8FAFC;
-      --saffron: #FF6B00;
-      --saffron-light: #FF8C3A;
-      --saffron-pale: #FFF3E8;
-      --accent-green: #0F6E56;
+      --bg: #FAFAFB; /* Clean off-white background */
       --white: #FFFFFF;
       --card-bg: #FFFFFF;
+      --accent-red: #EF4444;
+      --accent-green-dark: #049643;
       
-      --surface: rgba(255, 255, 255, 0.8);
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --input-bg: rgba(255, 255, 255, 0.9);
-      --shadow-soft: 0 10px 25px rgba(15, 23, 42, 0.03);
-      --shadow-btn: 0 4px 15px rgba(15, 23, 42, 0.08);
+      /* Smooth Depth Shadows */
+      --shadow-premium: 0 12px 34px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.02);
+      --shadow-btn: 0 4px 14px rgba(2, 189, 88, 0.25);
       
-      --font-main: 'DM Sans', sans-serif;
+      /* Typography Engine */
+      --font-heading: 'Poppins', sans-serif;
       --font-body: 'Inter', sans-serif;
-      --radius-lg: 16px;
+      --radius-cards: 18px;
     }
 
     html { scroll-behavior: smooth; }
@@ -45,146 +42,426 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.4;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    /* Ambient Glow Background Orbs */
-    body::before, body::after {
-      content: ''; position: fixed; border-radius: 50%; filter: blur(60px); opacity: 0.3; z-index: -1;
-      animation: floatOrbs 12s ease-in-out infinite alternate; pointer-events: none;
-    }
-    body::before { top: 0%; left: 0%; width: 35vw; height: 35vw; max-width: 300px; background: radial-gradient(circle, rgba(255, 107, 0, 0.12), transparent 70%); }
-    body::after { bottom: 0%; right: 0%; width: 45vw; height: 45vw; max-width: 400px; background: radial-gradient(circle, rgba(14, 165, 233, 0.12), transparent 70%); animation-delay: -4s; }
-
-    /* Performance Animations */
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
-    @keyframes popIn { 0% { transform: scale(0.92); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    /* System Micro-Animations */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.85); } }
     @keyframes drawTick { to { stroke-dashoffset: 0; } }
     @keyframes spin { to { transform: rotate(360deg); } }
-    @keyframes floatOrbs { 0% { transform: translate(0, 0); } 100% { transform: translate(15px, -15px); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalSlideUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
     /* ==========================================================================
-       HERO SECTION (Ultra-Compact Space-Saving Profile)
+       HERO STRUCTURE (Modern Center-Aligned Layout) - COMPACTED
        ========================================================================== */
-    .page-hero { padding: 1.25rem 1rem 0.35rem; text-align: center; position: relative; z-index: 10; animation: fadeUp 0.4s ease both; }
-    .page-hero-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255, 107, 0, 0.2); border-radius: 100px; padding: 0.2rem 0.55rem; font-family: var(--font-main); font-size: 0.65rem; font-weight: 700; color: var(--saffron); margin-bottom: 0.35rem; box-shadow: 0 2px 6px rgba(255, 107, 0, 0.02); }
-    .badge-dot { width: 5px; height: 5px; background: var(--saffron); border-radius: 50%; animation: pulse 2s infinite; box-shadow: 0 0 6px var(--saffron); }
-    .page-hero h1 { font-family: var(--font-main); font-weight: 800; font-size: 1.45rem; color: var(--dark); line-height: 1.1; margin-bottom: 0.1rem; letter-spacing: -0.02em; }
-    .page-hero h1 .accent { background: linear-gradient(135deg, var(--saffron), var(--saffron-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .tagline { font-size: 0.78rem; font-weight: 500; color: var(--muted); max-width: 300px; margin: 0 auto; }
+    .page-hero { 
+      padding: 1.5rem 1rem 0.5rem; 
+      text-align: center; 
+      position: relative; 
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; 
+    }
+    .page-hero-badge { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.4rem; 
+      background: var(--white); 
+      border: 1px solid #E2E8F0; 
+      border-radius: 100px; 
+      padding: 0.25rem 0.75rem; 
+      font-family: var(--font-heading); 
+      font-size: 0.7rem; 
+      font-weight: 600; 
+      color: var(--dark); 
+      margin-bottom: 0.5rem; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+    .badge-dot { 
+      width: 6px; 
+      height: 6px; 
+      background: var(--primary); 
+      border-radius: 50%; 
+      animation: pulse 2s infinite; 
+      box-shadow: 0 0 6px var(--primary); 
+    }
+    .page-hero h1 { 
+      font-family: var(--font-heading); 
+      font-weight: 700; 
+      font-size: 1.65rem; 
+      color: #000000; 
+      line-height: 1.2; 
+      margin-bottom: 0.2rem; 
+      letter-spacing: -0.02em; 
+    }
+    .page-hero h1 .accent { 
+      color: var(--primary); 
+    }
+    .tagline { 
+      font-size: 0.8rem; 
+      font-weight: 500; 
+      color: var(--muted); 
+    }
 
     /* ==========================================================================
-       STEP INDICATOR (Highly Squeezed Mobile Profile)
+       STEP INDICATOR (Refined Floating System) - COMPACTED
        ========================================================================== */
-    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0 auto 0.85rem; max-width: 220px; padding: 0 0.25rem; animation: fadeUp 0.4s ease 0.05s both; }
-    .step-wrap { position: relative; padding-bottom: 12px; display: flex; flex-direction: column; align-items: center; }
-    .step-dot { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-main); font-size: 0.7rem; font-weight: 700; border: 2px solid #E2E8F0; background: var(--white); color: #94A3B8; transition: all 0.25s ease; position: relative; z-index: 1; }
-    .step-dot.active { background: var(--saffron); border-color: var(--saffron); color: white; box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1); }
-    .step-dot.done { background: var(--accent-green); border-color: var(--accent-green); color: white; }
-    .step-line { flex: 1; height: 2px; background: #E2E8F0; transition: background 0.25s ease; min-width: 35px; margin-bottom: 12px; }
-    .step-line.done { background: var(--accent-green); }
-    .step-label { font-size: 0.58rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.2rem; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+    .step-indicator { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 0; 
+      margin: 0.4rem auto 1rem; 
+      width: 100%;
+      max-width: 240px; 
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; 
+    }
+    .step-wrap { 
+      position: relative; 
+      padding-bottom: 14px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+    }
+    .step-dot { 
+      width: 24px; 
+      height: 24px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-family: var(--font-heading); 
+      font-size: 0.75rem; 
+      font-weight: 600; 
+      border: 2px solid #E2E8F0; 
+      background: var(--white); 
+      color: #94A3B8; 
+      transition: all 0.25s ease; 
+      position: relative; 
+      z-index: 1; 
+    }
+    .step-dot.active { 
+      background: var(--primary-glow); 
+      border-color: var(--primary); 
+      color: var(--primary); 
+    }
+    .step-dot.done { 
+      background: var(--primary); 
+      border-color: var(--primary); 
+      color: white; 
+    }
+    .step-line { 
+      flex: 1; 
+      height: 2px; 
+      background: #E2E8F0; 
+      transition: background 0.25s ease; 
+      min-width: 40px; 
+      margin-bottom: 14px; 
+    }
+    .step-line.done { 
+      background: var(--primary); 
+    }
+    .step-label { 
+      font-size: 0.65rem; 
+      font-weight: 600; 
+      color: var(--muted); 
+      text-align: center; 
+      margin-top: 0.2rem; 
+      position: absolute; 
+      bottom: 0; 
+      left: 50%; 
+      transform: translateX(-50%); 
+      white-space: nowrap; 
+    }
 
     /* ==========================================================================
-       FORM CONTAINERS & ELEMENTS
+       CARD CAPACITIES & ELEMENT RENDERING (Optimized & Height-Reduced)
        ========================================================================== */
-    .form-container { max-width: 390px; margin: 0 auto; padding: 0 0.5rem 2rem; position: relative; z-index: 10; animation: fadeUp 0.4s ease 0.1s both; }
-    .form-card { background: var(--surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 1.15rem 0.85rem; box-shadow: var(--shadow-soft); }
-    .form-card-title { font-family: var(--font-main); font-weight: 800; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
-    .form-card-sub { font-size: 0.78rem; color: var(--muted); font-weight: 400; margin-bottom: 0.85rem; line-height: 1.35; }
+    .form-container { 
+      width: 100%;
+      max-width: 430px; 
+      margin: 0 auto; 
+      padding: 0 1rem 1.5rem; 
+      position: relative; 
+      z-index: 10; 
+      animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; 
+    }
+    .form-card { 
+      background: var(--white); 
+      border: 1px solid #E2E8F0; 
+      border-radius: var(--radius-cards); 
+      padding: 18px 20px; 
+      box-shadow: var(--shadow-premium); 
+    }
+    .form-card-title { 
+      font-family: var(--font-heading); 
+      font-weight: 700; 
+      font-size: 1.15rem; 
+      color: var(--dark); 
+      margin-bottom: 0.15rem; 
+      letter-spacing: -0.01em; 
+    }
+    .form-card-sub { 
+      font-size: 0.78rem; 
+      color: var(--muted); 
+      font-weight: 400; 
+      margin-bottom: 1rem; 
+    }
     
-    .form-group { margin-bottom: 0.75rem; }
-    .form-label { display: block; font-family: var(--font-main); font-size: 0.68rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .form-input { width: 100%; padding: 0.65rem 0.8rem; border: 1px solid #CBD5E1; border-radius: 8px; font-family: var(--font-body); font-size: 0.88rem; color: var(--dark); background: var(--input-bg); outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none; }
-    .form-input:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.06); background: var(--white); }
-    .form-input.error { border-color: #e53e3e; box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.06); }
-    .form-input.success { border-color: var(--accent-green); box-shadow: 0 0 0 3px rgba(15, 110, 86, 0.06); }
+    .form-group { 
+      margin-bottom: 0.9rem; 
+    }
+    .form-label { 
+      display: block; 
+      font-family: var(--font-heading); 
+      font-size: 0.68rem; 
+      font-weight: 700; 
+      color: var(--dark); 
+      margin-bottom: 0.25rem; 
+      text-transform: uppercase; 
+      letter-spacing: 0.05em; 
+    }
+    .form-input { 
+      width: 100%; 
+      padding: 0.7rem 0.9rem; 
+      border: 1px solid #CBD5E1; 
+      border-radius: 10px; 
+      font-family: var(--font-body); 
+      font-size: 0.88rem; 
+      color: var(--dark); 
+      background: #FAFAFB; 
+      outline: none; 
+      transition: all 0.2s ease; 
+      -webkit-appearance: none; 
+      appearance: none; 
+    }
+    .form-input:focus { 
+      border-color: var(--primary); 
+      box-shadow: 0 0 0 3px rgba(2, 189, 88, 0.08); 
+      background: var(--white); 
+    }
+    .form-input.error { 
+      border-color: var(--accent-red); 
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.06); 
+    }
+    .form-input.success { 
+      border-color: var(--primary); 
+      box-shadow: 0 0 0 3px rgba(2, 189, 88, 0.06); 
+    }
     
     .select-wrap { position: relative; }
-    .select-wrap::after { content: '▾'; position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 0.85rem; }
+    .select-wrap::after { 
+      content: '▾'; 
+      position: absolute; 
+      right: 1rem; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      color: var(--muted); 
+      pointer-events: none; 
+      font-size: 0.9rem; 
+    }
     
-    .error-msg { font-size: 0.68rem; color: #e53e3e; margin-top: 0.2rem; font-weight: 500; display: none; }
+    .error-msg { font-size: 0.72rem; color: var(--accent-red); margin-top: 0.25rem; font-weight: 500; display: none; }
     .error-msg.show { display: block; }
     
     .phone-wrap { position: relative; }
-    .phone-flag { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); font-size: 0.88rem; color: var(--muted); pointer-events: none; font-weight: 600; }
-    input[type=tel] { padding-left: 2.4rem !important; }
+    .phone-flag { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); font-size: 0.88rem; color: var(--text); pointer-events: none; font-weight: 600; }
+    input[type=tel] { padding-left: 2.6rem !important; }
     
     .utr-wrap { position: relative; }
-    .utr-wrap .form-input { padding-right: 2.4rem; }
-    .utr-spinner { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); display: none; width: 15px; height: 15px; border: 2px solid rgba(255,107,0,0.2); border-top-color: var(--saffron); border-radius: 50%; animation: spin 0.75s linear infinite; }
+    .utr-wrap .form-input { padding-right: 2.5rem; }
+    .utr-spinner { position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%); display: none; width: 16px; height: 16px; border: 2px solid rgba(2,189,88,0.2); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.75s linear infinite; }
     .utr-spinner.visible { display: block; }
-    .utr-check { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%); display: none; color: var(--accent-green); font-size: 1.05rem; font-weight: 700; line-height: 1; }
+    .utr-check { position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%); display: none; color: var(--primary); font-size: 1.1rem; font-weight: 700; line-height: 1; }
     .utr-check.visible { display: block; }
 
     /* OCR Notification Interface Layout */
-    .ocr-status { margin-top: 0.4rem; padding: 0.45rem 0.65rem; border-radius: 7px; font-size: 0.72rem; font-weight: 600; display: none; align-items: center; gap: 0.35rem; line-height: 1.3; font-family: var(--font-main); }
-    .ocr-status.scanning { display: flex; background: #FFF9E1; color: #7A5200; border: 1px solid rgba(255, 160, 0, 0.12); }
-    .ocr-status.found { display: flex; background: #F0FDF4; color: #16A34A; border: 1px solid rgba(22, 163, 74, 0.12); }
-    .ocr-status.not-found { display: flex; background: #FFF7ED; color: #EA580C; border: 1px solid rgba(234, 88, 12, 0.12); }
-    .ocr-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
-    .ocr-status.scanning .ocr-dot { background: #FFA000; animation: pulse 1s infinite; }
-    .ocr-status.found .ocr-dot { background: #00C853; }
-    .ocr-status.not-found .ocr-dot { background: var(--saffron); }
+    .ocr-status { margin-top: 0.4rem; padding: 0.5rem 0.7rem; border-radius: 8px; font-size: 0.75rem; font-weight: 600; display: none; align-items: center; gap: 0.4rem; line-height: 1.4; font-family: var(--font-heading); }
+    .ocr-status.scanning { display: flex; background: #FEF08A; color: #713F12; border: 1px solid rgba(234, 179, 8, 0.2); }
+    .ocr-status.found { display: flex; background: #DCFCE7; color: #14532D; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .ocr-status.not-found { display: flex; background: #F1F5F9; color: #475569; border: 1px solid rgba(100, 116, 139, 0.15); }
+    .ocr-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ocr-status.scanning .ocr-dot { background: #EAB308; animation: pulse 1s infinite; }
+    .ocr-status.found .ocr-dot { background: var(--primary); }
+    .ocr-status.not-found .ocr-dot { background: var(--muted); }
 
-    /* Compressed Layout Buttons */
-    .btn-primary, .submit-btn { width: 100%; padding: 0.7rem; color: white; border: none; border-radius: 9px; font-family: var(--font-main); font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.35rem; letter-spacing: 0.01em; }
-    .btn-primary { background: var(--dark); box-shadow: var(--shadow-btn); margin-top: 0.85rem; }
-    .btn-primary:hover { background: #1e293b; transform: translateY(-1px); }
+    /* Interactive Interface Buttons */
+    .btn-primary, .submit-btn { 
+      width: 100%; 
+      padding: 0.75rem; 
+      color: white; 
+      border: none; 
+      border-radius: 10px; 
+      font-family: var(--font-heading); 
+      font-size: 0.9rem; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 0.4rem; 
+    }
+    .btn-primary { background: var(--dark); margin-top: 1rem; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08); }
+    .btn-primary:hover { background: #1E293B; transform: translateY(-1px); }
     
-    /* QR Section Framework */
-    .qr-section { text-align: center; margin-bottom: 0.85rem; }
-    .qr-label { font-family: var(--font-main); font-size: 0.68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
-    .qr-box { display: inline-block; background: var(--white); border: 1px solid #E2E8F0; border-radius: 10px; padding: 6px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-    .qr-box img { display: block; border-radius: 6px; width: 135px; height: 135px; }
-    .qr-unavail { padding: 1rem 0.85rem; text-align: center; background: #FFF7ED; border: 1.2px dashed #FDBA74; border-radius: 10px; margin-bottom: 0.85rem; }
-    .qr-unavail p { font-size: 0.8rem; color: #C2410C; font-weight: 500; line-height: 1.4; }
+    /* QR Visual Block Framework - COMPACTED */
+    .qr-section { text-align: center; margin-bottom: 0.9rem; }
+    .qr-label { font-family: var(--font-heading); font-size: 0.68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .qr-box { display: inline-block; background: var(--white); border: 1px solid #E2E8F0; border-radius: 12px; padding: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.02); }
+    .qr-box img { display: block; border-radius: 6px; width: 125px; height: 125px; }
+    .qr-unavail { padding: 1rem; text-align: center; background: #F8FAFC; border: 1.5px dashed #CBD5E1; border-radius: 12px; margin-bottom: 0.9rem; }
+    .qr-unavail p { font-size: 0.8rem; color: var(--text); font-weight: 500; line-height: 1.4; }
     
-    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 0.85rem 0; }
-    .utr-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.35; }
+    .divider { border: none; border-top: 1px solid #E2E8F0; margin: 1rem 0; }
+    .utr-note { font-size: 0.68rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.4; }
     
-    /* Highly Compact File Upload HUD Zone */
-    .upload-zone { border: 1.5px dashed #CBD5E1; border-radius: 10px; padding: 0.75rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background: rgba(255, 255, 255, 0.5); position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-    .upload-zone:hover, .upload-zone.dragover { border-color: var(--saffron); background: var(--saffron-pale); }
-    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .upload-icon { font-size: 1.1rem; flex-shrink: 0; }
-    .upload-text { font-family: var(--font-main); font-size: 0.78rem; font-weight: 600; color: var(--dark); text-align: left; }
-    .upload-text span { color: var(--saffron); }
-    .upload-hint { font-size: 0.65rem; color: var(--muted); }
+    /* Clean Upload Zone Component */
+    .upload-zone { border: 2px dashed #CBD5E1; border-radius: 12px; padding: 0.85rem; text-align: center; cursor: pointer; transition: all 0.2s ease; background: #FAFAFB; position: relative; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary); background: var(--primary-glow); }
+    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; z-index: 5; }
+    .upload-icon { font-size: 1.1rem; flex-shrink: 0; color: var(--muted); display: flex; align-items: center; }
+    .upload-text { font-family: var(--font-heading); font-size: 0.78rem; font-weight: 600; color: var(--dark); text-align: left; }
+    .upload-text span { color: var(--primary); }
+    .upload-hint { font-size: 0.65rem; color: var(--muted); font-weight: 400; }
     
-    .upload-preview { margin-top: 0.4rem; display: none; align-items: center; gap: 0.4rem; background: var(--white); padding: 0.35rem; border-radius: 6px; border: 1px solid #E2E8F0; }
-    .upload-preview img { width: 30px; height: 30px; border-radius: 5px; border: 1px solid #E2E8F0; object-fit: cover; }
-    .upload-preview .file-name { font-size: 0.72rem; color: var(--accent-green); font-weight: 600; word-break: break-all; }
+    .upload-preview { margin-top: 0.4rem; display: none; align-items: center; gap: 0.5rem; background: var(--white); padding: 0.35rem; border-radius: 8px; border: 1px solid #E2E8F0; }
+    .upload-preview img { width: 30px; height: 30px; border-radius: 6px; border: 1px solid #E2E8F0; object-fit: cover; }
+    .upload-preview .file-name { font-size: 0.75rem; color: var(--primary); font-weight: 600; word-break: break-all; }
     
-    .submit-btn { background: var(--accent-green); box-shadow: 0 5px 12px rgba(15, 110, 86, 0.12); margin-top: 0.85rem; }
-    .submit-btn:hover:not(:disabled) { background: #0c5e49; transform: translateY(-1px); }
+    .submit-btn { background: var(--primary); box-shadow: var(--shadow-btn); margin-top: 1rem; }
+    .submit-btn:hover:not(:disabled) { background: var(--accent-green-dark); transform: translateY(-1px); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    /* Overlay Layer Components */
-    #loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(8px); align-items: center; justify-content: center; flex-direction: column; gap: 0.65rem; }
-    .loader-box { background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border); border-radius: 14px; padding: 1.25rem; text-align: center; width: 240px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
-    .loader-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
-    .loader-title { font-family: var(--font-main); font-size: 0.95rem; font-weight: 800; color: var(--dark); margin-bottom: 0.15rem; }
-    .loader-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
-    .progress-bar-wrap { background: var(--saffron-pale); border-radius: 100px; height: 4px; overflow: hidden; }
-    .progress-bar { height: 100%; background: var(--saffron); border-radius: 100px; width: 0%; transition: width 0.5s ease; }
+    /* Overlay Loading Core Elements */
+    #loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(4px); align-items: center; justify-content: center; flex-direction: column; }
+    .loader-box { background: var(--white); border: 1px solid #E2E8F0; border-radius: 16px; padding: 1.5rem; text-align: center; width: 260px; box-shadow: var(--shadow-premium); }
+    .loader-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+    .loader-title { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 0.2rem; }
+    .loader-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 1rem; }
+    .progress-bar-wrap { background: #F1F5F9; border-radius: 100px; height: 5px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--primary); border-radius: 100px; width: 0%; transition: width 0.4s ease; }
 
-    /* Premium Immersive Full-Screen Success Layout */
-    #successScreen { display: none; position: fixed; inset: 0; z-index: 1100; background: var(--bg); flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem; overflow-y: auto; animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    .gpay-check { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #059669); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.85rem; box-shadow: 0 8px 20px rgba(0, 200, 83, 0.2); }
-    .gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.5s 0.1s ease forwards; }
-    .success-screen-title { font-family: var(--font-main); font-weight: 800; font-size: 1.3rem; color: var(--dark); margin-bottom: 0.3rem; letter-spacing: -0.01em; }
-    .success-verified-note { display: inline-flex; align-items: center; gap: 0.35rem; background: #F0FDF4; border: 1px solid rgba(22, 163, 74, 0.15); border-radius: 100px; padding: 0.35rem 0.75rem; font-family: var(--font-main); font-size: 0.75rem; color: #16A34A; font-weight: 700; margin-bottom: 0.65rem; }
-    .success-screen-sub { font-size: 0.85rem; color: var(--muted); font-weight: 500; margin-bottom: 0.65rem; line-height: 1.4; max-width: 300px; }
-    .success-msg { font-family: var(--font-main); font-weight: 500; font-style: italic; font-size: 0.8rem; color: #C2410C; background: var(--saffron-pale); border-radius: 10px; padding: 0.75rem 0.95rem; border: 1px dashed rgba(255, 107, 0, 0.2); line-height: 1.5; max-width: 320px; margin: 0 auto 1.25rem; }
-    .success-back-btn { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--dark); color: white; padding: 0.75rem 1.35rem; border-radius: 10px; font-family: var(--font-main); font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s ease; text-decoration: none; box-shadow: var(--shadow-btn); }
-    .success-back-btn:hover { background: #1e293b; }
+    /* ==========================================================================
+       PREMIUM GLASSMORPHISM SUCCESS DESIGN (White Minimal Theme Pop-up)
+       ========================================================================== */
+    #successScreen { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      z-index: 1100; 
+      background: rgba(15, 23, 42, 0.15); 
+      backdrop-filter: blur(16px); 
+      -webkit-backdrop-filter: blur(16px);
+      align-items: center; 
+      justify-content: center; 
+      padding: 1.25rem; 
+      animation: fadeIn 0.35s ease both;
+    }
+    .modal-content {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 28px;
+      padding: 2.25rem 1.75rem 2rem;
+      width: 100%;
+      max-width: 390px;
+      text-align: center;
+      box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 10px 20px -5px rgba(15, 23, 42, 0.04);
+      animation: modalSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .gpay-check { 
+      width: 64px; 
+      height: 64px; 
+      border-radius: 50%; 
+      background: rgba(2, 189, 88, 0.08); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 1.25rem; 
+      border: 1px solid rgba(2, 189, 88, 0.15);
+      box-shadow: 0 0 20px rgba(2, 189, 88, 0.12);
+    }
+    .gpay-tick { 
+      stroke-dasharray: 60; 
+      stroke-dashoffset: 60; 
+      animation: drawTick 0.5s 0.15s ease forwards; 
+    }
+    .success-screen-title { 
+      font-family: var(--font-heading); 
+      font-weight: 700; 
+      font-size: 1.35rem; 
+      color: #0F172A; 
+      margin-bottom: 0.4rem; 
+      letter-spacing: -0.02em; 
+      line-height: 1.25;
+    }
+    .success-verified-note { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.35rem; 
+      background: rgba(2, 189, 88, 0.08); 
+      border-radius: 100px; 
+      padding: 0.3rem 0.8rem; 
+      font-family: var(--font-heading); 
+      font-size: 0.72rem; 
+      color: #049643; 
+      font-weight: 600; 
+      margin-bottom: 1.25rem; 
+    }
+    .success-screen-sub { 
+      font-size: 0.82rem; 
+      color: #475569; 
+      font-weight: 400; 
+      margin-bottom: 1.5rem; 
+      line-height: 1.45;
+    }
+    .success-msg { 
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      font-weight: 400;
+      color: #475569;
+      text-align: center;
+      margin: 0 auto 1.75rem; 
+      padding: 1rem 0.5rem;
+      border-top: 1px solid #E2E8F0;
+      border-bottom: 1px solid #E2E8F0;
+      font-style: normal;
+    }
+    .success-back-btn { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      background: var(--primary); 
+      color: white; 
+      padding: 0.8rem 1.75rem; 
+      border-radius: 100px; /* Modern Pill Style */
+      font-family: var(--font-heading); 
+      font-weight: 600; 
+      font-size: 0.9rem; 
+      cursor: pointer; 
+      border: none; 
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); 
+      text-decoration: none; 
+      width: 100%;
+      justify-content: center;
+      box-shadow: var(--shadow-btn);
+    }
+    .success-back-btn:hover { 
+      background: var(--accent-green-dark); 
+      box-shadow: 0 6px 20px rgba(2, 189, 88, 0.35);
+      transform: translateY(-1px);
+    }
 
-    @media(max-width: 640px) {
-      .form-container { padding: 0 0.25rem 1.5rem; }
-      .form-card { padding: 1rem 0.75rem; }
-      .page-hero { padding: 1rem 0.5rem 0.25rem; }
+    @media(max-width: 480px) {
+      .form-container { padding: 0 0.5rem 1.5rem; }
+      .form-card { padding: 16px 14px; }
+      .page-hero h1 { font-size: 1.45rem; }
+      .modal-content { padding: 2rem 1.25rem 1.5rem; margin: 0 0.25rem; }
     }
   </style>
 </head>
@@ -207,11 +484,13 @@
     <div class="form-card">
       <div class="form-card-title">Your Details</div>
       <div class="form-card-sub">Tell us who you are to proceed</div>
+      
       <div class="form-group">
         <label class="form-label" for="fullName">Full Name</label>
         <input class="form-input" type="text" id="fullName" placeholder="Your full name" autocomplete="name"/>
         <div class="error-msg" id="err-name">Please enter your name</div>
       </div>
+      
       <div class="form-group">
         <label class="form-label" for="gradYear">Year</label>
         <div class="select-wrap">
@@ -225,6 +504,7 @@
         </div>
         <div class="error-msg" id="err-year">Please select your year</div>
       </div>
+      
       <div class="form-group">
         <label class="form-label" for="department">Department</label>
         <div class="select-wrap">
@@ -240,6 +520,7 @@
         </div>
         <div class="error-msg" id="err-dept">Please select your department</div>
       </div>
+      
       <div class="form-group">
         <label class="form-label" for="mobile">Mobile Number</label>
         <div class="phone-wrap">
@@ -248,6 +529,7 @@
         </div>
         <div class="error-msg" id="err-mobile">Enter a valid 10-digit number</div>
       </div>
+      
       <button class="btn-primary" onclick="goToStep2()">Continue to Payment →</button>
     </div>
   </div>
@@ -256,15 +538,18 @@
     <div class="form-card">
       <div class="form-card-title">Scan &amp; Pay</div>
       <div class="form-card-sub">Use any UPI app to complete your payment — every contribution counts!</div>
+      
       <div id="portalQRSection">
         <div class="qr-section">
           <div class="qr-label">UPI QR Code</div>
-          <div class="qr-box"><img id="portalQRImg" src="" alt="UPI QR" width="175" height="175"/></div>
+          <div class="qr-box"><img id="portalQRImg" src="" alt="UPI QR" width="125" height="125"/></div>
         </div>
       </div>
+      
       <div id="portalQRUnavail" class="qr-unavail" style="display:none;">
         <p>🔔 Payment QR for your year will be shared by the admin shortly. Please contact the committee.</p>
       </div>
+      
       <hr class="divider"/>
 
       <div class="form-group">
@@ -272,7 +557,7 @@
         <div class="upload-zone" id="uploadZone">
           <input type="file" id="proofFile" accept="image/*,.pdf" onchange="handleFileUpload(event)"/>
           <div class="upload-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           </div>
           <div>
             <div class="upload-text"><span>Tap to upload</span> screenshot</div>
@@ -307,16 +592,22 @@
 </div>
 
 <div id="successScreen">
-  <div class="gpay-check">
-    <svg width="32" height="32" viewBox="0 0 44 44" fill="none">
-      <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
+  <div class="modal-content">
+    <div class="gpay-check">
+      <svg width="28" height="28" viewBox="0 0 44 44" fill="none">
+        <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="#02BD58" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="success-screen-title">Payment Submitted Successfully</div>
+    <div class="success-verified-note">⏳ Verification Pending</div>
+    <div class="success-screen-sub" id="successNameMsg">Thank you for contributing! Your details are safely shared with the committee.</div>
+    
+    <div class="success-msg">
+      "Far from home, but never far from our roots. Your support keeps the spirit of Ganesh Chaturthi alive at NIT Silchar. Ganpati Bappa Morya!"
+    </div>
+    
+    <a href="index.html" class="success-back-btn">← Back to Home</a>
   </div>
-  <div class="success-screen-title">Contribution Received!</div>
-  <div class="success-verified-note">⏳ Admin will verify your payment shortly</div>
-  <div class="success-screen-sub" id="successNameMsg">Thank you for contributing!</div>
-  <div class="success-msg">"Far from home, but never far from our roots. Your support keeps the spirit of Ganesh Chaturthi alive at NIT Silchar. Ganpati Bappa Morya!"</div>
-  <a href="index.html" class="success-back-btn">← Back to Home</a>
 </div>
 
 <div id="loadingOverlay">
@@ -348,10 +639,6 @@
   const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
-  /**
-   * saveToFirestore — called from the global submitForm() after Sheets + Telegram.
-   * Non-blocking: success screen is never held back by this.
-   */
   window.saveToFirestore = async function({ name, year, branch, mobile, utr, timestamp }) {
     try {
       const docRef = await addDoc(collection(db, "Contributions"), {
@@ -361,19 +648,18 @@
         mobile,
         utr,
         paymentStatus: "Pending",
-        timestamp,                 // IST string from the form
-        createdAt: serverTimestamp() // server-side Firestore timestamp for accurate ordering
+        timestamp,
+        createdAt: serverTimestamp()
       });
       console.log("[Firebase] Contribution saved — doc ID:", docRef.id);
     } catch (err) {
       console.error("[Firebase] Failed to save contribution:", err);
-      // Intentionally swallowed — success screen already shown
     }
   };
 </script>
 
 <script>
-  // ── PORTAL CONFIG ──────────────────────────────────────────────────────────
+  // ── PORTAL WEB DATA ROUTING CONFIG ──────────────────────────────────────────
   const PORTAL_CONFIG = {
     "1": {
       upi:   "8919531422-4@ibl",
@@ -403,16 +689,13 @@
 
   const YEAR_LABEL = { "1":"1st Year", "2":"2nd Year", "3":"3rd Year", "4":"4th Year" };
 
-  // ── QR helper ──────────────────────────────────────────────────────────────
   function makePaymentQR(upiId, size) {
     const d = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=0F172A&bgcolor=FFFFFF&qzone=2`;
   }
 
-  // ── OCR: extract UTR/transaction ID from screenshot ────────────────────────
   function extractUTRFromText(rawText) {
     const text = rawText.replace(/\s+/g, ' ');
-
     const labelledPatterns = [
       /(?:UTR|UPI\s*Ref(?:erence)?\s*(?:No\.?|Number|ID)?|Ref(?:erence)?\s*(?:No\.?|Number|ID)|Txn(?:\.?\s*ID)?|Transaction\s*(?:ID|No\.?)|Order\s*ID|Payment\s*ID)\s*[:\-]?\s*([A-Z0-9]{8,22})/gi,
     ];
@@ -423,16 +706,12 @@
         if (/^\d{10,15}$/.test(val) || /^[A-Z]{2,4}\d{8,18}$/.test(val)) return val;
       }
     }
-
     const utr12 = text.match(/\b(\d{12})\b/g);
     if (utr12 && utr12.length > 0) return utr12[0];
-
     const alphanum = text.match(/\b([A-Z]{1,4}\d{10,18})\b/g);
     if (alphanum && alphanum.length > 0) return alphanum[0];
-
     const utr10 = text.match(/\b(\d{10,14})\b/g);
     if (utr10 && utr10.length > 0) return utr10[0];
-
     return null;
   }
 
@@ -479,7 +758,6 @@
     }
   }
 
-  // ── File upload handler ────────────────────────────────────────────────────
   async function handleFileUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -503,14 +781,12 @@
     }
   }
 
-  // ── Progress bar ───────────────────────────────────────────────────────────
   function setProgress(pct, title, sub) {
     document.getElementById('progressBar').style.width = pct + '%';
     if (title !== undefined) document.getElementById('loaderTitle').textContent = title;
     if (sub   !== undefined) document.getElementById('loaderSub').textContent   = sub;
   }
 
-  // ── Google Sheets (no-cors, fire-and-forget) ───────────────────────────────
   function sendToSheet(url, data) {
     fetch(url, {
       method:  'POST',
@@ -520,7 +796,6 @@
     }).catch(() => {});
   }
 
-  // ── Telegram helpers ───────────────────────────────────────────────────────
   async function sendTelegramText(botToken, chatId, text) {
     const r = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
       method:  'POST',
@@ -546,7 +821,6 @@
     }).catch(() => {});
   }
 
-  // ── Success sound ──────────────────────────────────────────────────────────
   function playSuccessSound() {
     try {
       const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -563,7 +837,6 @@
     } catch(e) {}
   }
 
-  // ── Field validation helpers ───────────────────────────────────────────────
   const FIELD_MAP = {
     'err-name':   'fullName',
     'err-year':   'gradYear',
@@ -586,7 +859,6 @@
     document.getElementById('ocrStatus').className = 'ocr-status';
   });
 
-  // ── Step 1 → Step 2 ────────────────────────────────────────────────────────
   function goToStep2() {
     const name = document.getElementById('fullName').value.trim();
     const year = document.getElementById('gradYear').value;
@@ -605,7 +877,7 @@
     if (cfg && cfg.upi) {
       document.getElementById('portalQRSection').style.display = 'block';
       document.getElementById('portalQRUnavail').style.display = 'none';
-      document.getElementById('portalQRImg').src = QR_CACHE[year] || makePaymentQR(cfg.upi, 175);
+      document.getElementById('portalQRImg').src = QR_CACHE[year] || makePaymentQR(cfg.upi, 125);
     } else {
       document.getElementById('portalQRSection').style.display = 'none';
       document.getElementById('portalQRUnavail').style.display = 'block';
@@ -621,7 +893,6 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Drag-and-drop on upload zone ───────────────────────────────────────────
   const uz = document.getElementById('uploadZone');
   uz.addEventListener('dragover',  e => { e.preventDefault(); uz.classList.add('dragover'); });
   uz.addEventListener('dragleave', () => uz.classList.remove('dragover'));
@@ -634,19 +905,17 @@
     }
   });
 
-  // ── Preload QR images ──────────────────────────────────────────────────────
   const QR_CACHE = {};
   (function preloadQRs() {
     Object.entries(PORTAL_CONFIG).forEach(([year, cfg]) => {
       if (!cfg.upi) return;
-      const url = makePaymentQR(cfg.upi, 175);
+      const url = makePaymentQR(cfg.upi, 125);
       const img = new Image();
       img.src = url;
       QR_CACHE[year] = url;
     });
   })();
 
-  // ── Submit ─────────────────────────────────────────────────────────────────
   async function submitForm() {
     const name = document.getElementById('fullName').value.trim();
     const year = document.getElementById('gradYear').value;
@@ -672,7 +941,6 @@
     const ts = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
     try {
-      // ── 1. Google Sheets (unchanged) ───────────────────────────────────────
       sendToSheet(cfg.sheet, {
         name,
         year:      yl,
@@ -684,7 +952,6 @@
 
       setProgress(55, 'Notifying team…', 'Sending payment screenshot');
 
-      // ── 2. Telegram (unchanged) ────────────────────────────────────────────
       if (cfg.bot && cfg.cid) {
         const caption =
           `*Vinayaka Chavithi 2026 — New Contribution*\n\n` +
@@ -699,7 +966,6 @@
 
       setProgress(80, 'Saving to database…', 'Storing in Firebase');
 
-      // ── 3. Firebase Firestore (Executed safely in the background to avoid any blocking bugs) ──
       if (typeof window.saveToFirestore === 'function') {
         window.saveToFirestore({ name, year: yl, branch: dept, mobile: mob, utr, timestamp: ts });
       }
@@ -708,8 +974,6 @@
       await new Promise(r => setTimeout(r, 350));
 
       document.getElementById('loadingOverlay').style.display = 'none';
-      document.getElementById('successNameMsg').textContent =
-        `Thank you, ${name}! Your contribution has been recorded.`;
       document.getElementById('successScreen').style.display = 'flex';
       playSuccessSound();
 
