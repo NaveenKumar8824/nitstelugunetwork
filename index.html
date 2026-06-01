@@ -151,7 +151,6 @@
       position: relative;
     }
 
-    /* Navbar Profile Icon: Ultra-Clean Compact Variant */
     .avatar-btn {
       width: 36px;
       height: 36px;
@@ -179,7 +178,6 @@
       box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
     }
 
-    /* Premium Compact Dropdown: iCloud / Notion Inspired */
     .profile-dropdown {
       position: absolute;
       top: calc(100% + 8px);
@@ -258,7 +256,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 1.5rem 5rem;
+      padding: 8rem 1.5rem 4rem;
       position: relative;
       overflow: hidden;
       background: transparent;
@@ -345,6 +343,80 @@
       -webkit-mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
     }
 
+    /* ==========================================================================
+       GEMINI-STYLE AURORA GLOW EFFECT
+       ========================================================================== */
+    .hero-aurora-wrapper {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 45vw;
+      height: 25vw;
+      max-width: 650px;
+      max-height: 380px;
+      min-width: 280px;
+      min-height: 180px;
+      z-index: -1;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.35;
+    }
+
+    .aurora-radial-depth {
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 0) 70%);
+      z-index: 1;
+    }
+
+    .aurora-blur-field {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #22c55e 0%, #14b8a6 40%, #06b6d4 100%);
+      filter: blur(80px);
+      -webkit-filter: blur(80px);
+      border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+      will-change: transform, border-radius, filter;
+      animation: aurora-flow 18s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+    }
+
+    @keyframes aurora-flow {
+      0% {
+        transform: rotate(0deg) scale(0.9) translate(-5px, -10px);
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      }
+      33% {
+        transform: rotate(4deg) scale(1.05) translate(10px, 5px);
+        border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+        filter: blur(75px);
+      }
+      66% {
+        transform: rotate(-3deg) scale(0.95) translate(-8px, 12px);
+        border-radius: 48% 52% 30% 70% / 40% 65% 35% 60%;
+      }
+      100% {
+        transform: rotate(2deg) scale(1.02) translate(4px, -6px);
+        border-radius: 55% 45% 65% 35% / 50% 50% 50% 50%;
+        filter: blur(85px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-aurora-wrapper {
+        width: 70vw;
+        height: 45vw;
+        opacity: 0.32;
+      }
+      .aurora-blur-field {
+        filter: blur(55px);
+        -webkit-filter: blur(55px);
+      }
+    }
+
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -404,8 +476,81 @@
       font-size: clamp(0.95rem, 3vw, 1.1rem);
       color: var(--muted);
       line-height: 1.7;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
       animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+
+    /* ==========================================================================
+       STRICT SIDE-BY-SIDE STATISTICS COMPONENT WITH COUNT UP STYLING
+       ========================================================================== */
+    .hero-stats-row {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap !important;
+      gap: 3.5rem;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      padding: 1.25rem 2rem;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+
+    .stat-node {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-width: 0;
+    }
+
+    .stat-num {
+      font-family: var(--font-main);
+      font-weight: 800;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--dark), #334155);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .stat-label {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.3;
+      word-wrap: break-word;
+      width: 100%;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 45px;
+      background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.12) 20%, rgba(15, 23, 42, 0.12) 80%, transparent);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 480px) {
+      .hero-stats-row {
+        gap: 1.25rem;
+        padding: 1rem 1rem;
+        margin-bottom: 2rem;
+        width: 100%;
+      }
     }
 
     .scroll-hint {
@@ -420,7 +565,7 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
-      margin-top: 2rem;
+      margin-top: 1rem;
     }
 
     .scroll-line {
@@ -735,7 +880,7 @@
     .vp-ok-btn { width: 100%; padding: 0.85rem; background: var(--dark); color: white; border: none; border-radius: 12px; font-family: var(--font-main); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 8px 20px rgba(15, 23, 42, 0.15); }
 
     /* ==========================================================================
-       MOBILE-FIRST COMPACT MODAL SYSTEM (iCloud / Notion Style Redux)
+       MOBILE-FIRST COMPACT MODAL SYSTEM
        ========================================================================== */
     .apple-modal-overlay {
       position: fixed;
@@ -755,7 +900,6 @@
       display: flex;
     }
 
-    /* Highly Compact Mobile-First Forms */
     .auth-card {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(30px);
@@ -764,7 +908,7 @@
       border-radius: var(--radius-lg);
       padding: 1.75rem 1.5rem;
       width: 100%;
-      max-width: 350px; /* Rigid desktop boundary clamp */
+      max-width: 350px; 
       box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
       animation: vpSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       display: none;
@@ -925,7 +1069,6 @@
       text-decoration: underline;
     }
 
-    /* Elegant Micro Profile Dialog Window */
     .profile-card {
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(30px);
@@ -979,7 +1122,6 @@
       .grid-fields { grid-template-columns: 1fr; gap: 0; }
     }
 
-    /* Embedded Compact Profile Mini-Card Wrappers */
     .profile-form-section {
       background: rgba(241, 245, 249, 0.4);
       border: 1px solid rgba(15, 23, 42, 0.04);
@@ -988,7 +1130,6 @@
       margin-bottom: 1rem;
     }
 
-    /* Toast Overlay System */
     .toast-container {
       position: fixed;
       top: 16px;
@@ -1060,10 +1201,31 @@
   </div>
   
   <div class="hero-grid"></div>
+  
+  <!-- GEMINI STYLE GLOW WRAPPER -->
+  <div class="hero-aurora-wrapper">
+    <div class="aurora-radial-depth"></div>
+    <div class="aurora-blur-field"></div>
+  </div>
+
   <div class="hero-badge"><div class="badge-dot"></div>NIT Silchar's Telugu Community</div>
   <h1>NITS <span class="accent">Telugu</span></h1>
   <div class="hero-sub">Network</div>
   <p class="hero-desc">Connecting Telugu hearts at NIT Silchar — celebrating our culture, supporting each other, and building memories far from home.</p>
+  
+  <!-- ATOMIZED SIDE-BY-SIDE STATISTICS COMPONENT WITH COUNT UP CAPABILITY -->
+  <div class="hero-stats-row">
+    <div class="stat-node">
+      <div class="stat-num" id="statMembers" data-target="400">0+</div>
+      <div class="stat-label">Members</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-node">
+      <div class="stat-num" id="statFestivals" data-target="2">0</div>
+      <div class="stat-label">Festivals</div>
+    </div>
+  </div>
+
   <div class="scroll-hint">Explore<div class="scroll-line"></div></div>
 </section>
 
@@ -1142,7 +1304,7 @@
       <a href="https://wa.me/919392920692" target="_blank" rel="noopener" class="dsi" title="WhatsApp">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
           <rect width="24" height="24" rx="5" fill="#25D366"/>
-          <path fill="white" d="M12 4.8A7.2 7.2 0 0 0 5.6 15.7L4.5 19.5l3.9-1.02A7.2 7.2 0 1 0 12 4.8zm0 13a5.76 5.76 0 0 1-2.94-.81l-.21-.12-2.18.57.59-2.13-.14-.22A5.76 5.76 0 1 1 12 17.8zm3.17-4.3c-.17-.09-1.02-.5-1.18-.56-.15-.06-.27-.09-.38.09s-.44.56-.54.67c-.1.12-.2.13-.38.04a4.68 4.68 0 0 1-1.38-.85 5.16 5.16 0 0 1-.95-1.18c-.1-.18-.01-.27.08-.36.08-.08.17-.2.26-.3.09-.1.12-.17.18-.29.06-.11.03-.21-.02-.3-.05-.08-.38-.93-.53-1.28-.13-.33-.28-.29-.38-.29h-.33c-.11 0-.3.04-.45.21-.15.17-.6.58-.6 1.41s.61 1.64.69 1.75c.09.12 1.2 1.82 2.89 2.55.4.17.72.28.96.36.4.12.77.1 1.06.06.32-.05 1-.4 1.14-.8.14-.39.14-.73.1-.8-.05-.07-.16-.12-.33-.2z"/>
+          <path fill="white" d="M12 4.8A7.2 7.2 0 0 0 5.6 15.7 L4.5 19.5 l3.9-1.02A7.2 7.2 0 1 0 12 4.8zm0 13a5.76 5.76 0 0 1-2.94-.81l-.21-.12-2.18.57.59-2.13-.14-.22A5.76 5.76 0 1 1 12 17.8zm3.17-4.3c-.17-.09-1.02-.5-1.18-.56-.15-.06-.27-.09-.38.09s-.44.56-.54.67c-.1.12-.2.13-.38.04a4.68 4.68 0 0 1-1.38-.85 5.16 5.16 0 0 1-.95-1.18c-.1-.18-.01-.27.08-.36.08-.08.17-.2.26-.3.09-.1.12-.17.18-.29.06-.11.03-.21-.02-.3-.05-.08-.38-.93-.53-1.28-.13-.33-.28-.29-.38-.29h-.33c-.11 0-.3.04-.45.21-.15.17-.6.58-.6 1.41s.61 1.64.69 1.75c.09.12 1.2 1.82 2.89 2.55.4.17.72.28.96.36.4.12.77.1 1.06.06.32-.05 1-.4 1.14-.8.14-.39.14-.73.1-.8-.05-.07-.16-.12-.33-.2z"/>
         </svg>
       </a>
       <a href="mailto:naveenkumarnaik69@gmail.com" class="dsi" title="Gmail">
@@ -1192,12 +1354,9 @@
   </div>
 </div>
 
-<!-- ==========================================================================
-     AUTHENTICATION SYSTEM SYSTEM INTERFACES (MOBILE SE OPTIMIZED)
-     ========================================================================== */ -->
+<!-- AUTHENTICATION SYSTEM INTERFACES -->
 <div class="apple-modal-overlay" id="authGlobalOverlay">
   
-  <!-- INTERFACE ONE: COMPACT SIGN IN CARD -->
   <div class="auth-card" id="cardLogin">
     <div class="auth-header">
       <div class="auth-brand">NITS <span>Telugu</span></div>
@@ -1233,7 +1392,6 @@
     </div>
   </div>
 
-  <!-- INTERFACE TWO: COMPACT CREATE ACCOUNT CARD -->
   <div class="auth-card" id="cardRegister">
     <div class="auth-header">
       <div class="auth-brand">NITS <span>Telugu</span></div>
@@ -1265,7 +1423,6 @@
     </div>
   </div>
 
-  <!-- INTERFACE THREE: MY PROFILE MANAGEMENT COMPACT LAYOUT -->
   <div class="profile-card" id="cardProfile" style="display: none;">
     <button class="close-modal-btn" id="closeProfileBtn" title="Close window">✕</button>
     
@@ -1348,7 +1505,7 @@
     measurementId: "G-LE711ZLKB1"
   };
 
-  const app  = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const app   = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const db   = getFirestore(app);
   const auth = getAuth(app);
 
@@ -1379,6 +1536,73 @@
   const formEmailRegister  = document.getElementById("formEmailRegister");
   const formUpdateProfile  = document.getElementById("formUpdateProfile");
   const authLogoutBtn      = document.getElementById("authLogoutBtn");
+
+  /* ==========================================================================
+     PREMIUM COUNT UP INTERSECTION OBSERVER LOGIC
+     ========================================================================== */
+  function initCountUpAnimation() {
+    const statsElements = [
+      { id: 'statMembers', suffix: '+' },
+      { id: 'statFestivals', suffix: '' }
+    ];
+    
+    const countUp = (element, target, suffix) => {
+      let start = 0;
+      const duration = 1500; // Total duration of the animation in ms
+      const startTime = performance.now();
+      
+      const animate = (currentTime) => {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        
+        // Out-Quad easing function for a premium decelerating finish
+        const easeProgress = progress * (2 - progress);
+        const currentValue = Math.floor(easeProgress * target);
+        
+        element.textContent = currentValue + suffix;
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          element.textContent = target + suffix;
+        }
+      };
+      
+      requestAnimationFrame(animate);
+    };
+
+    const observerOptions = {
+      root: null,
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const targetNum = parseInt(el.getAttribute('data-target'), 10);
+          const config = statsElements.find(s => s.id === el.id);
+          
+          if (config && targetNum) {
+            countUp(el, targetNum, config.suffix);
+            observer.unobserve(el); // Prevent re-triggering
+          }
+        }
+      });
+    }, observerOptions);
+
+    statsElements.forEach(stat => {
+      const el = document.getElementById(stat.id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // Initialize counting script safely on dom load
+  document.addEventListener("DOMContentLoaded", initCountUpAnimation);
+  // Fail-safe execution context if DOMContentLoaded has already fired
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    initCountUpAnimation();
+  }
 
   /* ==========================================================================
      TOAST ALERTS CONTROLLER
