@@ -18,7 +18,6 @@
     }
     
     :root {
-      /* Premium Palette Requested */
       --primary: #00C853;
       --secondary: #0EA5E9;
       --dark: #0F172A;
@@ -26,7 +25,6 @@
       --muted: #64748B;
       --bg: #F8FAFC;
       
-      /* Derived & Surface Colors */
       --surface: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.5);
       --shadow-soft: 0 20px 40px rgba(15, 23, 42, 0.06);
@@ -53,8 +51,12 @@
       line-height: 1.6;
     }
 
+    body.modal-open {
+      overflow: hidden !important;
+    }
+
     /* ==========================================================================
-       FIXED GLASS NAVBAR (Updated Background)
+       FIXED GLASS NAVBAR
        ========================================================================== */
     nav {
       position: fixed;
@@ -67,7 +69,6 @@
       align-items: center;
       justify-content: space-between;
       padding: 1rem 5%;
-      /* Matches site bg #F8FAFC with slight transparency for glass effect */
       background: rgba(248, 250, 252, 0.9);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
@@ -118,6 +119,12 @@
       text-transform: uppercase;
     }
 
+    .nav-right-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
     .nav-links {
       display: flex;
       gap: 2rem;
@@ -140,9 +147,99 @@
       background: rgba(15, 23, 42, 0.04);
     }
 
+    .profile-nav-wrapper {
+      position: relative;
+    }
+
+    .avatar-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--secondary), #3b82f6);
+      color: white;
+      font-family: var(--font-main);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      text-transform: uppercase;
+    }
+
+    .avatar-btn:hover {
+      transform: scale(1.05);
+      border-color: white;
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3);
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: 180px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      padding: 0.5rem;
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 200;
+    }
+
+    .profile-dropdown.active {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .dropdown-item {
+      padding: 0.6rem 1rem;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(15, 23, 42, 0.05);
+      color: var(--dark);
+    }
+
+    .dropdown-item.logout-btn {
+      color: #EF4444;
+    }
+    .dropdown-item.logout-btn:hover {
+      background: rgba(239, 68, 68, 0.08);
+      color: #DC2626;
+    }
+
     @media(max-width: 768px) {
       .nav-links { display: none; }
       nav { padding: 0.85rem 1.25rem; }
+      .nav-right-container { gap: 1rem; }
     }
 
     /* ==========================================================================
@@ -161,7 +258,6 @@
       background: transparent;
     }
 
-    /* Premium Fluid AI-Inspired Aurora Backdrop */
     .hero-gradient-wrapper {
       position: absolute;
       inset: 0;
@@ -180,7 +276,6 @@
       will-change: transform;
     }
 
-    /* Teal Orb - Left Middle */
     .blob-teal {
       top: 10%;
       left: -5%;
@@ -191,7 +286,6 @@
       animation: fluidMovementOne 28s infinite alternate ease-in-out;
     }
 
-    /* Cyan Orb - Top Right */
     .blob-cyan {
       top: -5%;
       right: -5%;
@@ -202,7 +296,6 @@
       animation: fluidMovementTwo 32s infinite alternate ease-in-out 1.5s;
     }
 
-    /* Green Orb - Bottom Left */
     .blob-green {
       bottom: -5%;
       left: 10%;
@@ -213,7 +306,6 @@
       animation: fluidMovementThree 25s infinite alternate ease-in-out 3s;
     }
 
-    /* Light Blue Orb - Center Right */
     .blob-blue {
       bottom: 20%;
       right: 15%;
@@ -224,7 +316,6 @@
       animation: fluidMovementOne 30s infinite alternate-reverse ease-in-out 0.5s;
     }
 
-    /* Soft White Glow Orb - Ambient Core */
     .blob-white {
       top: 30%;
       left: 35%;
@@ -335,7 +426,7 @@
     }
 
     /* ==========================================================================
-       EVENTS SECTION (Mobile Optimized Cards)
+       EVENTS SECTION
        ========================================================================== */
     .events {
       padding: 6rem 1.5rem;
@@ -519,7 +610,6 @@
     .cta-arrow { font-size: 1.1rem; transition: transform 0.3s ease; }
     .event-card:hover .cta-arrow { transform: translateX(4px); }
 
-    /* --- MOBILE RESPONSIVE OVERRIDES --- */
     @media(max-width: 640px) {
       .events { padding: 4rem 1rem; }
       .events-grid { grid-template-columns: 1fr; gap: 1.25rem; }
@@ -586,7 +676,7 @@
     @media(max-width: 600px) { .dev-strip-inner { justify-content: center; text-align: center; } }
 
     /* ==========================================================================
-       COMPACT FOOTER (Updated Height)
+       COMPACT FOOTER
        ========================================================================== */
     footer {
       border-top: 1px solid rgba(15, 23, 42, 0.05); 
@@ -615,7 +705,6 @@
     @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
     @keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 
-    /* Refined Fluid Floating Aurora Core Movement Logic */
     @keyframes fluidMovementOne {
       0% { transform: translate(0px, 0px) scale(1); }
       33% { transform: translate(40px, -50px) scale(1.05); }
@@ -633,9 +722,6 @@
       100% { transform: translate(0px, 0px) scale(0.96); }
     }
 
-    /* ==========================================================================
-       VERIFIED BOOKING POPUP
-       ========================================================================== */
     @keyframes vpFadeIn { from { opacity: 0; backdrop-filter: blur(0px); } to { opacity: 1; backdrop-filter: blur(12px); } }
     @keyframes vpSlideUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes vpPop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
@@ -659,23 +745,331 @@
     .vp-note { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
     .vp-ok-btn { width: 100%; padding: 1rem; background: var(--dark); color: white; border: none; border-radius: 14px; font-family: var(--font-main); font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2); }
     .vp-ok-btn:hover { background: #1e293b; transform: translateY(-2px); box-shadow: 0 15px 35px rgba(15, 23, 42, 0.3); }
+
+    /* ==========================================================================
+       APPLE MORPHISM AUTHENTICATION SYSTEM & PROFILE MODALS
+       ========================================================================== */
+    .apple-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.3);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 1.5rem;
+      animation: vpFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .apple-modal-overlay.active {
+      display: flex;
+    }
+
+    .auth-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.15);
+      animation: vpSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      display: none;
+      flex-direction: column;
+    }
+
+    .auth-card.active {
+      display: flex;
+    }
+
+    .auth-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-brand {
+      font-family: var(--font-main);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+    .auth-brand span {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .auth-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .auth-methods-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .google-btn, .phone-toggle-btn {
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      background: #FFFFFF;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--dark);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .google-btn:hover, .phone-toggle-btn:hover {
+      background: #F8FAFC;
+      border-color: rgba(15, 23, 42, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .google-icon { width: 18px; height: 18px; }
+    .phone-icon { width: 18px; height: 18px; fill: var(--text); }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .auth-divider:not(:empty)::before { margin-right: .75em; }
+    .auth-divider:not(:empty)::after { margin-left: .75em; }
+
+    .input-group {
+      margin-bottom: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-align: left;
+    }
+
+    .input-group label {
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      padding-left: 0.25rem;
+    }
+
+    .apple-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: rgba(241, 245, 249, 0.6);
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--dark);
+      transition: all 0.2s ease;
+    }
+
+    .apple-input:focus {
+      outline: none;
+      background: #FFFFFF;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+    }
+
+    .phone-input-container {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .country-code {
+      width: 75px;
+      text-align: center;
+      font-weight: 600;
+      background: rgba(226, 232, 240, 0.6);
+    }
+
+    .apple-submit-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: var(--dark);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--font-main);
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 0.25rem;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+
+    .apple-submit-btn:hover {
+      background: #1E293B;
+      transform: translateY(-1px);
+    }
+
+    .apple-submit-btn:disabled {
+      background: #CBD5E1;
+      color: #94A3B8;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .auth-toggle-link {
+      margin-top: 1.25rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .auth-toggle-link span {
+      color: var(--secondary);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .auth-toggle-link span:hover {
+      text-decoration: underline;
+    }
+
+    /* Profile Edit Form Styles */
+    .profile-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 40px 90px rgba(15, 23, 42, 0.2);
+      position: relative;
+      animation: vpSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .close-modal-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(15, 23, 42, 0.05);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .close-modal-btn:hover {
+      background: rgba(15, 23, 42, 0.1);
+      color: var(--dark);
+    }
+
+    .grid-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Toast System Integration */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast-container.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .apple-toast {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      padding: 0.75rem 1.5rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .toast-success { color: #059669; border-left: 4px solid #10B981; }
+    .toast-error { color: #DC2626; border-left: 4px solid #EF4444; }
+
+    @media (max-width: 480px) {
+      .grid-fields { grid-template-columns: 1fr; }
+      .auth-card, .profile-card { padding: 1.75rem 1.25rem; }
+    }
   </style>
 </head>
 <body>
+
+<div class="toast-container" id="toastContainer">
+  <div class="apple-toast" id="toastBox">Status Alert</div>
+</div>
 
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="logo-mark">న</div>
     <div class="logo-text">NITS Telugu Network<span>Community Portal</span></div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#events">Events</a></li>
-    <li><a href="#about">About</a></li>
-  </ul>
+  <div class="nav-right-container">
+    <ul class="nav-links">
+      <li><a href="#events">Events</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    
+    <div class="profile-nav-wrapper" id="profileNavWrapper" style="display: none;">
+      <div class="avatar-btn" id="navAvatarBtn">—</div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <button class="dropdown-item" id="openProfileMenuBtn">My Profile</button>
+        <button class="dropdown-item logout-btn" id="authLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
-  <!-- Glowing Animated Fluid Aurora Base Structure (With Premium Orbs Added) -->
   <div class="hero-gradient-wrapper">
     <div class="hero-blob blob-teal"></div>
     <div class="hero-blob blob-cyan"></div>
@@ -797,7 +1191,7 @@
     <div class="vp-icon">
       <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
         <path d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
-          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.6s 0.3s ease forwards;"/>
+          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.6s 0.3s ease forwards"/>
       </svg>
     </div>
     <div class="vp-title">Booking Verified Successfully</div>
@@ -820,54 +1214,662 @@
   </div>
 </div>
 
+<div class="apple-modal-overlay" id="authGlobalOverlay">
+  
+  <div class="auth-card" id="cardLogin">
+    <div class="auth-header">
+      <div class="auth-brand">NITS <span>Telugu</span></div>
+      <div class="auth-subtitle">Sign in to continue</div>
+    </div>
+    
+    <div class="auth-methods-grid">
+      <button class="google-btn" id="googleSignInBtn">
+        <svg class="google-icon" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22c-.81-2.61-.81-3.04 0-4.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <button class="phone-toggle-btn" id="phoneOptionSelectBtn">
+        <svg class="phone-icon" viewBox="0 0 24 24">
+          <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+        </svg>
+        Continue with Phone OTP
+      </button>
+    </div>
+    
+    <div class="auth-divider">or traditional metrics</div>
+    
+    <form id="formEmailLogin">
+      <div class="input-group">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" class="apple-input" placeholder="name@example.com" required>
+      </div>
+      <div class="input-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" class="apple-input" placeholder="Required" required>
+      </div>
+      <button type="submit" class="apple-submit-btn">Sign In</button>
+    </form>
+    
+    <div class="auth-toggle-link">
+      Don't have an account? <span id="toRegisterLink">Create Account</span>
+    </div>
+  </div>
+
+  <div class="auth-card" id="cardRegister">
+    <div class="auth-header">
+      <div class="auth-brand">NITS <span>Telugu</span></div>
+      <div class="auth-subtitle">Create your community profile</div>
+    </div>
+    
+    <form id="formEmailRegister">
+      <div class="input-group">
+        <label for="regName">Full Name</label>
+        <input type="text" id="regName" class="apple-input" placeholder="John Doe" required>
+      </div>
+      <div class="input-group">
+        <label for="regEmail">Email Address</label>
+        <input type="email" id="regEmail" class="apple-input" placeholder="name@example.com" required>
+      </div>
+      <div class="input-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" class="apple-input" placeholder="At least 6 characters" minlength="6" required>
+      </div>
+      <div class="input-group">
+        <label for="regConfirmPassword">Confirm Password</label>
+        <input type="password" id="regConfirmPassword" class="apple-input" placeholder="Repeat password" minlength="6" required>
+      </div>
+      <button type="submit" class="apple-submit-btn">Create Account</button>
+    </form>
+    
+    <div class="auth-toggle-link">
+      Already have an account? <span id="toLoginLink">Sign In</span>
+    </div>
+  </div>
+
+  <div class="auth-card" id="cardPhoneAuth">
+    <div class="auth-header">
+      <div class="auth-brand">NITS <span>Telugu</span></div>
+      <div class="auth-subtitle">Verify via Mobile OTP</div>
+    </div>
+
+    <div id="phoneStepContainer">
+      <div class="input-group">
+        <label for="phoneMainNumber">Mobile Number</label>
+        <div class="phone-input-container">
+          <input type="text" class="apple-input country-code" value="+91" readonly>
+          <input type="tel" id="phoneMainNumber" class="apple-input" placeholder="Enter 10-digit number" maxlength="10">
+        </div>
+      </div>
+      <button type="button" class="apple-submit-btn" id="sendOtpBtn">Send OTP</button>
+    </div>
+
+    <div id="otpStepContainer" style="display: none; margin-top: 0.5rem;">
+      <div class="input-group">
+        <label for="otpCodeInput">Enter 6-Digit OTP</label>
+        <input type="text" id="otpCodeInput" class="apple-input" placeholder="XXXXXX" maxlength="6" style="text-align: center; letter-spacing: 0.4em; font-weight: 700;">
+      </div>
+      <button type="button" class="apple-submit-btn" id="verifyOtpBtn" disabled>Verify OTP</button>
+      <div class="auth-toggle-link" style="font-size: 0.8rem; margin-top: 1rem;">
+        Didn't receive code? <span id="resendTimerText" style="color: var(--muted); cursor: not-allowed;">Resend in 30s</span>
+      </div>
+    </div>
+
+    <div id="invisibleRecaptchaAnchor"></div>
+
+    <div class="auth-toggle-link">
+      Go back to standard <span id="backToLoginLink">Sign In options</span>
+    </div>
+  </div>
+
+  <div class="profile-card" id="cardProfile" style="display: none;">
+    <button class="close-modal-btn" id="closeProfileBtn" title="Close window">✕</button>
+    
+    <div class="auth-header" style="text-align: left; margin-bottom: 1.5rem;">
+      <div class="auth-brand" style="font-size: 1.35rem;">My <span>Profile</span></div>
+      <div class="auth-subtitle">View and update your student information</div>
+    </div>
+    
+    <form id="formUpdateProfile">
+      <div class="input-group">
+        <label>Identity Metric (Read-Only)</label>
+        <input type="text" id="profEmail" class="apple-input" style="opacity: 0.65; cursor: not-allowed;" readonly>
+      </div>
+      
+      <div class="input-group">
+        <label for="profName">Full Name</label>
+        <input type="text" id="profName" class="apple-input" placeholder="Add full name" required>
+      </div>
+      
+      <div class="grid-fields">
+        <div class="input-group">
+          <label for="profMobile">Mobile Number</label>
+          <input type="tel" id="profMobile" class="apple-input" placeholder="e.g. 9392920692">
+        </div>
+        <div class="input-group">
+          <label for="profYear">Academic Year</label>
+          <input type="text" id="profYear" class="apple-input" placeholder="e.g. 3rd Year">
+        </div>
+      </div>
+      
+      <div class="grid-fields">
+        <div class="input-group">
+          <label for="profDept">Department</label>
+          <input type="text" id="profDept" class="apple-input" placeholder="e.g. CSE">
+        </div>
+        <div class="input-group">
+          <label for="profHometown">Hometown</label>
+          <input type="text" id="profHometown" class="apple-input" placeholder="e.g. Vijayawada">
+        </div>
+      </div>
+      
+      <button type="submit" class="apple-submit-btn" style="background: linear-gradient(135deg, var(--secondary), #2563EB)">Save Changes</button>
+    </form>
+  </div>
+
+</div>
+
 <script type="module">
-  import { initializeApp, getApps, getApp }
-    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    query,
-    where,
-    getDocs,
-    doc,
-    updateDoc
-  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+  import { initializeApp, getApps, getApp } 
+    from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { 
+    getFirestore, collection, query, where, getDocs, doc, updateDoc, setDoc, getDoc 
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { 
+    getAuth, 
+    setPersistence, 
+    browserLocalPersistence, 
+    onAuthStateChanged, 
+    signInWithPopup, 
+    GoogleAuthProvider, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    updateProfile, 
+    signOut,
+    RecaptchaVerifier,
+    signInWithPhoneNumber
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey:            "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
-    authDomain:        "movie-tickets-booking-a1545.firebaseapp.com",
-    projectId:         "movie-tickets-booking-a1545",
-    storageBucket:     "movie-tickets-booking-a1545.firebasestorage.app",
-    messagingSenderId: "557765260182",
-    appId:             "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
-    measurementId:     "G-GNNYBNTQFC"
+    apiKey: "AIzaSyDXi-_b6QwjAbC9b7DPw37u6LefeMaTwl0",
+    authDomain: "nitstelugu.firebaseapp.com",
+    projectId: "nitstelugu",
+    storageBucket: "nitstelugu.firebasestorage.app",
+    messagingSenderId: "480146246426",
+    appId: "1:480146246426:web:f779fd4a7ea4de12073aa3",
+    measurementId: "G-LE711ZLKB1"
   };
 
-  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const db  = getFirestore(app);
+  const app  = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const db   = getFirestore(app);
+  const auth = getAuth(app);
 
-  /* Check if the user's booking has been verified by admin */
+  setPersistence(auth, browserLocalPersistence).catch(err => {
+    console.error("Session persistence configuration failure:", err.message);
+  });
+
+  /* ==========================================================================
+     DOM NODE ACCESS POINTER MATRIX
+     ========================================================================== */
+  const authOverlay         = document.getElementById("authGlobalOverlay");
+  const cardLogin           = document.getElementById("cardLogin");
+  const cardRegister        = document.getElementById("cardRegister");
+  const cardPhoneAuth       = document.getElementById("cardPhoneAuth");
+  const cardProfile         = document.getElementById("cardProfile");
+  
+  const profileNavWrapper   = document.getElementById("profileNavWrapper");
+  const navAvatarBtn        = document.getElementById("navAvatarBtn");
+  const profileDropdown     = document.getElementById("profileDropdown");
+  
+  const toRegisterLink      = document.getElementById("toRegisterLink");
+  const toLoginLink         = document.getElementById("toLoginLink");
+  const phoneOptionSelectBtn = document.getElementById("phoneOptionSelectBtn");
+  const backToLoginLink     = document.getElementById("backToLoginLink");
+  const openProfileMenuBtn  = document.getElementById("openProfileMenuBtn");
+  const closeProfileBtn     = document.getElementById("closeProfileBtn");
+  
+  const googleSignInBtn     = document.getElementById("googleSignInBtn");
+  const formEmailLogin      = document.getElementById("formEmailLogin");
+  const formEmailRegister   = document.getElementById("formEmailRegister");
+  const formUpdateProfile   = document.getElementById("formUpdateProfile");
+  const authLogoutBtn       = document.getElementById("authLogoutBtn");
+
+  // Phone Specific Field Selectors
+  const phoneMainNumber     = document.getElementById("phoneMainNumber");
+  const sendOtpBtn          = document.getElementById("sendOtpBtn");
+  const phoneStepContainer  = document.getElementById("phoneStepContainer");
+  const otpStepContainer    = document.getElementById("otpStepContainer");
+  const otpCodeInput        = document.getElementById("otpCodeInput");
+  const verifyOtpBtn        = document.getElementById("verifyOtpBtn");
+  const resendTimerText     = document.getElementById("resendTimerText");
+
+  // Global variables tracking state operations
+  let globalRecaptchaVerifier = null;
+  let globalConfirmationResult = null;
+  let resendCountdownInterval = null;
+
+  /* ==========================================================================
+     TOAST ALERTS SYSTEM
+     ========================================================================== */
+  function showToastNotification(message, isSuccess = false) {
+    const container = document.getElementById("toastContainer");
+    const box = document.getElementById("toastBox");
+    
+    box.className = `apple-toast ${isSuccess ? 'toast-success' : 'toast-error'}`;
+    box.textContent = message;
+    
+    container.classList.add("visible");
+    setTimeout(() => {
+      container.classList.remove("visible");
+    }, 4000);
+  }
+
+  /* ==========================================================================
+     ROUTING & VIEW INTERFACE CONTROLLERS
+     ========================================================================== */
+  function enforceAuthOverlayView(mode) {
+    document.body.classList.add("modal-open");
+    authOverlay.classList.add("active");
+    cardLogin.classList.remove("active");
+    cardRegister.classList.remove("active");
+    cardPhoneAuth.classList.remove("active");
+    cardProfile.style.display = "none";
+    
+    if (mode === "login") {
+      cardLogin.classList.add("active");
+    } else if (mode === "register") {
+      cardRegister.classList.add("active");
+    } else if (mode === "phone") {
+      cardPhoneAuth.classList.add("active");
+      resetPhoneFlowInterface();
+    } else if (mode === "profile") {
+      cardProfile.style.display = "block";
+    }
+  }
+
+  function dismissAuthOverlayView() {
+    document.body.classList.remove("modal-open");
+    authOverlay.classList.remove("active");
+    cardLogin.classList.remove("active");
+    cardRegister.classList.remove("active");
+    cardPhoneAuth.classList.remove("active");
+    cardProfile.style.display = "none";
+    clearInterval(resendCountdownInterval);
+  }
+
+  function resetPhoneFlowInterface() {
+    phoneStepContainer.style.display = "block";
+    otpStepContainer.style.display = "none";
+    phoneMainNumber.value = "";
+    otpCodeInput.value = "";
+    sendOtpBtn.disabled = false;
+    verifyOtpBtn.disabled = true;
+    if (globalRecaptchaVerifier) {
+      try { globalRecaptchaVerifier.clear(); globalRecaptchaVerifier = null; } catch(e){}
+    }
+    clearInterval(resendCountdownInterval);
+    resendTimerText.style.color = "var(--muted)";
+    resendTimerText.style.cursor = "not-allowed";
+    resendTimerText.textContent = "Resend in 30s";
+  }
+
+  // Bind Standard View Transitions
+  toRegisterLink.addEventListener("click", () => enforceAuthOverlayView("register"));
+  toLoginLink.addEventListener("click", () => enforceAuthOverlayView("login"));
+  phoneOptionSelectBtn.addEventListener("click", () => enforceAuthOverlayView("phone"));
+  backToLoginLink.addEventListener("click", () => enforceAuthOverlayView("login"));
+  closeProfileBtn.addEventListener("click", () => dismissAuthOverlayView());
+  
+  navAvatarBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileDropdown.classList.toggle("active");
+  });
+  
+  document.addEventListener("click", () => {
+    profileDropdown.classList.remove("active");
+  });
+
+  /* ==========================================================================
+     PHONE OTP INFRASTRUCTURE EXECUTION ENGINE
+     ========================================================================== */
+  function initializeInvisibleRecaptcha() {
+    if (globalRecaptchaVerifier) return;
+    try {
+      globalRecaptchaVerifier = new RecaptchaVerifier(auth, 'invisibleRecaptchaAnchor', {
+        'size': 'invisible',
+        'callback': (response) => {
+          // reCAPTCHA solved - user context allowed execution
+        },
+        'expired-callback': () => {
+          showToastNotification("reCAPTCHA state expired. Please re-verify phone entry.");
+          resetPhoneFlowInterface();
+        }
+      });
+    } catch (err) {
+      showToastNotification("reCAPTCHA failure orchestration: " + err.message);
+    }
+  }
+
+  function triggerResendCountdown() {
+    let duration = 30;
+    resendTimerText.style.color = "var(--muted)";
+    resendTimerText.style.cursor = "not-allowed";
+    resendTimerText.textContent = `Resend in ${duration}s`;
+    
+    clearInterval(resendCountdownInterval);
+    resendCountdownInterval = setInterval(() => {
+      duration--;
+      if (duration <= 0) {
+        clearInterval(resendCountdownInterval);
+        resendTimerText.textContent = "Resend OTP";
+        resendTimerText.style.color = "var(--secondary)";
+        resendTimerText.style.cursor = "pointer";
+      } else {
+        resendTimerText.textContent = `Resend in ${duration}s`;
+      }
+    }, 1000);
+  }
+
+  // Validate Indian mobile numbers (Starts with 6-9, followed by 9 digits)
+  function isValidIndianMobile(number) {
+    const cleanNum = number.replace(/\D/g, '');
+    return cleanNum.length === 10 && /^[6-9]/.test(cleanNum);
+  }
+
+  async function requestOtpTransmission() {
+    const digits = phoneMainNumber.value.trim();
+    if (!isValidIndianMobile(digits)) {
+      showToastNotification("Invalid phone number structure. Please input a valid 10-digit Indian mobile number.");
+      return;
+    }
+
+    sendOtpBtn.disabled = true;
+    initializeInvisibleRecaptcha();
+    
+    const absolutePhoneNumber = `+91${digits}`;
+    
+    try {
+      const result = await signInWithPhoneNumber(auth, absolutePhoneNumber, globalRecaptchaVerifier);
+      globalConfirmationResult = result;
+      showToastNotification("OTP sent successfully to your device.", true);
+      
+      phoneStepContainer.style.display = "none";
+      otpStepContainer.style.display = "block";
+      triggerResendCountdown();
+    } catch (err) {
+      sendOtpBtn.disabled = false;
+      if (globalRecaptchaVerifier) {
+        try { globalRecaptchaVerifier.clear(); globalRecaptchaVerifier = null; } catch(e){}
+      }
+      showToastNotification("OTP send failure: " + err.message);
+    }
+  }
+
+  sendOtpBtn.addEventListener("click", requestOtpTransmission);
+
+  resendTimerText.addEventListener("click", () => {
+    if (resendTimerText.style.cursor === "pointer") {
+      requestOtpTransmission();
+    }
+  });
+
+  // Track dynamic changes on the Verify Button state
+  otpCodeInput.addEventListener("input", () => {
+    verifyOtpBtn.disabled = (otpCodeInput.value.trim().length !== 6);
+  });
+
+  verifyOtpBtn.addEventListener("click", async () => {
+    const code = otpCodeInput.value.trim();
+    if (code.length !== 6) return;
+
+    verifyOtpBtn.disabled = true;
+    try {
+      const authResult = await globalConfirmationResult.confirm(code);
+      const user = authResult.user;
+      
+      const userDocRef = doc(db, "usersExtended", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          mobile: user.phoneNumber,
+          createdAt: new Date().toISOString()
+        }, { merge: true });
+      }
+      
+      showToastNotification("Authentication verified successfully!", true);
+      dismissAuthOverlayView();
+    } catch (err) {
+      verifyOtpBtn.disabled = false;
+      if (err.code === "auth/invalid-verification-code") {
+        showToastNotification("Incorrect OTP. Please evaluate entry data and retry.");
+      } else if (err.code === "auth/code-expired") {
+        showToastNotification("OTP has expired. Please hit resend loop to fetch a new token.");
+      } else {
+        showToastNotification("Verification failure error context: " + err.message);
+      }
+    }
+  });
+
+  /* ==========================================================================
+     TRADITIONAL AUTHENTICATION IMPLEMENTATION ROUTINES
+     ========================================================================== */
+  googleSignInBtn.addEventListener("click", async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const userDocRef = doc(db, "usersExtended", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (!userDocSnap.exists()) {
+        await setDoc(userDocRef, {
+          name: user.displayName || "Student",
+          email: user.email,
+          createdAt: new Date().toISOString()
+        }, { merge: true });
+      }
+      showToastNotification("Logged in via Google Network.", true);
+      dismissAuthOverlayView();
+    } catch (err) {
+      showToastNotification("Google Sign In process failed: " + err.message);
+    }
+  });
+
+  formEmailLogin.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      showToastNotification("Welcome back!", true);
+      dismissAuthOverlayView();
+      formEmailLogin.reset();
+    } catch (err) {
+      showToastNotification("Authentication validation rejected: " + err.message);
+    }
+  });
+
+  formEmailRegister.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value;
+    const confirmPassword = document.getElementById("regConfirmPassword").value;
+    
+    if (password !== confirmPassword) {
+      showToastNotification("Verification mismatch: Passwords entries must be identical.");
+      return;
+    }
+    
+    try {
+      const credentials = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(credentials.user, { displayName: name });
+      
+      await setDoc(doc(db, "usersExtended", credentials.user.uid), {
+        name: name,
+        email: email,
+        createdAt: new Date().toISOString()
+      });
+      
+      showToastNotification("Profile registered successfully!", true);
+      dismissAuthOverlayView();
+      formEmailRegister.reset();
+    } catch (err) {
+      showToastNotification("Registration processing rejected: " + err.message);
+    }
+  });
+
+  /* ==========================================================================
+     PROFILE PROFILE WORKSPACE CONTROLLER
+     ========================================================================== */
+  openProfileMenuBtn.addEventListener("click", async () => {
+    profileDropdown.classList.remove("active");
+    const user = auth.currentUser;
+    if (user) {
+      document.getElementById("profEmail").value = user.email || user.phoneNumber || "Verified User";
+      document.getElementById("profName").value = user.displayName || "";
+      
+      try {
+        const docRef = doc(db, "usersExtended", user.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()) {
+          const extData = docSnap.data();
+          document.getElementById("profMobile").value = extData.mobile || user.phoneNumber || "";
+          document.getElementById("profYear").value = extData.year || "";
+          document.getElementById("profDept").value = extData.department || "";
+          document.getElementById("profHometown").value = extData.hometown || "";
+        } else {
+          document.getElementById("profMobile").value = user.phoneNumber || "";
+          document.getElementById("profYear").value = "";
+          document.getElementById("profDept").value = "";
+          document.getElementById("profHometown").value = "";
+        }
+      } catch(ex) {
+        console.error("Error matching detailed cloud user storage map:", ex.message);
+      }
+      enforceAuthOverlayView("profile");
+    }
+  });
+
+  formUpdateProfile.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    const targetName = document.getElementById("profName").value.trim();
+    const targetMobile = document.getElementById("profMobile").value.trim();
+    const targetYear = document.getElementById("profYear").value.trim();
+    const targetDept = document.getElementById("profDept").value.trim();
+    const targetHometown = document.getElementById("profHometown").value.trim();
+    
+    try {
+      await updateProfile(user, { displayName: targetName });
+      
+      await setDoc(doc(db, "usersExtended", user.uid), {
+        name: targetName,
+        mobile: targetMobile,
+        year: targetYear,
+        department: targetDept,
+        hometown: targetHometown,
+        lastUpdated: new Date().toISOString()
+      }, { merge: true });
+      
+      // Regenerate initials tracking dynamic updates instantly
+      updateNavbarAvatarDisplay(user, targetName);
+      
+      showToastNotification("Profile data saved successfully!", true);
+      dismissAuthOverlayView();
+    } catch (err) {
+      showToastNotification("Error processing updates: " + err.message);
+    }
+  });
+
+  authLogoutBtn.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      profileDropdown.classList.remove("active");
+      showToastNotification("Logged out safely.", true);
+    } catch (err) {
+      console.error("Sign-out sequencing exception caught:", err.message);
+    }
+  });
+
+  /* ==========================================================================
+     COMPREHENSIVE INITIAL TRACKING REFACTOR
+     ========================================================================== */
+  function updateNavbarAvatarDisplay(user, explicitlyPassedName = null) {
+    const resolvedName = explicitlyPassedName || user.displayName;
+    
+    if (resolvedName && resolvedName.trim().length > 0) {
+      const subTokens = resolvedName.trim().split(/\s+/);
+      if (subTokens.length >= 2) {
+        navAvatarBtn.textContent = (subTokens[0].charAt(0) + subTokens[1].charAt(0)).toUpperCase();
+      } else {
+        navAvatarBtn.textContent = subTokens[0].charAt(0).toUpperCase();
+      }
+    } else if (user.email) {
+      navAvatarBtn.textContent = user.email.charAt(0).toUpperCase();
+    } else if (user.phoneNumber) {
+      // Use the final two tracking values of phone configuration if identity name defaults are empty
+      const targetPhoneString = user.phoneNumber.toString();
+      navAvatarBtn.textContent = targetPhoneString.slice(-2);
+    } else {
+      navAvatarBtn.textContent = "U";
+    }
+  }
+
+  /* ==========================================================================
+     GLOBAL LIFECYCLE EVENT TRACKER
+     ========================================================================== */
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      profileNavWrapper.style.display = "block";
+      updateNavbarAvatarDisplay(user);
+      
+      // Hide the authentication viewport if it's currently showing login windows
+      if (authOverlay.classList.contains("active") && styleDisplayCheck(cardProfile) === "none") {
+        dismissAuthOverlayView();
+      }
+    } else {
+      profileNavWrapper.style.display = "none";
+      navAvatarBtn.textContent = "—";
+      enforceAuthOverlayView("login");
+    }
+  });
+
+  function styleDisplayCheck(element) {
+    return element ? element.style.display : "none";
+  }
+
+  /* ==========================================================================
+     ORIGINAL FIRESTORE SEAT-TICKET VERIFICATION FUNCTIONALITY (Preserved)
+     ========================================================================== */
+  const movieDbConfigApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const movieDbInstance  = getFirestore(movieDbConfigApp);
+
   async function checkVerifiedBooking() {
     const bookingId = localStorage.getItem("movieBookingId");
     if (!bookingId) return;
 
     try {
-      const q    = query(collection(db, "movieBookings"), where("bookingId", "==", bookingId));
+      const q    = query(collection(movieDbInstance, "movieBookings"), where("bookingId", "==", bookingId));
       const snap = await getDocs(q);
       if (snap.empty) return;
 
       const docSnap = snap.docs[0];
       const data    = docSnap.data();
 
-      /* Only show if status is Verified AND popup hasn't been shown before */
       if (data.status === "Verified" && !data.popupShown) {
         document.getElementById("vpName").textContent      = data.name      || "Student";
         document.getElementById("vpBookingId").textContent = data.bookingId || bookingId;
 
         document.getElementById("verifiedPopupOverlay").classList.add("show");
 
-        /* Mark popupShown = true so it never shows again */
-        await updateDoc(doc(db, "movieBookings", docSnap.id), { popupShown: true });
+        await updateDoc(doc(movieDbInstance, "movieBookings", docSnap.id), { popupShown: true });
         console.log("✅ Verified popup shown on index.html for:", bookingId);
       }
     } catch (err) {
