@@ -823,10 +823,14 @@
 
   function playSuccessSound() {
     try {
-      const audio = new Audio("https://nitstelugu.in/phone_pe_notification.mp3");
-      audio.play();
+      // Appending a random query parameter clears old browser caches instantly
+      const audio = new Audio("https://nitstelugu.in/phone_pe_notification.mp3?v=" + new Date().getTime());
+      audio.crossOrigin = "anonymous";
+      audio.play().catch(function(err) {
+        console.log("Audio play deferred or blocked by browser user-interaction rules:", err);
+      });
     } catch(e) {
-      console.error("Audio playback blocked or failed:", e);
+      console.error("Audio block:", e);
     }
   }
 
