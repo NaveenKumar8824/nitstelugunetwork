@@ -185,7 +185,7 @@
       width: 100%;
       max-width: 430px; 
       margin: 0 auto; 
-      padding: 0 1rem 1.5rem; 
+      padding: 0 1.25rem 1.5rem; /* Increased horizontal padding for safer grid alignment */
       position: relative; 
       z-index: 10; 
       animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; 
@@ -458,7 +458,7 @@
     }
 
     @media(max-width: 480px) {
-      .form-container { padding: 0 0.5rem 1.5rem; }
+      .form-container { padding: 0 1.25rem 1.5rem; } /* Preserved proper 20px breathing room on viewport borders */
       .form-card { padding: 16px 14px; }
       .page-hero h1 { font-size: 1.45rem; }
       .modal-content { padding: 2rem 1.25rem 1.5rem; margin: 0 0.25rem; }
