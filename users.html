@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NITS Telugu — Users Panel</title>
+  <style>
+    /* RESET & CORE STYLES */
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #1e293b;
+    }
+
+    /* MODERN NAVBAR */
+    nav {
+      background: #ffffff;
+      padding: 0.75rem 2.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+    }
+
+    nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Clean Cropped Borders Logo */
+    nav .brand img {
+      width: 32px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    nav .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav .brand-title {
+      color: #0f172a;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+    }
+
+    nav .brand-sub {
+      color: #0284c7;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    nav .nav-right {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    /* FULL LAYOUT CONFIG */
+    main {
+      flex: 1;
+      padding: 2rem 2.5rem;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* CARD STRUCTURE */
+    .table-card {
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+    }
+
+    /* TOP HEADER CONTROLS */
+    .table-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.75rem;
+      background: #ffffff;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .table-top h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .actions-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* MINIMALIST SEARCH BAR */
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap input {
+      padding: 7px 12px 7px 32px;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #334155;
+      outline: none;
+      width: 220px;
+      background: #f8fafc;
+      transition: all 0.15s ease;
+    }
+
+    .search-wrap input:focus {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    /* ICON COPPY LOGO BUTTON */
+    .copy-icon-btn {
+      background: #f8fafc;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .copy-icon-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #cbd5e1;
+    }
+
+    .copy-icon-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* DATA TABLE LAYOUT */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    thead tr {
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    thead th {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 12px 1.75rem;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.1s ease;
+    }
+
+    tbody tr:last-child { 
+      border-bottom: none; 
+    }
+    
+    tbody tr:hover { 
+      background: #fdfdfd; 
+    }
+
+    tbody td {
+      padding: 12px 1.75rem;
+      font-size: 14px;
+      color: #334155;
+      vertical-align: middle;
+    }
+
+    .sno {
+      color: #94a3b8;
+      width: 60px;
+    }
+
+    .user-name {
+      font-weight: 500;
+      color: #0f172a;
+    }
+
+    .email-td { 
+      color: #0284c7;
+      cursor: pointer;
+    }
+    
+    .email-td:hover {
+      text-decoration: underline;
+      color: #0369a1;
+    }
+
+    /* STATE DEFAULTS */
+    .state-row {
+      text-align: center;
+      padding: 5rem 2rem;
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .state-row .icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    #no-results { display: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <img src="https://nitstelugu.in/favicon.png" alt="NITS Telugu Logo" />
+    <div class="brand-text">
+      <div class="brand-title">NITS Telugu Network</div>
+      <div class="brand-sub">User Portal</div>
+    </div>
+  </div>
+  <div class="nav-right">Admin panel</div>
+</nav>
+
+<main>
+  <div class="table-card">
+    <div class="table-top">
+      <h2>Registered Users</h2>
+      <div class="actions-wrap">
+        <div class="search-wrap">
+          <input type="text" id="search" placeholder="Search parameters…" oninput="filterUsers()"/>
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <button class="copy-icon-btn" id="copy-btn" onclick="copyAllEmails()" title="Copy active email lineup">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="loading" class="state-row">
+      <div class="icon">⏳</div>
+      <div>Loading network profiles…</div>
+    </div>
+
+    <div id="error-msg" class="state-row" style="display:none; color:#e11d48;">
+      <div class="icon">⚠️</div>
+      <div>Configuration loading error occurred.</div>
+    </div>
+
+    <table id="users-table" style="display:none;">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Email Address (Double-click to open in Gmail)</th>
+        </tr>
+      </thead>
+      <tbody id="users-body"></tbody>
+    </table>
+
+    <div id="no-results" class="state-row">
+      <div class="icon">🔍</div>
+      <div>No profiles match your filters.</div>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXi-_b6QwjAbC9b7DPw37u6LefeMaTwl0",
+    authDomain: "nitstelugu.firebaseapp.com",
+    projectId: "nitstelugu",
+    storageBucket: "nitstelugu.firebasestorage.app",
+    messagingSenderId: "480146246426",
+    appId: "1:480146246426:web:f779fd4a7ea4de12073aa3",
+    measurementId: "G-LE711ZLKB1"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window._allUsers = [];
+  window._filteredUsers = [];
+
+  async function loadUsers() {
+    try {
+      const snapshot = await getDocs(collection(db, "usersExtended"));
+
+      document.getElementById("loading").style.display = "none";
+
+      if (snapshot.empty) {
+        document.getElementById("error-msg").style.display = "block";
+        document.getElementById("error-msg").innerHTML = '<div class="icon">📭</div>No metrics parsed.';
+        return;
+      }
+
+      const emailMap = new Map();
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        const email = (d.email || "").toLowerCase().trim();
+        if (!email) return;
+        if (!emailMap.has(email)) {
+          emailMap.set(email, d);
+        } else {
+          const existing = emailMap.get(email);
+          if (d.createdAt && existing.createdAt && d.createdAt > existing.createdAt) {
+            emailMap.set(email, d);
+          }
+        }
+      });
+
+      const users = Array.from(emailMap.values());
+
+      users.sort((a, b) => {
+        if (!a.createdAt) return 1;
+        if (!b.createdAt) return -1;
+        return b.createdAt > a.createdAt ? 1 : -1;
+      });
+
+      window._allUsers = users;
+      window._filteredUsers = users;
+      renderTable(users);
+
+    } catch (err) {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("error-msg").style.display = "block";
+      console.error("Firestore error:", err);
+    }
+  }
+
+  window.renderTable = function(users) {
+    const tbody = document.getElementById("users-body");
+    tbody.innerHTML = "";
+
+    if (users.length === 0) {
+      document.getElementById("users-table").style.display = "none";
+      document.getElementById("no-results").style.display = "block";
+      return;
+    }
+
+    document.getElementById("no-results").style.display = "none";
+    document.getElementById("users-table").style.display = "table";
+
+    users.forEach((d, i) => {
+      const name = d.name || d.displayName || "—";
+      const email = d.email || "—";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="sno">${i + 1}</td>
+        <td class="user-name">${name}</td>
+        <td class="email-td" ondblclick="openInGmail('${email}')" title="Double click to draft on Gmail">${email}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  };
+
+  window.openInGmail = function(email) {
+    // Opens up specific web composition interface directly inside Gmail window panel
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+    window.open(gmailUrl, '_blank');
+  };
+
+  window.filterUsers = function() {
+    const q = document.getElementById("search").value.toLowerCase().trim();
+    if (!q) {
+      window._filteredUsers = window._allUsers;
+      renderTable(window._allUsers);
+      return;
+    }
+    window._filteredUsers = window._allUsers.filter(u =>
+      (u.name || "").toLowerCase().includes(q) ||
+      (u.email || "").toLowerCase().includes(q)
+    );
+    renderTable(window._filteredUsers);
+  };
+
+  window.copyAllEmails = function() {
+    if (!window._filteredUsers || window._filteredUsers.length === 0) return;
+    
+    const emailList = window._filteredUsers
+      .map(u => (u.email || "").trim())
+      .filter(email => email.length > 0)
+      .join("\n");
+
+    navigator.clipboard.writeText(emailList).then(() => {
+      const btn = document.getElementById("copy-btn");
+      const originalIcon = btn.innerHTML;
+      
+      // Temporary state change feedback 
+      btn.innerHTML = `
+        <svg width="15" height="15" fill="none" stroke="#16a34a" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+      `;
+      setTimeout(() => {
+        btn.innerHTML = originalIcon;
+      }, 1200);
+    }).catch(err => {
+      console.error("Copy action breakdown: ", err);
+    });
+  };
+
+  loadUsers();
+</script>
+
+</body>
+</html>
