@@ -626,6 +626,7 @@
     }
 
     .events-grid {
+      display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
@@ -1189,10 +1190,6 @@
   </div>
 </nav>
 
-<div id="alignmentNotice" style="display: none; padding: 0.6rem 5%; background: #FEF2F2; border-bottom: 1px solid #FCA5A5; text-align: center; font-family: var(--font-main); font-size: 0.85rem; color: #DC2626; font-weight: 600; margin-top: 60px; position: fixed; width: 100%; z-index: 99;">
-  Google interface alignment notice: Missing or insufficient permissions.
-</div>
-
 <section class="hero">
   <div class="hero-gradient-wrapper">
     <div class="hero-blob blob-teal"></div>
@@ -1381,7 +1378,7 @@
     <form id="formEmailLogin">
       <div class="input-group">
         <label for="loginEmail">Email Address</label>
-        <input type="email" id="loginEmail" class="apple-input" placeholder="name@gmail.com" required>
+        <input type="email" id="loginEmail" class="apple-input" placeholder="name@example.com" required>
       </div>
       <div class="input-group">
         <label for="loginPassword">Password</label>
@@ -1408,7 +1405,7 @@
       </div>
       <div class="input-group">
         <label for="regEmail">Email Address</label>
-        <input type="email" id="regEmail" class="apple-input" placeholder="name@gmail.com" required>
+        <input type="email" id="regEmail" class="apple-input" placeholder="name@example.com" required>
       </div>
       <div class="input-group">
         <label for="regPassword">Password</label>
@@ -1450,22 +1447,22 @@
         <div class="grid-fields">
           <div class="input-group">
             <label for="profMobile">Mobile No</label>
-            <input type="tel" id="profMobile" class="apple-input" placeholder="">
+            <input type="tel" id="profMobile" class="apple-input" placeholder="9876543210">
           </div>
           <div class="input-group">
             <label for="profYear">Academic Year</label>
-            <input type="text" id="profYear" class="apple-input" placeholder="">
+            <input type="text" id="profYear" class="apple-input" placeholder="e.g. 3rd Year">
           </div>
         </div>
         
         <div class="grid-fields">
           <div class="input-group">
             <label for="profDept">Department</label>
-            <input type="text" id="profDept" class="apple-input" placeholder="">
+            <input type="text" id="profDept" class="apple-input" placeholder="e.g. ECE">
           </div>
           <div class="input-group">
             <label for="profHometown">Hometown</label>
-            <input type="text" id="profHometown" class="apple-input" placeholder="">
+            <input type="text" id="profHometown" class="apple-input" placeholder="e.g. Nellore">
           </div>
         </div>
       </div>
@@ -1535,7 +1532,6 @@
   const formEmailRegister  = document.getElementById("formEmailRegister");
   const formUpdateProfile  = document.getElementById("formUpdateProfile");
   const authLogoutBtn      = document.getElementById("authLogoutBtn");
-  const alignmentNotice    = document.getElementById("alignmentNotice");
 
   /* ==========================================================================
      PREMIUM COUNT UP INTERSECTION OBSERVER LOGIC
@@ -1654,7 +1650,7 @@
   });
   
   document.addEventListener("click", () => {
-    profileDropdown.classList.remove("remove");
+    profileDropdown.classList.remove("active");
   });
 
   /* ==========================================================================
@@ -1667,7 +1663,7 @@
       document.getElementById("profEmail").value = user.email || "Google Account Connected";
       document.getElementById("profName").value = user.displayName || "";
       
-      // Kept clean default values blank without 'e.g.' text tags
+      // Setup dynamic clean default values so fields stay open and editable
       document.getElementById("profMobile").value = "";
       document.getElementById("profYear").value = "";
       document.getElementById("profDept").value = "";
@@ -1702,6 +1698,7 @@
       const userDocRef = doc(db, "usersExtended", user.uid);
       const userDocSnap = await getDoc(userDocRef);
       
+      // Safely provision structural documents on registration sequence
       if (!userDocSnap.exists()) {
         await setDoc(userDocRef, {
           name: user.displayName || "Student",
@@ -1714,12 +1711,10 @@
         });
       }
       showToastNotification("Successfully authenticated with Google profile.", true);
-      alignmentNotice.style.display = "none"; // Safe clear alignment notice on explicit login completion
       dismissAuthOverlayView();
     } catch (err) {
       console.error(err);
       showToastNotification("Google interface alignment notice: " + err.message);
-      alignmentNotice.style.display = "block"; // Only display fallback error message frame when catch triggers
     }
   });
 
@@ -1731,7 +1726,6 @@
     try {
       await signInWithEmailAndPassword(auth, email, password);
       showToastNotification("Welcome back to NITS Network!", true);
-      alignmentNotice.style.display = "none";
       dismissAuthOverlayView();
       formEmailLogin.reset();
     } catch (err) {
@@ -1766,7 +1760,6 @@
       });
       
       showToastNotification("Profile registration locked successfully.", true);
-      alignmentNotice.style.display = "none";
       dismissAuthOverlayView();
       formEmailRegister.reset();
     } catch (err) {
@@ -1808,7 +1801,6 @@
     try {
       await signOut(auth);
       profileDropdown.classList.remove("active");
-      alignmentNotice.style.display = "none";
       showToastNotification("Session signed out successfully.", true);
     } catch (err) {
       console.error("Sign-out orchestration dropped:", err.message);
@@ -1842,14 +1834,12 @@
     if (user) {
       profileNavWrapper.style.display = "block";
       updateNavbarAvatarDisplay(user);
-      alignmentNotice.style.display = "none"; // Explicitly clear any visibility errors once auth state matches valid session
       if (authOverlay.classList.contains("active") && cardProfile.style.display !== "block") {
         dismissAuthOverlayView();
       }
     } else {
       profileNavWrapper.style.display = "none";
       navAvatarBtn.textContent = "—";
-      alignmentNotice.style.display = "none"; // Keep home banner cleanly disabled when login card overlay context forces view parameters
       enforceAuthOverlayView("login");
     }
   });
