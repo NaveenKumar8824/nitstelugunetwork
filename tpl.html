@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>TPL — Player Registration</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  
+  <style>
+    /* ==========================================================================
+       CORE RESET & GOOGLE FORMS STYLING ARCHITECTURE
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --gform-primary: #02BD58; 
+      --gform-accent: rgba(2, 189, 88, 0.05);
+      --gform-bg: #F0F3F4; 
+      --gform-card-bg: #FFFFFF;
+      --dark: #0F172A;
+      --text: #202124;
+      --muted: #70757a;
+      --error-red: #D93025;
+      
+      --font-heading: 'Poppins', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--gform-bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 0 4rem;
+    }
+
+    @keyframes drawTick { to { stroke-dashoffset: 0; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalSlideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+    .gforms-wrapper {
+      width: 100%;
+      max-width: 640px; 
+      margin: 12px auto 0;
+      padding: 0 1rem;
+    }
+
+    .gforms-header {
+      background: var(--gform-card-bg);
+      border-top: 10px solid var(--gform-primary);
+      border-radius: 8px;
+      padding: 22px 24px 24px;
+      margin-bottom: 12px;
+      border: 1px solid #DADCE0;
+    }
+    .gforms-header h1 {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      font-size: 2rem;
+      color: #202124;
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .gforms-header .tagline {
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .gforms-question-card {
+      background: var(--gform-card-bg);
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .gforms-question-card:focus-within {
+      border-color: var(--gform-primary);
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      color: #202124;
+      margin-bottom: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .form-input {
+      width: 100%;
+      max-width: 360px; 
+      padding: 0.5rem 0;
+      border: none;
+      border-bottom: 1px solid #DADCE0;
+      border-radius: 0;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--text);
+      background: transparent;
+      outline: none;
+      transition: border-color 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input:focus {
+      border-bottom: 2px solid var(--gform-primary);
+      padding-bottom: 0.45rem; 
+    }
+
+    .select-wrap {
+      position: relative;
+      max-width: 300px;
+    }
+    .select-wrap .form-input {
+      max-width: 100%;
+      padding-right: 2rem;
+      cursor: pointer;
+    }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+
+    .gforms-question-card.invalid {
+      border-color: var(--error-red) !important;
+    }
+    .error-msg {
+      font-size: 0.75rem;
+      color: var(--error-red);
+      margin-top: 0.5rem;
+      font-weight: 400;
+      display: none;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .error-msg.show { display: flex; }
+
+    .footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .submit-btn {
+      padding: 0.55rem 1.5rem;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      background: var(--gform-primary);
+    }
+    .submit-btn:hover:not(:disabled) { background: #03A84E; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    #successScreen { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      z-index: 1100; 
+      background: rgba(15, 23, 42, 0.15); 
+      backdrop-filter: blur(12px); 
+      -webkit-backdrop-filter: blur(12px);
+      align-items: center; 
+      justify-content: center; 
+      padding: 1.25rem; 
+      animation: fadeIn 0.35s ease both;
+    }
+    .modal-content {
+      background: #FFFFFF;
+      border: 1px solid #DADCE0;
+      border-radius: 8px;
+      padding: 2.25rem 2rem 2rem;
+      width: 100%;
+      max-width: 390px;
+      text-align: center;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+      animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    
+    .success-check-circle { 
+      width: 60px; 
+      height: 60px; 
+      border-radius: 50%; 
+      background: var(--gform-accent); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 1.25rem; 
+      border: 1px solid rgba(2, 189, 88, 0.15);
+    }
+    .success-tick { 
+      stroke-dasharray: 60; 
+      stroke-dashoffset: 60; 
+      animation: drawTick 0.5s 0.15s ease forwards; 
+    }
+
+    .success-screen-title { 
+      font-family: var(--font-heading); 
+      font-weight: 500; 
+      font-size: 1.45rem; 
+      color: #202124; 
+      margin-bottom: 0.4rem; 
+    }
+    .success-screen-sub { 
+      font-size: 0.88rem; 
+      color: var(--muted); 
+      font-weight: 400; 
+      margin-bottom: 1.75rem; 
+      line-height: 1.5;
+    }
+
+    .whatsapp-btn {
+      display: inline-flex; 
+      align-items: center; 
+      gap: 0.6rem; 
+      background: #25D366; 
+      color: white; 
+      padding: 0.8rem 1.5rem; 
+      border-radius: 6px; 
+      font-family: var(--font-body); 
+      font-weight: 600; 
+      font-size: 0.92rem; 
+      cursor: pointer; 
+      border: none; 
+      transition: background 0.2s ease; 
+      text-decoration: none; 
+      width: 100%;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+    }
+    .whatsapp-btn:hover { background: #20BA5A; }
+    .whatsapp-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+    .secondary-btn {
+      background: transparent;
+      border: 1px solid #DADCE0;
+      color: #202124;
+      width: 100%;
+      padding: 0.65rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .secondary-btn:hover { background: #F8FAFC; }
+
+    @media(max-width: 480px) {
+      .gforms-wrapper { margin-top: 0; padding: 0 0.5rem; }
+      .gforms-header, .gforms-question-card { padding: 20px 16px; border-radius: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="gforms-wrapper">
+  <section class="gforms-header">
+    <h1>TPL Registration</h1>
+    <div class="tagline">Official Player Registration for TPL 2026 Auction</div>
+  </section>
+
+  <form id="tplForm" novalidate onsubmit="return false;">
+    
+    <div class="gforms-question-card" id="q-name">
+      <label class="form-label" for="name">Full Name</label>
+      <input class="form-input" type="text" id="name" placeholder="Enter your full name" autocomplete="name"/>
+      <div class="error-msg" id="err-name">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        This is a required question
+      </div>
+    </div>
+    
+    <div class="gforms-question-card" id="q-year">
+      <label class="form-label" for="year">Academic Year</label>
+      <div class="select-wrap">
+        <select class="form-input" id="year">
+          <option value="" disabled selected>Choose</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+          <option value="M.Tech">M.Tech</option>
+          <option value="PhD">PhD</option>
+        </select>
+      </div>
+      <div class="error-msg" id="err-year">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        This is a required question
+      </div>
+    </div>
+    
+    <div class="gforms-question-card" id="q-mobile">
+      <label class="form-label" for="mobile">Mobile Number</label>
+      <input class="form-input" type="tel" id="mobile" placeholder="10-digit number" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel-national"/>
+      <div class="error-msg" id="err-mobile">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        Enter a valid 10-digit mobile number
+      </div>
+    </div>
+    
+    <div class="gforms-question-card" id="q-role">
+      <label class="form-label" for="role">Player Role</label>
+      <div class="select-wrap">
+        <select class="form-input" id="role">
+          <option value="" disabled selected>Choose</option>
+          <option value="Batsman">Batsman</option>
+          <option value="Bowler">Bowler</option>
+          <option value="All-Rounder">All-Rounder</option>
+        </select>
+      </div>
+      <div class="error-msg" id="err-role">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        This is a required question
+      </div>
+    </div>
+    
+    <div class="footer-actions">
+      <button type="button" class="submit-btn" id="submitBtn" onclick="processInstantSubmission()">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div id="successScreen">
+  <div class="modal-content">
+    <div class="success-check-circle">
+      <svg width="26" height="26" viewBox="0 0 44 44" fill="none">
+        <path class="success-tick" d="M10 22 L19 31 L34 13" stroke="#02BD58" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    
+    <div class="success-screen-title">You're In the Auction</div>
+    <div class="success-screen-sub">Your player application profile has been submitted. Join our tracking channel for live updates.</div>
+    
+    <!-- TODO: Update href with your actual WhatsApp community link -->
+    <a href="YOUR_WHATSAPP_GROUP_LINK_HERE" target="_blank" class="whatsapp-btn">
+      <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.93 0c3.165.001 6.14 1.233 8.377 3.469 2.237 2.235 3.469 5.211 3.469 8.377-.003 6.582-5.338 11.93-11.87 11.93h-.004c-2.012-.002-3.992-.512-5.747-1.48L0 24zm6.072-4.305c1.642.975 3.256 1.487 4.903 1.488 5.4 0 9.794-4.393 9.797-9.793.002-2.615-1.015-5.074-2.864-6.924C16.113 2.616 13.65 1.6 11.932 1.6 6.53 1.6 2.139 5.993 2.136 11.393c-.001 1.724.463 3.407 1.346 4.925l-.993 3.626 3.64-.954zm10.165-6.852c-.27-.135-1.597-.788-1.845-.878-.248-.09-.43-.135-.61.135-.18.27-.697.878-.853 1.058-.157.18-.314.202-.584.067-.27-.135-1.14-.42-2.172-1.34-1.03-.918-1.478-1.41-1.68-1.748-.203-.337-.02-.52.148-.688.153-.153.338-.393.507-.59.168-.197.225-.338.337-.562.113-.225.056-.422-.028-.588-.084-.166-.61-1.472-.836-2.018-.22-.53-.442-.458-.61-.466-.153-.008-.33-.008-.507-.008-.177 0-.465.067-.71.337-.243.27-.927.907-.927 2.21 0 1.303.947 2.56 1.08 2.74.133.18 1.86 2.84 4.505 3.982.63.27 1.12.43 1.503.553.633.202 1.208.173 1.664.105.508-.075 1.597-.652 1.822-1.282.225-.63.225-1.17.157-1.283-.068-.112-.248-.202-.518-.337z"/></svg>
+      Join WhatsApp Group
+    </a>
+    
+    <button class="secondary-btn" onclick="dismissModal()">Close</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, doc, runTransaction, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDyN9DCiAXnetmq5yybqLdj06U84tWZwy0",
+    authDomain: "tpl2026-d5e5e.firebaseapp.com",
+    projectId: "tpl2026-d5e5e",
+    storageBucket: "tpl2026-d5e5e.firebasestorage.app",
+    messagingSenderId: "21034817339",
+    appId: "1:21034817339:web:88696fae5aea0e3c9c891e",
+    measurementId: "G-QQZ2DJ8766"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.getNextSno = async function() {
+    const counterRef = doc(db, "tpl_meta", "counter");
+    return await runTransaction(db, async (tx) => {
+      const snap = await tx.get(counterRef);
+      const current = snap.exists() ? (snap.data().value || 0) : 0;
+      const updated = current + 1;
+      tx.set(counterRef, { value: updated }, { merge: true });
+      return updated;
+    });
+  };
+
+  window.savePlayerToFirestore = async function(playerDoc) {
+    playerDoc.createdAt = serverTimestamp();
+    await setDoc(doc(collection(db, "tpl_players")), playerDoc);
+  };
+</script>
+
+<script>
+  // Live Apps Script Web App endpoint
+  const SHEETS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwSvSVicrOGVyC3XHaSszo3bWExKKLA-4M6uIs1qKmm3UXmWD4Vd7WEb_ybMgabQYNZ/exec";
+
+  function showErr(cardId, errorId, show) {
+    document.getElementById(errorId).classList.toggle('show', show);
+    document.getElementById(cardId).classList.toggle('invalid', show);
+  }
+
+  function playAlertChime() {
+    try {
+      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2869/2869-500.wav");
+      audio.crossOrigin = "anonymous";
+      audio.volume = 0.5;
+      audio.play().catch(e => console.log("Audio presentation deferred:", e));
+    } catch(err) {
+      console.error("Audio platform interface error:", err);
+    }
+  }
+
+  document.getElementById('mobile').addEventListener('input', function() {
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    if(this.value.length === 10) showErr('q-mobile', 'err-mobile', false);
+  });
+  
+  document.getElementById('name').addEventListener('input', function() {
+    if(this.value.trim().length >= 2) showErr('q-name', 'err-name', false);
+  });
+
+  document.getElementById('year').addEventListener('change', function() {
+    if(this.value !== "") showErr('q-year', 'err-year', false);
+  });
+
+  document.getElementById('role').addEventListener('change', function() {
+    if(this.value !== "") showErr('q-role', 'err-role', false);
+  });
+
+  // Sends JSON as text/plain to Code.gs (which reads e.postData.contents via JSON.parse()).
+  //
+  // IMPORTANT: this uses mode: "no-cors" on purpose. When this page is opened as a local
+  // file (file://) or from certain hosts, the browser sends Origin: null, and Google's
+  // Apps Script CORS response doesn't always allow that — which makes a normal cors-mode
+  // fetch throw "Failed to fetch" even though the request would have gone through fine.
+  // no-cors sends the request and lets Apps Script execute (row still gets appended,
+  // Logger.log still records it) but makes the response *opaque* — we can't read its
+  // status or body from JS. That's the trade-off for reliability across environments.
+  //
+  // Because of that, this call no longer throws on failure, and Firestore (which we can
+  // fully verify) stays the source of truth for whether the registration succeeded.
+  async function appendToGoogleSheets(row) {
+    if (!SHEETS_WEBHOOK_URL) return;
+
+    try {
+      await fetch(SHEETS_WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(row)
+      });
+      console.log("[Google Sheets] Request sent (no-cors — response is opaque, check the Sheet or Apps Script Executions log to confirm).");
+    } catch (err) {
+      // Even no-cors can fail on a genuine network/DNS problem — log it but don't block registration.
+      console.warn("[Google Sheets] Request failed to send:", err);
+    }
+  }
+
+  async function processInstantSubmission() {
+    const name = document.getElementById('name').value.trim();
+    const year = document.getElementById('year').value;
+    const mobile = document.getElementById('mobile').value.trim();
+    const role = document.getElementById('role').value;
+    
+    let valid = true;
+
+    if (name.length < 2) { showErr('q-name', 'err-name', true); valid = false; }
+    if (!year) { showErr('q-year', 'err-year', true); valid = false; }
+    if (!/^[6-9]\d{9}$/.test(mobile)) { showErr('q-mobile', 'err-mobile', true); valid = false; }
+    if (!role) { showErr('q-role', 'err-role', true); valid = false; }
+
+    if (!valid) {
+      const firstInvalid = document.querySelector('.gforms-question-card.invalid');
+      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+
+    try {
+      // 1. Fetch transaction increment index atomically
+      const sno = await window.getNextSno();
+      
+      const payload = { 
+        sno: sno,
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        name: name, 
+        year: year, 
+        mobile: mobile, 
+        role: role
+      };
+      
+      // 2. Execute concurrently and await both database pipeline responses strictly
+      await Promise.all([
+        window.savePlayerToFirestore({ ...payload, team: "", status: "Pending" }),
+        appendToGoogleSheets(payload)
+      ]);
+      
+      // 3. Render success only if no network errors throw
+      document.getElementById('successScreen').style.display = 'flex';
+      playAlertChime();
+
+    } catch (e) {
+      console.error("Dumping submission error trace parameters:", e);
+      alert("Registration Failed to broadcast completely.\nError: " + e.message + "\nCheck browser console logs for full parameters description.");
+      btn.disabled = false;
+      btn.textContent = "Submit";
+    }
+  }
+
+  function dismissModal() {
+    document.getElementById('successScreen').style.display = 'none';
+    document.getElementById('tplForm').reset();
+    
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = false;
+    btn.textContent = "Submit";
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
