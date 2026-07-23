@@ -34,10 +34,6 @@
       --radius-xl: 28px;
       --radius-pill: 100px;
       
-      --radius-lg: 20px;
-      --radius-xl: 28px;
-      --radius-pill: 100px;
-      
       --font-main: 'DM Sans', sans-serif;
       --font-body: 'Inter', sans-serif;
     }
@@ -348,7 +344,7 @@
     }
 
     /* ==========================================================================
-       GEMINI-STYLE AURORA GLOW EFFECT
+       AURORA GLOW EFFECT
        ========================================================================== */
     .hero-aurora-wrapper {
       position: absolute;
@@ -485,7 +481,7 @@
     }
 
     /* ==========================================================================
-       STRICT SIDE-BY-SIDE STATISTICS COMPONENT WITH COUNT UP STYLING
+       SIDE-BY-SIDE STATISTICS COMPONENT
        ========================================================================== */
     .hero-stats-row {
       display: flex !important;
@@ -581,11 +577,11 @@
     }
 
     /* ==========================================================================
-       EVENTS SECTION
+       COMPACT STACKED COMMUNITY ACTIVITIES SECTION
        ========================================================================== */
     .events {
-      padding: 6rem 1.5rem;
-      max-width: 1200px;
+      padding: 5rem 1.5rem;
+      max-width: 800px;
       margin: 0 auto;
       position: relative;
       z-index: 10;
@@ -593,19 +589,19 @@
 
     .section-header {
       text-align: center;
-      margin-bottom: 3.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .section-tag {
       display: inline-block;
       font-family: var(--font-main);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       color: var(--secondary);
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      margin-bottom: 0.75rem;
-      padding: 0.4rem 1rem;
+      margin-bottom: 0.5rem;
+      padding: 0.35rem 0.9rem;
       background: rgba(14, 165, 233, 0.1);
       border-radius: var(--radius-pill);
     }
@@ -613,26 +609,26 @@
     .section-title {
       font-family: var(--font-main);
       font-weight: 800;
-      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       color: var(--dark);
       letter-spacing: -0.02em;
       line-height: 1.2;
     }
 
     .section-desc {
-      margin-top: 1rem;
-      font-size: clamp(0.95rem, 3vw, 1.1rem);
+      margin-top: 0.5rem;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
       color: var(--muted);
-      max-width: 540px;
+      max-width: 500px;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    .events-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
+    .events-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
     }
 
     .event-card {
@@ -644,135 +640,171 @@
       text-decoration: none;
       color: inherit;
       display: flex;
-      flex-direction: column;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      align-items: center;
+      padding: 1rem 1.25rem;
+      gap: 1.25rem;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: var(--shadow-soft);
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
 
     .event-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-3px) scale(1.01);
       box-shadow: var(--shadow-hover);
-      border-color: rgba(0, 200, 83, 0.3);
+      background: rgba(255, 255, 255, 0.9);
     }
 
-    .card-banner {
-      height: 200px;
+    .card-vinayaka {
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.85) 0%, rgba(236, 253, 245, 0.6) 100%);
+    }
+    .card-vinayaka:hover { border-color: rgba(0, 200, 83, 0.4); }
+
+    .card-ugadi {
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.85) 0%, rgba(254, 243, 199, 0.6) 100%);
+    }
+    .card-ugadi:hover { border-color: rgba(245, 158, 11, 0.4); }
+
+    .card-movie {
+      background: linear-gradient(110deg, rgba(255, 255, 255, 0.85) 0%, rgba(224, 242, 254, 0.6) 100%);
+    }
+    .card-movie:hover { border-color: rgba(14, 165, 233, 0.4); }
+
+    .card-thumb-wrapper {
       position: relative;
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
     }
 
-    .banner-img {
+    .thumb-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .event-card:hover .banner-img {
-      transform: scale(1.08);
-    }
-
-    .card-banner-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 40%, rgba(15, 23, 42, 0.6) 100%);
-    }
-
-    .card-year-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: var(--radius-pill);
-      padding: 0.35rem 0.85rem;
-      font-family: var(--font-main);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: white;
-      letter-spacing: 0.05em;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .event-card:hover .thumb-img {
+      transform: scale(1.1);
     }
 
     .card-body {
-      padding: 1.5rem;
       flex: 1;
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      min-width: 0;
     }
 
     .card-category {
       font-family: var(--font-main);
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.2rem;
     }
 
     .card-vinayaka .card-category { color: var(--primary); }
-    .card-ugadi .card-category { color: #F59E0B; }
+    .card-ugadi .card-category { color: #D97706; }
     .card-movie .card-category { color: var(--secondary); }
 
     .card-title {
       font-family: var(--font-main);
       font-weight: 800;
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       color: var(--dark);
-      line-height: 1.3;
-      margin-bottom: 0.6rem;
-      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .card-desc {
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      line-height: 1.6;
-      flex: 1;
-      margin-bottom: 1.25rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
-    .card-cta {
+    .card-action-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.25rem;
-      border-radius: 12px;
-      font-family: var(--font-main);
-      font-size: 0.9rem;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      width: 100%;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .card-vinayaka .card-cta { background: rgba(0, 200, 83, 0.1); color: var(--primary); }
-    .card-vinayaka:hover .card-cta { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(0, 200, 83, 0.3); }
+    .cta-arrow {
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: transform 0.3s ease;
+    }
 
-    .card-ugadi .card-cta { background: rgba(245, 158, 11, 0.1); color: #D97706; }
-    .card-ugadi:hover .card-cta { background: #F59E0B; color: white; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3); }
+    .card-vinayaka .card-action-btn { color: var(--primary); }
+    .card-vinayaka:hover .card-action-btn {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 6px 16px rgba(0, 200, 83, 0.35);
+    }
 
-    .card-movie .card-cta { background: rgba(14, 165, 233, 0.1); color: var(--secondary); }
-    .card-movie:hover .card-cta { background: var(--secondary); color: white; box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3); }
+    .card-ugadi .card-action-btn { color: #D97706; }
+    .card-ugadi:hover .card-action-btn {
+      background: #F59E0B;
+      color: white;
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+    }
 
-    .cta-arrow { font-size: 1.1rem; transition: transform 0.3s ease; }
-    .event-card:hover .cta-arrow { transform: translateX(4px); }
+    .card-movie .card-action-btn { color: var(--secondary); }
+    .card-movie:hover .card-action-btn {
+      background: var(--secondary);
+      color: white;
+      box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+    }
 
-    @media(max-width: 640px) {
-      .events { padding: 4rem 1rem; }
-      .events-grid { grid-template-columns: 1fr; gap: 1.25rem; }
-      .card-banner { height: 160px; }
-      .card-body { padding: 1.1rem; }
-      .card-title { font-size: 1.15rem; }
-      .card-desc { font-size: 0.85rem; margin-bottom: 1rem; }
-      .card-cta { padding: 0.7rem 1rem; font-size: 0.85rem; }
+    .event-card:hover .cta-arrow {
+      transform: translateX(3px);
+    }
+
+    @media (max-width: 580px) {
+      .events { padding: 3.5rem 1rem; }
+      .event-card {
+        padding: 0.85rem 1rem;
+        gap: 0.85rem;
+      }
+      .card-thumb-wrapper {
+        width: 68px;
+        height: 68px;
+        border-radius: 12px;
+      }
+      .card-title {
+        font-size: 0.98rem;
+        white-space: normal;
+      }
+      .card-desc {
+        font-size: 0.78rem;
+        -webkit-line-clamp: 2;
+      }
+      .card-action-btn {
+        width: 36px;
+        height: 36px;
+      }
+      .cta-arrow {
+        font-size: 0.95rem;
+      }
     }
 
     /* ==========================================================================
@@ -1198,52 +1230,59 @@
   <div class="scroll-hint">Explore<div class="scroll-line"></div></div>
 </section>
 
+<!-- ==========================================================================
+   COMPACT STACKED COMMUNITY ACTIVITIES SECTION
+   ========================================================================== -->
 <section class="events" id="events">
   <div class="section-header">
     <div class="section-tag">What's Happening</div>
-    <div class="section-title">Our Community Activities</div>
-    <p class="section-desc">From fundraising to festivals and fun — here's everything our Telugu community is up to at NITS.</p>
+    <div class="section-title">Community Activities</div>
+    <p class="section-desc">Cultural celebrations, gatherings, and ticket bookings organized by our Telugu community.</p>
   </div>
   
-  <div class="events-grid">
+  <div class="events-stack">
+    <!-- Vinayaka Chavithi Card -->
     <a href="vinayaka" class="event-card card-vinayaka">
-      <div class="card-banner">
-        <img class="banner-img" src="vinayaka-banner.jpeg" alt="Vinayaka Chavithi 2026"/>
-        <div class="card-banner-overlay"></div>
-        <div class="card-year-badge">2026</div>
+      <div class="card-thumb-wrapper">
+        <img class="thumb-img" src="https://raw.githubusercontent.com/NaveenKumar8824/nitstelugunetwork/main/banner1.png" alt="Vinayaka Chavithi"/>
       </div>
       <div class="card-body">
-        <div class="card-category">Festival · August 2026</div>
-        <div class="card-title">Vinayaka Chavithi 2026</div>
-        <p class="card-desc">Celebrate Ganesh Chaturthi with the Telugu family at NITS. Puja, prasadam, cultural programs and unforgettable festivities — just like back home.</p>
-        <div class="card-cta">Know More <span class="cta-arrow">→</span></div>
+        <div class="card-category">Festival · August</div>
+        <div class="card-title">Vinayaka Chavithi</div>
+        <p class="card-desc">Ganesh Chaturthi celebrations featuring puja, prasadam, cultural programs, and traditional festivities.</p>
+      </div>
+      <div class="card-action-btn" aria-label="Know More">
+        <span class="cta-arrow">→</span>
       </div>
     </a>
 
+    <!-- Ugadi Card -->
     <a href="ugadi" class="event-card card-ugadi">
-      <div class="card-banner">
-        <img class="banner-img" src="ugadi-banner.png" alt="Ugadi 2027"/>
-        <div class="card-banner-overlay"></div>
-        <div class="card-year-badge">2027</div>
+      <div class="card-thumb-wrapper">
+        <img class="thumb-img" src="https://raw.githubusercontent.com/NaveenKumar8824/nitstelugunetwork/main/banner2.png" alt="Ugadi"/>
       </div>
       <div class="card-body">
-        <div class="card-category">New Year · March 2027</div>
-        <div class="card-title">Ugadi 2027</div>
-        <p class="card-desc">Ring in the Telugu New Year with ugadi pachadi, traditional decorations, cultural programs and the warmth of home — celebrated together at NITS.</p>
-        <div class="card-cta">Know More <span class="cta-arrow">→</span></div>
+        <div class="card-category">New Year · March</div>
+        <div class="card-title">Ugadi</div>
+        <p class="card-desc">Celebrate Telugu New Year with traditional ugadi pachadi, cultural performances, and family warmth.</p>
+      </div>
+      <div class="card-action-btn" aria-label="Know More">
+        <span class="cta-arrow">→</span>
       </div>
     </a>
 
+    <!-- Movie Ticket Booking Card -->
     <a href="movie" class="event-card card-movie">
-      <div class="card-banner">
-        <img class="banner-img" src="movie-banner.png" alt="Movie Ticket Booking"/>
-        <div class="card-banner-overlay"></div>
+      <div class="card-thumb-wrapper">
+        <img class="thumb-img" src="https://raw.githubusercontent.com/NaveenKumar8824/nitstelugunetwork/main/banner3.png" alt="Movie Ticket Booking"/>
       </div>
       <div class="card-body">
         <div class="card-category">Entertainment · Ongoing</div>
         <div class="card-title">Movie Ticket Booking</div>
-        <p class="card-desc">Missing Telugu movies? Book tickets for group screenings of the latest Telugu blockbusters organized exclusively for the NITS Telugu community.</p>
-        <div class="card-cta">Book Tickets <span class="cta-arrow">→</span></div>
+        <p class="card-desc">Exclusive group screenings and ticket reservations for the latest Telugu blockbusters at NITS.</p>
+      </div>
+      <div class="card-action-btn" aria-label="Book Tickets">
+        <span class="cta-arrow">→</span>
       </div>
     </a>
   </div>
@@ -1275,7 +1314,7 @@
           <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
         </svg>
       </a>
-      <a href="mailto:naveenkumarnaik69@gmail.com" target="_blank" rel="noopener" class="dsi" title="Gmail">
+      <a href="/cdn-cgi/l/email-protection#1d737c6b7878737668707c6f737c74762b245d7a707c7471337e7270" target="_blank" rel="noopener" class="dsi" title="Gmail">
         <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
           <rect width="32" height="32" rx="6" fill="white"/>
           <path d="M6 10h20v14H6z" fill="white"/>
@@ -1445,7 +1484,7 @@
 
 </div>
 
-<script type="module">
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
   import { initializeApp, getApps, getApp } 
     from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { 
@@ -1635,7 +1674,6 @@
       document.getElementById("profEmail").value = user.email || "Google Account Connected";
       document.getElementById("profName").value = user.displayName || "";
       
-      // Setup dynamic clean default values so fields stay open and editable
       document.getElementById("profMobile").value = "";
       document.getElementById("profYear").value = "";
       document.getElementById("profDept").value = "";
@@ -1670,7 +1708,6 @@
       const userDocRef = doc(db, "usersExtended", user.uid);
       const userDocSnap = await getDoc(userDocRef);
       
-      // Safely provision structural documents on registration sequence
       if (!userDocSnap.exists()) {
         await setDoc(userDocRef, {
           name: user.displayName || "Student",
@@ -1817,7 +1854,7 @@
   });
 
   /* ==========================================================================
-     ORIGINAL FIRESTORE SEAT-TICKET VERIFICATION FUNCTIONALITY (Preserved)
+     FIRESTORE SEAT-TICKET VERIFICATION FUNCTIONALITY
      ========================================================================== */
   const movieDbConfigApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const movieDbInstance  = getFirestore(movieDbConfigApp);
@@ -1861,5 +1898,6 @@
   };
 </script>
 
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1}' crossorigin="anonymous"></script>
 </body>
 </html>
