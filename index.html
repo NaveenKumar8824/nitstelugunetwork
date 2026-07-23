@@ -1133,193 +1133,6 @@
       padding: 0.85rem;
       margin-bottom: 1rem;
     }
-
-    /* ==========================================================================
-       MODERN POLL POPUP UI STYLING (GLASSMORPHISM)
-       ========================================================================== */
-    #applePollOverlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 3000;
-      background: rgba(15, 23, 42, 0.35);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-    }
-    #applePollOverlay.show {
-      display: flex;
-      animation: vpFadeIn 0.4s ease forwards;
-    }
-    .poll-popup {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(35px);
-      -webkit-backdrop-filter: blur(35px);
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 30px 70px rgba(15, 23, 42, 0.16);
-      overflow: hidden;
-      animation: vpSlideUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
-      display: flex;
-      flex-direction: column;
-    }
-    .poll-banner-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      background: rgba(15, 23, 42, 0.03);
-    }
-    .poll-banner-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-    }
-    .poll-banner-img.loaded {
-      opacity: 1;
-    }
-    .poll-skeleton {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(90deg, rgba(226, 232, 240, 0.5) 25%, rgba(241, 245, 249, 0.7) 50%, rgba(226, 232, 240, 0.5) 75%);
-      background-size: 200% 100%;
-      animation: pollShimmer 1.5s infinite linear;
-    }
-    @keyframes pollShimmer {
-      to { background-position: -200% 0; }
-    }
-    .poll-body {
-      padding: 1.5rem;
-      text-align: center;
-    }
-    .poll-header-tag {
-      font-family: var(--font-main);
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--dark);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-    }
-    .poll-movie-title {
-      font-family: var(--font-main);
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--secondary);
-      margin-bottom: 0.75rem;
-    }
-    .poll-description {
-      font-size: 0.9rem;
-      color: var(--text);
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-    }
-    .poll-options-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-      text-align: left;
-    }
-    .poll-option-label {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
-      background: rgba(255, 255, 255, 0.5);
-      border: 1px solid rgba(15, 23, 42, 0.06);
-      border-radius: 14px;
-      cursor: pointer;
-      font-family: var(--font-main);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--dark);
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-    .poll-option-label:hover {
-      background: rgba(255, 255, 255, 0.8);
-      border-color: rgba(14, 165, 233, 0.3);
-    }
-    .poll-option-input {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--muted);
-      border-radius: 50%;
-      outline: none;
-      margin: 0;
-      position: relative;
-      transition: all 0.2s ease;
-      background: #FFFFFF;
-      flex-shrink: 0;
-    }
-    .poll-option-input:checked {
-      border-color: var(--secondary);
-      background: var(--secondary);
-      box-shadow: inset 0 0 0 3px #FFFFFF;
-    }
-    .poll-option-label.selected {
-      background: rgba(14, 165, 233, 0.06);
-      border-color: var(--secondary);
-    }
-    .poll-submit-btn {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--dark);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-family: var(--font-main);
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
-      margin-bottom: 0.75rem;
-    }
-    .poll-submit-btn:hover:not(:disabled) {
-      background: #1E293B;
-      transform: translateY(-1px);
-    }
-    .poll-submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .poll-footer-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    #pollSuccessOverlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 3100;
-      background: rgba(15, 23, 42, 0.3);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    #pollSuccessOverlay.show {
-      display: flex;
-      animation: vpFadeIn 0.3s ease forwards;
-    }
   </style>
 </head>
 <body>
@@ -1514,51 +1327,6 @@
   </div>
 </div>
 
-<!-- NEW POLL POPUP MODAL SCREEN -->
-<div id="applePollOverlay">
-  <div class="poll-popup" id="pollPopupCard">
-    <div class="poll-banner-container">
-      <div class="poll-skeleton" id="pollBannerSkeleton"></div>
-      <img class="poll-banner-img" id="pollBannerImg" alt="Upcoming Movie Banner" />
-    </div>
-    <div class="poll-body">
-      <div class="poll-header-tag">🎬 Upcoming Movie Poll</div>
-      <div class="poll-movie-title" id="pollMovieLabel">Movie: Toxic (August 2026)</div>
-
-      <p class="poll-description" id="pollDescriptionLabel">We're planning a screening of Toxic in August 2026. Are you interested?</p>
-      
-      <div class="poll-options-group">
-        <label class="poll-option-label" id="labelOptInterested">
-          <input type="radio" name="moviePollOption" value="Interested" class="poll-option-input">
-          Interested
-        </label>
-        <label class="poll-option-label" id="labelOptNotInterested">
-          <input type="radio" name="moviePollOption" value="Not Interested" class="poll-option-input">
-          Not Interested
-        </label>
-      </div>
-
-      <button class="poll-submit-btn" id="pollSubmitBtn" disabled>Submit Vote</button>
-      <p class="poll-footer-note">Note: You can vote only once. Your response helps us understand interest in the movie.</p>
-    </div>
-  </div>
-</div>
-
-<!-- NEW POLL SUCCESS OVERLAY SCREEN -->
-<div id="pollSuccessOverlay">
-  <div class="vp-popup">
-    <div class="vp-icon" style="background: linear-gradient(135deg, var(--secondary), #0284c7);">
-      <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
-        <path d="M10 22 L19 31 L34 13" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"
-          style="stroke-dasharray:60;stroke-dashoffset:60;animation:drawTick 0.6s 0.3s ease forwards"/>
-      </svg>
-    </div>
-    <div class="vp-title">Vote Registered!</div>
-    <p class="vp-hello">Thank you for your feedback.</p>
-    <button class="vp-ok-btn" id="closePollSuccessBtn">Continue ✓</button>
-  </div>
-</div>
-
 <div class="apple-modal-overlay" id="authGlobalOverlay">
   
   <div class="auth-card" id="cardLogin">
@@ -1681,7 +1449,7 @@
   import { initializeApp, getApps, getApp } 
     from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { 
-    getFirestore, collection, query, where, getDocs, doc, updateDoc, setDoc, getDoc, increment 
+    getFirestore, collection, query, where, getDocs, doc, updateDoc, setDoc, getDoc 
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
   import { 
     getAuth, 
@@ -1707,7 +1475,7 @@
   };
 
   const app   = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const db   = getFirestore(app);
+  const db    = getFirestore(app);
   const auth = getAuth(app);
 
   setPersistence(auth, browserLocalPersistence).catch(err => {
@@ -1722,7 +1490,7 @@
   const cardRegister       = document.getElementById("cardRegister");
   const cardProfile        = document.getElementById("cardProfile");
   
-  const profileNavWrapper  = document.getElementById("profileNavWrapper");
+  const profileNavWrapper = document.getElementById("profileNavWrapper");
   const navAvatarBtn       = document.getElementById("navAvatarBtn");
   const profileDropdown    = document.getElementById("profileDropdown");
   
@@ -1733,7 +1501,7 @@
   
   const googleSignInBtn    = document.getElementById("googleSignInBtn");
   const formEmailLogin     = document.getElementById("formEmailLogin");
-  const formEmailRegister  = document.getElementById("formEmailRegister");
+  const formEmailRegister = document.getElementById("formEmailRegister");
   const formUpdateProfile  = document.getElementById("formUpdateProfile");
   const authLogoutBtn      = document.getElementById("authLogoutBtn");
 
@@ -2032,133 +1800,6 @@
   }
 
   /* ==========================================================================
-     DYNAMICS OF AUTOMATED MOVIE POLL POPUP CONTROLLER
-     ========================================================================== */
-  let currentActivePollId = null;
-
-  async function evaluateActiveMoviePolls(uid) {
-    try {
-      const pollsCollection = collection(db, "Polls");
-      const activePollsQuery = query(pollsCollection, where("active", "==", true));
-      const querySnapshot = await getDocs(activePollsQuery);
-      
-      if (querySnapshot.empty) return;
-      
-      const pollDoc = querySnapshot.docs[0];
-      currentActivePollId = pollDoc.id;
-      
-      // Check if current authenticated user has already cast a vote
-      const voteDocRef = doc(db, "pollVotes", uid);
-      const voteSnapshot = await getDoc(voteDocRef);
-      
-      if (voteSnapshot.exists() && voteSnapshot.data().pollId === currentActivePollId) {
-        return;
-      }
-      
-      // Evaluate if the profile represents a newly generated profile registration mapping
-      const userDocRef = doc(db, "usersExtended", uid);
-      const userDocSnap = await getDoc(userDocRef);
-      let isNewUser = false;
-      
-      if (userDocSnap.exists()) {
-        const userData = userDocSnap.data();
-        if (userData.createdAt) {
-          const creationTimestamp = new Date(userData.createdAt).getTime();
-          const currentTimestamp = Date.now();
-          // Detect profile initialization sequence within a 15-second tracking threshold
-          if (currentTimestamp - creationTimestamp < 15000) {
-            isNewUser = true;
-          }
-        }
-      }
-      
-      const dynamicDisplayTimeout = isNewUser ? 4000 : 2000;
-      setTimeout(triggerPollPopupDisplay, dynamicDisplayTimeout);
-    } catch (error) {
-      console.error("Movie poll verification process interrupted:", error.message);
-    }
-  }
-
-  function triggerPollPopupDisplay() {
-    const overlay = document.getElementById("applePollOverlay");
-    const bannerImg = document.getElementById("pollBannerImg");
-    const skeleton = document.getElementById("pollBannerSkeleton");
-    const submitBtn = document.getElementById("pollSubmitBtn");
-    const optionLabels = document.querySelectorAll(".poll-option-label");
-    
-    // Provision full bleed banner assets flawlessly from GitHub raw endpoints
-    bannerImg.src = "https://raw.githubusercontent.com/NaveenKumar8824/nitstelugunetwork/main/pollbanner.png";
-    bannerImg.onload = () => {
-      skeleton.style.display = "none";
-      bannerImg.classList.add("loaded");
-    };
-
-    // Initialize radio tracking hooks cleanly
-    optionLabels.forEach(label => {
-      label.classList.remove("selected");
-      const input = label.querySelector(".poll-option-input");
-      input.checked = false;
-      
-      label.onclick = () => {
-        optionLabels.forEach(l => l.classList.remove("selected"));
-        label.classList.add("selected");
-        input.checked = true;
-        submitBtn.disabled = false;
-      };
-    });
-
-    submitBtn.disabled = true;
-    document.body.classList.add("modal-open");
-    overlay.classList.add("show");
-  }
-
-  // Handle Poll submission parameters natively
-  document.getElementById("pollSubmitBtn").onclick = async () => {
-    const user = auth.currentUser;
-    if (!user || !currentActivePollId) return;
-
-    const selectedOptionInput = document.querySelector('input[name="moviePollOption"]:checked');
-    if (!selectedOptionInput) return;
-    
-    const voteValue = selectedOptionInput.value;
-    const submitBtn = document.getElementById("pollSubmitBtn");
-    submitBtn.disabled = true;
-
-    try {
-      // 1. Commit individual vote record to pollVotes/{uid}
-      const userVoteRef = doc(db, "pollVotes", user.uid);
-      await setDoc(userVoteRef, {
-        pollId: currentActivePollId,
-        option: voteValue,
-        timestamp: new Date().toISOString()
-      });
-
-      // 2. Atomically increment total metrics inside Polls collection structural document
-      const pollDocRef = doc(db, "Polls", currentActivePollId);
-      const updatePayload = {};
-      updatePayload[`options.${voteValue}.votes`] = increment(1);
-      await updateDoc(pollDocRef, updatePayload);
-
-      // Dismiss poll popup overlay interface context safely
-      const pollOverlay = document.getElementById("applePollOverlay");
-      pollOverlay.classList.remove("show");
-
-      // Display Success Modal verification notification seamlessly
-      const successOverlay = document.getElementById("pollSuccessOverlay");
-      successOverlay.classList.add("show");
-    } catch (err) {
-      submitBtn.disabled = false;
-      console.error("Poll registration fault transaction caught:", err.message);
-      showToastNotification("Vote processing anomaly encountered: " + err.message);
-    }
-  };
-
-  document.getElementById("closePollSuccessBtn").onclick = () => {
-    document.getElementById("pollSuccessOverlay").classList.remove("show");
-    document.body.classList.remove("modal-open");
-  };
-
-  /* ==========================================================================
      GLOBAL LIFECYCLE EVENT TRACKER
      ========================================================================== */
   onAuthStateChanged(auth, (user) => {
@@ -2168,8 +1809,6 @@
       if (authOverlay.classList.contains("active") && cardProfile.style.display !== "block") {
         dismissAuthOverlayView();
       }
-      // Check for active polls with distinct delay thresholds right after login completes
-      evaluateActiveMoviePolls(user.uid);
     } else {
       profileNavWrapper.style.display = "none";
       navAvatarBtn.textContent = "—";
