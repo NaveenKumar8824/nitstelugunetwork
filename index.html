@@ -256,7 +256,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 1.5rem 4rem;
+      padding: 8rem 1.5rem 3rem;
       position: relative;
       overflow: hidden;
       background: transparent;
@@ -481,75 +481,126 @@
     }
 
     /* ==========================================================================
-       SIDE-BY-SIDE STATISTICS COMPONENT
+       APPLE HIG HORIZONTAL QUICK ACTION SECTION (BALANCED & PERFECTLY SYMMETRIC)
        ========================================================================== */
-    .hero-stats-row {
-      display: flex !important;
-      flex-direction: row !important;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap !important;
-      gap: 3.5rem;
+    .quick-nav-section {
       width: 100%;
-      max-width: 500px;
+      max-width: 850px;
       margin: 0 auto 2.5rem;
-      padding: 1.25rem 2rem;
-      background: rgba(255, 255, 255, 0.45);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+      padding: 0 0.5rem;
+      background: transparent;
+      position: relative;
+      z-index: 10;
       animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
     }
 
-    .stat-node {
-      flex: 1;
+    .quick-nav-container {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .quick-nav-item {
+      flex: 1 1 0px;
+      min-width: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      min-width: 0;
+      text-decoration: none;
+      background: transparent;
+      outline: none;
+      cursor: pointer;
+      padding: 0.25rem;
     }
 
-    .stat-num {
-      font-family: var(--font-main);
-      font-weight: 800;
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--dark), #334155);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.25rem;
-      white-space: nowrap;
+    .quick-nav-item:focus-visible {
+      outline: 2px solid var(--secondary);
+      border-radius: 8px;
     }
 
-    .stat-label {
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      line-height: 1.3;
-      word-wrap: break-word;
-      width: 100%;
-    }
-
-    .stat-divider {
-      width: 1px;
-      height: 45px;
-      background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.12) 20%, rgba(15, 23, 42, 0.12) 80%, transparent);
+    .quick-nav-icon {
+      width: 32px;
+      height: 32px;
+      stroke-width: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       flex-shrink: 0;
     }
 
-    @media (max-width: 480px) {
-      .hero-stats-row {
-        gap: 1.25rem;
-        padding: 1rem 1rem;
-        margin-bottom: 2rem;
-        width: 100%;
+    .quick-nav-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .quick-nav-item:hover .quick-nav-icon {
+      transform: scale(1.08);
+    }
+
+    .quick-nav-title {
+      font-family: var(--font-main);
+      font-size: 19px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.2rem;
+      transition: all 0.25s ease;
+      width: 100%;
+      word-wrap: break-word;
+    }
+
+    .quick-nav-item:hover .quick-nav-title {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .quick-nav-desc {
+      font-family: var(--font-body);
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #6B7280;
+      line-height: 1.3;
+      transition: color 0.25s ease;
+      width: 100%;
+      word-wrap: break-word;
+    }
+
+    .quick-nav-item:hover .quick-nav-desc {
+      color: #374151;
+    }
+
+    .quick-nav-divider {
+      width: 1px;
+      height: 60px;
+      background: #E5E7EB;
+      flex-shrink: 0;
+      align-self: center;
+      margin: 0 0.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .quick-nav-icon {
+        width: 24px;
+        height: 24px;
+        margin-bottom: 0.35rem;
+      }
+      .quick-nav-title {
+        font-size: 13px;
+        line-height: 1.15;
+      }
+      .quick-nav-desc {
+        font-size: 10px;
+        line-height: 1.2;
+      }
+      .quick-nav-divider {
+        height: 38px;
       }
     }
 
@@ -1215,15 +1266,52 @@
   <div class="hero-sub">Network</div>
   <p class="hero-desc">Connecting Telugu hearts at NIT Silchar — celebrating our culture, supporting each other, and building memories far from home.</p>
   
-  <div class="hero-stats-row">
-    <div class="stat-node">
-      <div class="stat-num" id="statMembers" data-target="400">0+</div>
-      <div class="stat-label">Members</div>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat-node">
-      <div class="stat-num" id="statFestivals" data-target="2">0</div>
-      <div class="stat-label">Festivals</div>
+  <!-- ==========================================================================
+     APPLE HIG HORIZONTAL QUICK ACTION SECTION
+     ========================================================================== -->
+  <div class="quick-nav-section">
+    <div class="quick-nav-container">
+      
+      <a href="#events" class="quick-nav-item" aria-label="Explore upcoming events">
+        <div class="quick-nav-icon" style="color: #10B981;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <div class="quick-nav-title">Events</div>
+        <div class="quick-nav-desc">Upcoming cultural events</div>
+      </a>
+
+      <div class="quick-nav-divider"></div>
+
+      <a href="movie" class="quick-nav-item" aria-label="Book movie tickets">
+        <div class="quick-nav-icon" style="color: #3B82F6;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path>
+            <line x1="13" y1="5" x2="13" y2="19"></line>
+          </svg>
+        </div>
+        <div class="quick-nav-title">Tickets</div>
+        <div class="quick-nav-desc">Movie seat bookings</div>
+      </a>
+
+      <div class="quick-nav-divider"></div>
+
+      <a href="#events" class="quick-nav-item" aria-label="Latest community updates">
+        <div class="quick-nav-icon" style="color: #A855F7;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18.8 4A2.4 2.4 0 0 0 16.4 1.6H7.6A2.4 2.4 0 0 0 5.2 4v16a2.4 2.4 0 0 0 2.4 2.4h8.8a2.4 2.4 0 0 0 2.4-2.4V4z" style="display:none;"></path>
+            <path d="m3 11 18-5v12L3 13v-2z"></path>
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+          </svg>
+        </div>
+        <div class="quick-nav-title">Announcement</div>
+        <div class="quick-nav-desc">Latest campus updates</div>
+      </a>
+
     </div>
   </div>
 
@@ -1543,70 +1631,6 @@
   const formEmailRegister = document.getElementById("formEmailRegister");
   const formUpdateProfile  = document.getElementById("formUpdateProfile");
   const authLogoutBtn      = document.getElementById("authLogoutBtn");
-
-  /* ==========================================================================
-     PREMIUM COUNT UP INTERSECTION OBSERVER LOGIC
-     ========================================================================== */
-  function initCountUpAnimation() {
-    const statsElements = [
-      { id: 'statMembers', suffix: '+' },
-      { id: 'statFestivals', suffix: '' }
-    ];
-    
-    const countUp = (element, target, suffix) => {
-      let start = 0;
-      const duration = 1500; 
-      const startTime = performance.now();
-      
-      const animate = (currentTime) => {
-        const elapsedTime = currentTime - startTime;
-        const progress = Math.min(elapsedTime / duration, 1);
-        
-        const easeProgress = progress * (2 - progress);
-        const currentValue = Math.floor(easeProgress * target);
-        
-        element.textContent = currentValue + suffix;
-        
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        } else {
-          element.textContent = target + suffix;
-        }
-      };
-      
-      requestAnimationFrame(animate);
-    };
-
-    const observerOptions = {
-      root: null,
-      threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const targetNum = parseInt(el.getAttribute('data-target'), 10);
-          const config = statsElements.find(s => s.id === el.id);
-          
-          if (config && targetNum) {
-            countUp(el, targetNum, config.suffix);
-            observer.unobserve(el); 
-          }
-        }
-      });
-    }, observerOptions);
-
-    statsElements.forEach(stat => {
-      const el = document.getElementById(stat.id);
-      if (el) observer.observe(el);
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", initCountUpAnimation);
-  if (document.readyState === "interactive" || document.readyState === "complete") {
-    initCountUpAnimation();
-  }
 
   /* ==========================================================================
      TOAST ALERTS CONTROLLER
