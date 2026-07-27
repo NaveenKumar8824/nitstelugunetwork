@@ -905,59 +905,65 @@
     }
 
     /* ==========================================================================
-       DEVELOPER STRIP
+       ULTRA-COMPACT CONTACT SECTION (#about)
        ========================================================================== */
-    .dev-strip {
-      background: var(--dark);
-      position: relative;
-      overflow: hidden;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .dev-strip::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.15), transparent 70%);
-      pointer-events: none;
-    }
-
-    .dev-strip-inner {
-      max-width: 1200px;
+    .contact-section {
+      padding: 1.5rem 1rem 2rem;
+      max-width: 600px;
       margin: 0 auto;
-      padding: 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
+      text-align: center;
       position: relative;
-      z-index: 2;
+      z-index: 10;
     }
 
-    .dev-strip-text {
+    .contact-title {
       font-family: var(--font-main);
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 500;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.25rem;
     }
 
-    .dev-strip-text strong { color: var(--secondary); font-weight: 700; letter-spacing: 0.02em; }
-
-    .dev-strip-icons { display: flex; gap: 12px; align-items: center; }
-
-    .dsi {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .dsi svg { width: 16px; height: 16px; }
-    
-    .dsi:hover {
-      transform: translateY(-3px) scale(1.1); background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    .contact-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
     }
 
-    @media(max-width: 600px) { .dev-strip-inner { justify-content: center; text-align: center; } }
+    .contact-links {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .contact-link {
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .contact-divider {
+      margin: 0 0.4rem;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 480px) {
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .contact-divider { display: none; }
+    }
 
     /* ==========================================================================
        COMPACT FOOTER
@@ -1497,8 +1503,8 @@
 </section>
 
 <!-- ==========================================================================
-   COMPACT STACKED COMMUNITY ACTIVITIES SECTION
-   ========================================================================== -->
+    COMPACT STACKED COMMUNITY ACTIVITIES SECTION
+    ========================================================================== -->
 <section class="events" id="events">
   <div class="section-header">
     <div class="section-tag">What's Happening</div>
@@ -1554,47 +1560,18 @@
   </div>
 </section>
 
-<div class="dev-strip" id="about">
-  <div class="dev-strip-inner">
-    <span class="dev-strip-text">Designed &amp; Developed by <strong>Naveen Kumar</strong> &lt;/&gt;</span>
-    <div class="dev-strip-icons">
-      <a href="https://www.linkedin.com/in/bukkenaveenkumarnaik" target="_blank" rel="noopener" class="dsi" title="LinkedIn">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white">
-          <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-        </svg>
-      </a>
-      <a href="https://www.instagram.com/naveennn_7" target="_blank" rel="noopener" class="dsi" title="Instagram">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-          <defs>
-            <radialGradient id="ig1" cx="30%" cy="107%" r="150%">
-              <stop offset="0%" stop-color="#fdf497"/>
-              <stop offset="5%" stop-color="#fdf497"/>
-              <stop offset="45%" stop-color="#fd5949"/>
-              <stop offset="60%" stop-color="#d6249f"/>
-              <stop offset="90%" stop-color="#285AEB"/>
-            </radialGradient>
-          </defs>
-          <rect width="24" height="24" rx="5" fill="url(#ig1)"/>
-          <rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="none" stroke="white" stroke-width="1.5"/>
-          <circle cx="12" cy="12" r="4" fill="none" stroke="white" stroke-width="1.5"/>
-          <circle cx="17.2" cy="6.8" r="1.1" fill="white"/>
-        </svg>
-      </a>
-      <a href="/cdn-cgi/l/email-protection#1d737c6b7878737668707c6f737c74762b245d7a707c7471337e7270" target="_blank" rel="noopener" class="dsi" title="Gmail">
-        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
-          <rect width="32" height="32" rx="6" fill="white"/>
-          <path d="M6 10h20v14H6z" fill="white"/>
-          <path d="M6 10l10 9 10-9" fill="none" stroke="#EA4335" stroke-width="1.5"/>
-          <rect x="6" y="10" width="2" height="14" fill="#34A853"/>
-          <rect x="24" y="10" width="2" height="14" fill="#FBBC05"/>
-          <path d="M6 10h2v2L6 13z" fill="#C5221F"/>
-          <path d="M26 10h-2v2l2 1z" fill="#C5221F"/>
-          <path d="M6 24h20" stroke="#ddd" stroke-width="0.5"/>
-        </svg>
-      </a>
-    </div>
+<!-- ==========================================================================
+    ULTRA-COMPACT TEXT CONTACT SECTION (#about)
+    ========================================================================== -->
+<section class="contact-section" id="about">
+  <h2 class="contact-title">Get in Touch</h2>
+  <p class="contact-desc">Have questions or suggestions? We'd love to hear from you!</p>
+  <div class="contact-links">
+    <a href="mailto:nitstelugunetwork@gmail.com" class="contact-link">nitstelugunetwork@gmail.com</a>
+    <span class="contact-divider">OR</span>
+    <a href="mailto:mail@nitstelugu.in" class="contact-link">mail@nitstelugu.in</a>
   </div>
-</div>
+</section>
 
 <footer>
   <div class="footer-logo">NITS <span>Telugu</span> Network</div>
@@ -1603,8 +1580,8 @@
 </footer>
 
 <!-- ==========================================================================
-   TPL 2026 ANNOUNCEMENT POPUP (COMPACT IOS STYLE WITH TOP-RIGHT X BUTTON)
-   ========================================================================== -->
+    TPL 2026 ANNOUNCEMENT POPUP (COMPACT IOS STYLE WITH TOP-RIGHT X BUTTON)
+    ========================================================================== -->
 <div id="verifiedPopupOverlay">
   <div class="vp-popup">
     <!-- Top Right 'X' Close Button -->
@@ -1754,7 +1731,7 @@
 
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module">
+<script type="module">
   import { initializeApp, getApps, getApp } 
     from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { 
@@ -2085,6 +2062,5 @@
   };
 </script>
 
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1}' crossorigin="anonymous"></script>
 </body>
 </html>
