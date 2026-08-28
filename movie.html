@@ -2,575 +2,575 @@
 
 <head>
 
-<meta charset="UTF-8"/>
+  <meta charset="UTF-8"/>
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 
-<meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
 
-<meta http-equiv="Expires" content="0"/>
+  <meta http-equiv="Expires" content="0"/>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-<title>Movie Tickets — NITS Telugu Network</title>
+  <title>Movie Tickets — NITS Telugu Network</title>
 
+  
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
 
+    /* ==========================================================================
 
+       SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
 
-<style>
+       ========================================================================== */
 
-/* ==========================================================================
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
+    
 
-========================================================================== */
+    :root {
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      --primary: #10B981;
 
+      --secondary: #0EA5E9;
 
+      --dark: #0F172A;
 
-:root {
+      --surface: #FFFFFF;
 
---primary: #10B981;
+      --surface-card: #F8FAFC;
 
---secondary: #0EA5E9;
+      --ui-border: #E2E8F0;
 
---dark: #0F172A;
+      --text: #1E293B;
 
---surface: #FFFFFF;
+      --muted: #64748B;
 
---surface-card: #F8FAFC;
+      --bms-red: #FF3366;
 
---ui-border: #E2E8F0;
+      --bms-red-glow: rgba(255, 51, 102, 0.15);
 
---text: #1E293B;
+      --bg: #F1F5F9;
 
---muted: #64748B;
+      
 
---bms-red: #FF3366;
+      --font-heading: 'Poppins', sans-serif;
 
---bms-red-glow: rgba(255, 51, 102, 0.15);
+      --font-display: 'Plus Jakarta Sans', sans-serif;
 
---bg: #F1F5F9;
+      --font-body: 'Inter', sans-serif;
 
+      --radius-lg: 16px;
 
+      --radius-md: 12px;
 
---font-heading: 'Poppins', sans-serif;
+      --shadow-premium: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
 
---font-display: 'Plus Jakarta Sans', sans-serif;
+    }
 
---font-body: 'Inter', sans-serif;
 
---radius-lg: 16px;
 
---radius-md: 12px;
+    html { scroll-behavior: smooth; background-color: var(--bg); }
 
---shadow-premium: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+    body {
 
-}
+      font-family: var(--font-body);
 
+      background-color: var(--bg);
 
+      color: var(--text);
 
-html { scroll-behavior: smooth; background-color: var(--bg); }
+      min-height: 100vh;
 
-body {
+      overflow-x: hidden;
 
-font-family: var(--font-body);
+      line-height: 1.4;
 
-background-color: var(--bg);
+      -webkit-font-smoothing: antialiased;
 
-color: var(--text);
+    }
 
-min-height: 100vh;
 
-overflow-x: hidden;
 
-line-height: 1.4;
+    /* Micro-Animations */
 
--webkit-font-smoothing: antialiased;
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-}
+    @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
+    @keyframes popIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
+    @keyframes drawTick { to { stroke-dashoffset: 0; } }
 
-/* Micro-Animations */
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    .fade-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
-@keyframes popIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-@keyframes drawTick { to { stroke-dashoffset: 0; } }
 
+    /* ==========================================================================
 
+       CINEMATIC COMPACT HEADER (Optimized Spacing)
 
-.fade-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+       ========================================================================== */
 
+    .movie-page-hero { padding: 1rem 1rem 0.5rem; text-align: center; }
 
+    .movie-badge {
 
-/* ==========================================================================
+      display: inline-flex; align-items: center; gap: 0.3rem; 
 
-CINEMATIC COMPACT HEADER (Optimized Spacing)
+      background: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 100px; 
 
-========================================================================== */
+      padding: 0.2rem 0.5rem; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; 
 
-.movie-page-hero { padding: 1rem 1rem 0.5rem; text-align: center; }
+      color: #0369A1; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.04em;
 
-.movie-badge {
+    }
 
-display: inline-flex; align-items: center; gap: 0.3rem;
+    .movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite ease-in-out; box-shadow: 0 0 6px var(--primary); }
 
-background: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 100px;
+    
 
-padding: 0.2rem 0.5rem; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
+    .hero-title { 
 
-color: #0369A1; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.04em;
+      font-family: var(--font-heading); 
 
-}
+      font-weight: 800; 
 
-.movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite ease-in-out; box-shadow: 0 0 6px var(--primary); }
+      font-size: 1.65rem; 
 
+      color: var(--dark); 
 
+      line-height: 1.15; 
 
-.hero-title {
+      margin-bottom: 0.25rem; 
 
-font-family: var(--font-heading);
+      letter-spacing: -0.035em; 
 
-font-weight: 800;
+    }
 
-font-size: 1.65rem;
+    .hero-title span { color: var(--secondary); }
 
-color: var(--dark);
+    .hero-sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); max-width: 320px; margin: 0 auto; }
 
-line-height: 1.15;
 
-margin-bottom: 0.25rem;
 
-letter-spacing: -0.035em;
+    @media (max-width: 360px) {
 
-}
+      .hero-title { font-size: 1.5rem; }
 
-.hero-title span { color: var(--secondary); }
+    }
 
-.hero-sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); max-width: 320px; margin: 0 auto; }
 
 
+    /* ==========================================================================
 
-@media (max-width: 360px) {
+       COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
 
-.hero-title { font-size: 1.5rem; }
+       ========================================================================== */
 
-}
+    .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0.5rem auto 0.75rem; max-width: 280px; padding: 0; }
 
+    .step-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
 
+    .step-dot { 
 
-/* ==========================================================================
+      width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
 
-COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; border: 1.5px solid var(--ui-border); 
 
-========================================================================== */
+      background: #FFFFFF; color: var(--muted); transition: all 0.3s ease; position: relative; z-index: 1; 
 
-.step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0.5rem auto 0.75rem; max-width: 280px; padding: 0; }
+    }
 
-.step-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+    .step-dot.active { background: var(--secondary); border-color: var(--secondary); color: #FFF; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2); }
 
-.step-dot {
+    .step-dot.done { background: var(--primary); border-color: var(--primary); color: #FFF; }
 
-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    .step-line { flex: 1; height: 2px; background: var(--ui-border); transition: background 0.3s ease; margin-top: -10px; transform: translateY(10px); }
 
-font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; border: 1.5px solid var(--ui-border);
+    .step-line.done { background: var(--primary); }
 
-background: #FFFFFF; color: var(--muted); transition: all 0.3s ease; position: relative; z-index: 1;
+    .step-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.2rem; white-space: nowrap; }
 
-}
 
-.step-dot.active { background: var(--secondary); border-color: var(--secondary); color: #FFF; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2); }
 
-.step-dot.done { background: var(--primary); border-color: var(--primary); color: #FFF; }
+    /* ==========================================================================
 
-.step-line { flex: 1; height: 2px; background: var(--ui-border); transition: background 0.3s ease; margin-top: -10px; transform: translateY(10px); }
+       PREMIUM FORM & CARD INTERFACE
 
-.step-line.done { background: var(--primary); }
+       ========================================================================== */
 
-.step-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.2rem; white-space: nowrap; }
+    .form-container { max-width: 400px; margin: 0 auto; padding: 0 1.25rem 1.5rem; width: 100%; }
 
+    .form-card { 
 
+      background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem; 
 
-/* ==========================================================================
+      box-shadow: var(--shadow-premium); 
 
-PREMIUM FORM & CARD INTERFACE
+    }
 
-========================================================================== */
+    .form-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
 
-.form-container { max-width: 400px; margin: 0 auto; padding: 0 1.25rem 1.5rem; width: 100%; }
+    .form-card-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
 
-.form-card {
+    
 
-background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem;
+    .form-group { margin-bottom: 0.85rem; }
 
-box-shadow: var(--shadow-premium);
+    .form-label { display: block; font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
 
-}
+    .form-input { 
 
-.form-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
+      width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
 
-.form-card-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
+      font-family: var(--font-body); font-size: 0.85rem; color: var(--text); background: #F8FAFC; 
 
+      outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none; 
 
+    }
 
-.form-group { margin-bottom: 0.85rem; }
+    .form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); background: #FFFFFF; }
 
-.form-label { display: block; font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-input.error { border-color: var(--bms-red); box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.1); }
 
-.form-input {
+    
 
-width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--ui-border); border-radius: var(--radius-md);
+    select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.9rem; padding-right: 2rem; }
 
-font-family: var(--font-body); font-size: 0.85rem; color: var(--text); background: #F8FAFC;
+    
 
-outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none;
+    .error-msg { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.2rem; font-weight: 500; display: none; }
 
-}
+    .error-msg.show { display: block; }
 
-.form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); background: #FFFFFF; }
+    
 
-.form-input.error { border-color: var(--bms-red); box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.1); }
+    .phone-wrap { position: relative; }
 
+    .phone-flag { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--muted); pointer-events: none; font-weight: 500; }
 
+    input[type=tel] { padding-left: 2.5rem !important; }
 
-select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.9rem; padding-right: 2rem; }
+    
 
+    .terms-compact { background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; margin-bottom: 0.85rem; }
 
+    .checkbox-row { display: flex; align-items: flex-start; gap: 0.4rem; cursor: pointer; }
 
-.error-msg { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.2rem; font-weight: 500; display: none; }
+    .checkbox-row input[type=checkbox] { width: 14px; height: 14px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
 
-.error-msg.show { display: block; }
+    .checkbox-row label { font-size: 0.75rem; color: var(--muted); line-height: 1.35; cursor: pointer; }
 
+    .checkbox-row label span { color: var(--bms-red); font-weight: 500; }
 
+    
 
-.phone-wrap { position: relative; }
+    /* Interactive Buttons */
 
-.phone-flag { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--muted); pointer-events: none; font-weight: 500; }
+    .btn-primary, .submit-btn, .confirm-btn, .download-btn { 
 
-input[type=tel] { padding-left: 2.5rem !important; }
+      width: 100%; padding: 0.65rem; color: #FFF; border: none; border-radius: var(--radius-md); 
 
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; cursor: pointer; 
 
+      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.3rem; 
 
-.terms-compact { background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; margin-bottom: 0.85rem; }
+    }
 
-.checkbox-row { display: flex; align-items: flex-start; gap: 0.4rem; cursor: pointer; }
+    .btn-primary { background: #FFFFFF; border: 1px solid var(--ui-border); color: var(--text); }
 
-.checkbox-row input[type=checkbox] { width: 14px; height: 14px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+    .btn-primary:hover:not(:disabled) { border-color: var(--secondary); background: #F0F9FF; }
 
-.checkbox-row label { font-size: 0.75rem; color: var(--muted); line-height: 1.35; cursor: pointer; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.checkbox-row label span { color: var(--bms-red); font-weight: 500; }
+    
 
+    /* ==========================================================================
 
+       COMPACT PAYMENT SECTION
 
-/* Interactive Buttons */
+       ========================================================================== */
 
-.btn-primary, .submit-btn, .confirm-btn, .download-btn {
+    .qr-section { text-align: center; margin-bottom: 0.75rem; }
 
-width: 100%; padding: 0.65rem; color: #FFF; border: none; border-radius: var(--radius-md);
+    .qr-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
 
-font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; cursor: pointer;
+    .qr-box { display: inline-block; background: #FFF; border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--ui-border); box-shadow: 0 4px 12px rgba(15,23,42,0.03); }
 
-transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+    .qr-box img { display: block; border-radius: 4px; width: 110px; height: 110px; }
 
-}
+    .qr-unavail { padding: 0.75rem; text-align: center; background: #FFF7ED; border: 1px dashed #FED7AA; border-radius: var(--radius-md); margin-bottom: 0.75rem; }
 
-.btn-primary { background: #FFFFFF; border: 1px solid var(--ui-border); color: var(--text); }
+    .qr-unavail p { font-size: 0.75rem; color: #C2410C; font-weight: 400; }
 
-.btn-primary:hover:not(:disabled) { border-color: var(--secondary); background: #F0F9FF; }
+    
 
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .divider { border: none; border-top: 1px solid var(--ui-border); margin: 0.85rem 0; }
 
+    
 
+    .upload-zone { 
 
-/* ==========================================================================
+      border: 1.5px dashed #CBD5E1; border-radius: var(--radius-md); 
 
-COMPACT PAYMENT SECTION
+      padding: 0.55rem; text-align: center; cursor: pointer; 
 
-========================================================================== */
+      transition: all 0.2s ease; background: #F8FAFC; 
 
-.qr-section { text-align: center; margin-bottom: 0.75rem; }
+      margin-bottom: 0.2rem; position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
 
-.qr-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    }
 
-.qr-box { display: inline-block; background: #FFF; border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--ui-border); box-shadow: 0 4px 12px rgba(15,23,42,0.03); }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--secondary); background: #F0F9FF; }
 
-.qr-box img { display: block; border-radius: 4px; width: 110px; height: 110px; }
+    .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 
-.qr-unavail { padding: 0.75rem; text-align: center; background: #FFF7ED; border: 1px dashed #FED7AA; border-radius: var(--radius-md); margin-bottom: 0.75rem; }
+    .upload-icon { color: var(--secondary); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-.qr-unavail p { font-size: 0.75rem; color: #C2410C; font-weight: 400; }
+    .upload-icon svg { width: 15px; height: 15px; }
 
+    .upload-text { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; color: var(--text); }
 
+    .upload-text span { color: var(--secondary); font-weight: 600; }
 
-.divider { border: none; border-top: 1px solid var(--ui-border); margin: 0.85rem 0; }
+    .upload-hint { font-size: 0.62rem; color: var(--muted); margin-top: 0.1rem; text-align: center; }
 
+    
 
+    .upload-preview { margin-top: 0.35rem; display: none; align-items: center; gap: 0.35rem; background: #F1F5F9; padding: 0.3rem 0.45rem; border-radius: 6px; border: 1px solid var(--ui-border); }
 
-.upload-zone {
+    .upload-preview img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
 
-border: 1.5px dashed #CBD5E1; border-radius: var(--radius-md);
+    .upload-preview .file-name { font-size: 0.7rem; color: var(--primary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-padding: 0.55rem; text-align: center; cursor: pointer;
+    
 
-transition: all 0.2s ease; background: #F8FAFC;
+    .submit-btn { background: var(--primary); color: #FFFFFF; font-weight: 700; margin-top: 0.75rem; }
 
-margin-bottom: 0.2rem; position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    .submit-btn:hover:not(:disabled) { background: #059669; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
 
-}
+    
 
-.upload-zone:hover, .upload-zone.dragover { border-color: var(--secondary); background: #F0F9FF; }
+    .utr-status { margin-top: 0.35rem; padding: 0.3rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 500; display: none; align-items: center; gap: 0.3rem; font-family: var(--font-display); }
 
-.upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .utr-status.detecting { display: flex; background: #F0F9FF; color: #0369A1; border: 1px solid #B9E6FD; }
 
-.upload-icon { color: var(--secondary); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .utr-status.found { display: flex; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
 
-.upload-icon svg { width: 15px; height: 15px; }
+    .utr-status.not-found { display: flex; background: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA; }
 
-.upload-text { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; color: var(--text); }
+    
 
-.upload-text span { color: var(--secondary); font-weight: 600; }
+    .utr-input-wrap { margin-top: 0.65rem; }
 
-.upload-hint { font-size: 0.62rem; color: var(--muted); margin-top: 0.1rem; text-align: center; }
+    #utrInput.auto-filled { border-color: var(--primary); background: #ECFDF5; font-weight: 600; color: #047857; }
 
 
 
-.upload-preview { margin-top: 0.35rem; display: none; align-items: center; gap: 0.35rem; background: #F1F5F9; padding: 0.3rem 0.45rem; border-radius: 6px; border: 1px solid var(--ui-border); }
+    /* ==========================================================================
 
-.upload-preview img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
+       PREMIUM LIGHT DESIGN TICKET (Refined Spacing)
 
-.upload-preview .file-name { font-size: 0.7rem; color: var(--primary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+       ========================================================================== */
 
+    .ticket-preview-label { text-align: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; }
 
+    .bms-ticket-wrap { max-width: 340px; margin: 0 auto 1rem; width: 100%; }
 
-.submit-btn { background: var(--primary); color: #FFFFFF; font-weight: 700; margin-top: 0.75rem; }
+    
 
-.submit-btn:hover:not(:disabled) { background: #059669; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+    .bms-ticket { 
 
+      background: #FFFFFF; border-radius: var(--radius-lg); overflow: hidden; position: relative; width: 100%;
 
+      border: 1px solid var(--ui-border); box-shadow: var(--shadow-premium);
 
-.utr-status { margin-top: 0.35rem; padding: 0.3rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 500; display: none; align-items: center; gap: 0.3rem; font-family: var(--font-display); }
+    }
 
-.utr-status.detecting { display: flex; background: #F0F9FF; color: #0369A1; border: 1px solid #B9E6FD; }
+    
 
-.utr-status.found { display: flex; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
+    .bms-top { padding: 1rem 1rem 0.85rem; position: relative; }
 
-.utr-status.not-found { display: flex; background: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA; }
+    .bms-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
 
+    .bms-org-label { font-size: 0.55rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1px; font-family: var(--font-display); }
 
+    .bms-movie-title { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--dark); line-height: 1.2; letter-spacing: -0.01em; }
 
-.utr-input-wrap { margin-top: 0.65rem; }
+    
 
-#utrInput.auto-filled { border-color: var(--primary); background: #ECFDF5; font-weight: 600; color: #047857; }
+    .bms-status-badge { 
 
+      background: #FEF3C7; border: 1px solid #FDE68A; 
 
+      border-radius: 4px; padding: 2px 5px; font-size: 0.6rem; font-weight: 700; color: #D97706; 
 
-/* ==========================================================================
+      letter-spacing: 0.02em; text-transform: uppercase; font-family: var(--font-display);
 
-PREMIUM LIGHT DESIGN TICKET (Refined Spacing)
+    }
 
-========================================================================== */
+    .bms-status-badge.confirmed { background: #D1FAE5; border-color: #A7F3D0; color: #047857; }
 
-.ticket-preview-label { text-align: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; }
+    
 
-.bms-ticket-wrap { max-width: 340px; margin: 0 auto 1rem; width: 100%; }
+    .bms-meta-strip { display: flex; gap: 8px; padding-top: 0.75rem; border-top: 1px dashed var(--ui-border); }
 
+    .bms-meta-item { flex: 1; min-width: 0; }
 
+    .bms-meta-label { font-size: 0.55rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
 
-.bms-ticket {
+    .bms-meta-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-background: #FFFFFF; border-radius: var(--radius-lg); overflow: hidden; position: relative; width: 100%;
+    
 
-border: 1px solid var(--ui-border); box-shadow: var(--shadow-premium);
+    /* Couplings */
 
-}
+    .bms-perf { height: 14px; position: relative; display: flex; align-items: center; background: transparent; }
 
+    .bms-perf::before, .bms-perf::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; border: 1px solid var(--ui-border); }
 
+    .bms-perf::before { left: -8px; }
 
-.bms-top { padding: 1rem 1rem 0.85rem; position: relative; }
+    .bms-perf::after { right: -8px; }
 
-.bms-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+    .bms-perf-line { flex: 1; margin: 0 10px; height: 1px; background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size: 5px 1px; background-repeat: repeat-x; }
 
-.bms-org-label { font-size: 0.55rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1px; font-family: var(--font-display); }
+    
 
-.bms-movie-title { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--dark); line-height: 1.2; letter-spacing: -0.01em; }
+    .bms-qr-section { padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem; background: #F8FAFC; }
 
+    .bms-qr-frame { flex-shrink: 0; background: #FFF; border-radius: var(--radius-md); padding: 4px; display: inline-block; border: 1px solid var(--ui-border); }
 
+    .bms-qr-frame img { display: block; width: 75px; height: 75px; border-radius: 4px; }
 
-.bms-status-badge {
+    .bms-qr-info { flex: 1; min-width: 0; }
 
-background: #FEF3C7; border: 1px solid #FDE68A;
+    .bms-booking-label { font-size: 0.55rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
 
-border-radius: 4px; padding: 2px 5px; font-size: 0.6rem; font-weight: 700; color: #D97706;
+    .bms-booking-id { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--dark); letter-spacing: 0.01em; line-height: 1.1; }
 
-letter-spacing: 0.02em; text-transform: uppercase; font-family: var(--font-display);
+    
 
-}
+    .bms-details { padding: 0.85rem 1rem; background: #FFFFFF; border-top: 1px solid var(--ui-border); }
 
-.bms-status-badge.confirmed { background: #D1FAE5; border-color: #A7F3D0; color: #047857; }
+    .bms-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
 
+    .bms-detail-item .bms-meta-label { color: var(--muted); }
 
+    .bms-detail-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; word-break: break-word; }
 
-.bms-meta-strip { display: flex; gap: 8px; padding-top: 0.75rem; border-top: 1px dashed var(--ui-border); }
+    
 
-.bms-meta-item { flex: 1; min-width: 0; }
+    /* Elegant Ticket Notice Update */
 
-.bms-meta-label { font-size: 0.55rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
+    .bms-notice { margin: 0 1rem 1rem; background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.5rem 0.65rem; text-align: center; }
 
-.bms-meta-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bms-notice p { font-size: 0.68rem; color: #64748B; font-weight: 400; line-height: 1.4; font-family: var(--font-body); }
 
 
 
-/* Couplings */
+    .ticket-actions { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
 
-.bms-perf { height: 14px; position: relative; display: flex; align-items: center; background: transparent; }
+    .confirm-btn { background: var(--bms-red); font-weight: 700; color: #FFFFFF; }
 
-.bms-perf::before, .bms-perf::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; border: 1px solid var(--ui-border); }
+    .confirm-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
 
-.bms-perf::before { left: -8px; }
+    
 
-.bms-perf::after { right: -8px; }
+    .edit-btn, .movie-back-btn { 
 
-.bms-perf-line { flex: 1; margin: 0 10px; height: 1px; background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size: 5px 1px; background-repeat: repeat-x; }
+      width: 100%; padding: 0.65rem; background: #FFFFFF; color: var(--muted); 
 
+      border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
 
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; cursor: pointer; 
 
-.bms-qr-section { padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem; background: #F8FAFC; }
+      transition: all 0.2s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.2rem; 
 
-.bms-qr-frame { flex-shrink: 0; background: #FFF; border-radius: var(--radius-md); padding: 4px; display: inline-block; border: 1px solid var(--ui-border); }
+    }
 
-.bms-qr-frame img { display: block; width: 75px; height: 75px; border-radius: 4px; }
+    .edit-btn:hover, .movie-back-btn:hover { border-color: #94A3B8; color: var(--text); background: #F8FAFC; }
 
-.bms-qr-info { flex: 1; min-width: 0; }
+    
 
-.bms-booking-label { font-size: 0.55rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
+    /* ==========================================================================
 
-.bms-booking-id { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--dark); letter-spacing: 0.01em; line-height: 1.1; }
+       SUCCESS COMPONENT
 
+       ========================================================================== */
 
+    #movieSuccessScreen { display: none; padding: 0.5rem 1.25rem 2rem; max-width: 400px; margin: 0 auto; width: 100%; }
 
-.bms-details { padding: 0.85rem 1rem; background: #FFFFFF; border-top: 1px solid var(--ui-border); }
+    .gpay-check { 
 
-.bms-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+      width: 44px; height: 44px; border-radius: 50%; background: var(--primary); 
 
-.bms-detail-item .bms-meta-label { color: var(--muted); }
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; 
 
-.bms-detail-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; word-break: break-word; }
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; 
 
+    }
 
+    .gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.4s 0.1s ease forwards; }
 
-/* Elegant Ticket Notice Update */
+    .movie-success-top { text-align: center; padding: 0.5rem 0; }
 
-.bms-notice { margin: 0 1rem 1rem; background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.5rem 0.65rem; text-align: center; }
+    
 
-.bms-notice p { font-size: 0.68rem; color: #64748B; font-weight: 400; line-height: 1.4; font-family: var(--font-body); }
+    .success-verified-note { 
 
+      display: inline-flex; align-items: center; gap: 0.25rem; background: #ECFDF5; 
 
+      border: 1px solid #A7F3D0; border-radius: 100px; padding: 0.25rem 0.75rem; 
 
-.ticket-actions { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+      font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight: 600; margin-bottom: 0.75rem; 
 
-.confirm-btn { background: var(--bms-red); font-weight: 700; color: #FFFFFF; }
+    }
 
-.confirm-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
+    #msuccessNameMsg { font-size: 0.8rem; color: var(--muted); line-height: 1.4; max-width: 320px; margin: 0 auto 0.85rem; }
 
+    
 
+    .download-btn { background: var(--bms-red); font-weight: 700; margin-bottom: 0.2rem; }
 
-.edit-btn, .movie-back-btn {
+    .download-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
 
-width: 100%; padding: 0.65rem; background: #FFFFFF; color: var(--muted);
 
-border: 1px solid var(--ui-border); border-radius: var(--radius-md);
 
-font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+    /* Screen Loader Styles */
 
-transition: all 0.2s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.2rem;
+    #loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; }
 
-}
+    .loader-box { background: #FFFFFF; border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; width: 240px; box-shadow: var(--shadow-premium); }
 
-.edit-btn:hover, .movie-back-btn:hover { border-color: #94A3B8; color: var(--text); background: #F8FAFC; }
+    .loader-icon { font-size: 1.75rem; margin-bottom: 0.3rem; }
 
+    .loader-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-bottom: 0.1rem; }
 
+    .loader-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
 
-/* ==========================================================================
+    .progress-bar-wrap { background: #E2E8F0; border-radius: 100px; height: 4px; overflow: hidden; }
 
-SUCCESS COMPONENT
+    .progress-bar { height: 100%; background: var(--secondary); border-radius: 100px; width: 0%; transition: width 0.3s ease; }
 
-========================================================================== */
-
-#movieSuccessScreen { display: none; padding: 0.5rem 1.25rem 2rem; max-width: 400px; margin: 0 auto; width: 100%; }
-
-.gpay-check {
-
-width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
-
-display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;
-
-box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-
-}
-
-.gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.4s 0.1s ease forwards; }
-
-.movie-success-top { text-align: center; padding: 0.5rem 0; }
-
-
-
-.success-verified-note {
-
-display: inline-flex; align-items: center; gap: 0.25rem; background: #ECFDF5;
-
-border: 1px solid #A7F3D0; border-radius: 100px; padding: 0.25rem 0.75rem;
-
-font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight: 600; margin-bottom: 0.75rem;
-
-}
-
-#msuccessNameMsg { font-size: 0.8rem; color: var(--muted); line-height: 1.4; max-width: 320px; margin: 0 auto 0.85rem; }
-
-
-
-.download-btn { background: var(--bms-red); font-weight: 700; margin-bottom: 0.2rem; }
-
-.download-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
-
-
-
-/* Screen Loader Styles */
-
-#loadingOverlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(15, 23, 42, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); align-items: center; justify-content: center; }
-
-.loader-box { background: #FFFFFF; border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1.25rem; text-align: center; width: 240px; box-shadow: var(--shadow-premium); }
-
-.loader-icon { font-size: 1.75rem; margin-bottom: 0.3rem; }
-
-.loader-title { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-bottom: 0.1rem; }
-
-.loader-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
-
-.progress-bar-wrap { background: #E2E8F0; border-radius: 100px; height: 4px; overflow: hidden; }
-
-.progress-bar { height: 100%; background: var(--secondary); border-radius: 100px; width: 0%; transition: width 0.3s ease; }
-
-</style>
+  </style>
 
 </head>
 
@@ -580,11 +580,11 @@ font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight
 
 <section class="movie-page-hero fade-up">
 
-<div class="movie-badge"><div class="movie-live-dot"></div>Booking Open</div>
+  <div class="movie-badge"><div class="movie-live-dot"></div>Booking Open</div>
 
-<h1 class="hero-title">Movie <span>Tickets</span></h1>
+  <h1 class="hero-title">Movie <span>Tickets</span></h1>
 
-<p class="hero-sub">Telugu blockbusters for the NITS Telugu community</p>
+  <p class="hero-sub">Telugu blockbusters for the NITS Telugu community</p>
 
 </section>
 
@@ -592,15 +592,15 @@ font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight
 
 <div class="step-indicator fade-up" id="movieStepInd">
 
-<div class="step-wrap"><div class="step-dot active" id="mdot1">1</div><div class="step-label">Details</div></div>
+  <div class="step-wrap"><div class="step-dot active" id="mdot1">1</div><div class="step-label">Details</div></div>
 
-<div class="step-line" id="mline1"></div>
+  <div class="step-line" id="mline1"></div>
 
-<div class="step-wrap"><div class="step-dot" id="mdot2">2</div><div class="step-label">Payment</div></div>
+  <div class="step-wrap"><div class="step-dot" id="mdot2">2</div><div class="step-label">Payment</div></div>
 
-<div class="step-line" id="mline2"></div>
+  <div class="step-line" id="mline2"></div>
 
-<div class="step-wrap"><div class="step-dot" id="mdot3">3</div><div class="step-label">Confirm</div></div>
+  <div class="step-wrap"><div class="step-dot" id="mdot3">3</div><div class="step-label">Confirm</div></div>
 
 </div>
 
@@ -610,285 +610,285 @@ font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight
 
 
 
-<div id="mpStep1">
+  <div id="mpStep1">
 
-<div class="form-card">
+    <div class="form-card">
 
-<div class="form-card-title">Your Details</div>
+      <div class="form-card-title">Your Details</div>
 
-<div class="form-card-sub">Please enter your information to proceed</div>
+      <div class="form-card-sub">Please enter your information to proceed</div>
 
-<div class="form-group">
+      <div class="form-group">
 
-<label class="form-label" for="mfullName">Name</label>
+        <label class="form-label" for="mfullName">Name</label>
 
-<input class="form-input" type="text" id="mfullName" placeholder="Your full name" autocomplete="name"/>
+        <input class="form-input" type="text" id="mfullName" placeholder="Your full name" autocomplete="name"/>
 
-<div class="error-msg" id="merr-name">Please enter your name</div>
+        <div class="error-msg" id="merr-name">Please enter your name</div>
 
-</div>
+      </div>
 
-<div class="form-group">
+      <div class="form-group">
 
-<label class="form-label" for="mgradYear">Year</label>
+        <label class="form-label" for="mgradYear">Year</label>
 
-<div class="select-wrap">
+        <div class="select-wrap">
 
-<select class="form-input" id="mgradYear">
+          <select class="form-input" id="mgradYear">
 
-<option value="">Select year</option>
+            <option value="">Select year</option>
 
-<option value="1">1st Year</option>
+            <option value="1">1st Year</option>
 
-<option value="2">2nd Year</option>
+            <option value="2">2nd Year</option>
 
-<option value="3">3rd Year</option>
+            <option value="3">3rd Year</option>
 
-<option value="4">4th Year</option>
+            <option value="4">4th Year</option>
 
-</select>
+          </select>
 
-</div>
+        </div>
 
-<div class="error-msg" id="merr-year">Please select your year</div>
+        <div class="error-msg" id="merr-year">Please select your year</div>
 
-</div>
+      </div>
 
-<div class="form-group">
+      <div class="form-group">
 
-<label class="form-label" for="mdepartment">Department</label>
+        <label class="form-label" for="mdepartment">Department</label>
 
-<div class="select-wrap">
+        <div class="select-wrap">
 
-<select class="form-input" id="mdepartment">
+          <select class="form-input" id="mdepartment">
 
-<option value="">Select department</option>
+            <option value="">Select department</option>
 
-<option value="CSE">CSE</option>
+            <option value="CSE">CSE</option>
 
-<option value="ECE">ECE</option>
+            <option value="ECE">ECE</option>
 
-<option value="EE">EE</option>
+            <option value="EE">EE</option>
 
-<option value="EIE">EIE</option>
+            <option value="EIE">EIE</option>
 
-<option value="ME">ME</option>
+            <option value="ME">ME</option>
 
-<option value="CE">CE</option>
+            <option value="CE">CE</option>
 
-</select>
+          </select>
 
-</div>
+        </div>
 
-<div class="error-msg" id="merr-dept">Please select your department</div>
+        <div class="error-msg" id="merr-dept">Please select your department</div>
 
-</div>
+      </div>
 
-<div class="form-group">
+      <div class="form-group">
 
-<label class="form-label" for="mmobile">Mobile Number</label>
+        <label class="form-label" for="mmobile">Mobile Number</label>
 
-<div class="phone-wrap">
+        <div class="phone-wrap">
 
-<span class="phone-flag">+91</span>
+          <span class="phone-flag">+91</span>
 
-<input class="form-input" type="tel" id="mmobile" placeholder="10-digit number" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel-national"/>
+          <input class="form-input" type="tel" id="mmobile" placeholder="10-digit number" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" autocomplete="tel-national"/>
 
-</div>
+        </div>
 
-<div class="error-msg" id="merr-mobile">Enter a valid 10-digit number</div>
+        <div class="error-msg" id="merr-mobile">Enter a valid 10-digit number</div>
 
-</div>
+      </div>
 
-<div class="terms-compact">
+      <div class="terms-compact">
 
-<div class="checkbox-row">
+        <div class="checkbox-row">
 
-<input type="checkbox" id="mtermsCheck"/>
+          <input type="checkbox" id="mtermsCheck"/>
 
-<label for="mtermsCheck">I agree to the <span>cancellation policy</span> — tickets are non-refundable except if the show is cancelled by organizers.</label>
+          <label for="mtermsCheck">I agree to the <span>cancellation policy</span> — tickets are non-refundable except if the show is cancelled by organizers.</label>
 
-</div>
+        </div>
 
-<div class="error-msg" id="merr-terms">Please accept to continue</div>
+        <div class="error-msg" id="merr-terms">Please accept to continue</div>
 
-</div>
+      </div>
 
-<button class="submit-btn" id="continueBtn" onclick="movieGoToStep2()">Continue to Payment →</button>
+      <button class="submit-btn" id="continueBtn" onclick="movieGoToStep2()">Continue to Payment →</button>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 
 
-<div id="mpStep2" style="display:none;">
+  <div id="mpStep2" style="display:none;">
 
-<div class="form-card">
+    <div class="form-card">
 
-<div class="form-card-title">Scan & Pay</div>
+      <div class="form-card-title">Scan &amp; Pay</div>
 
-<div class="form-card-sub" id="paymentInstructionText">Please scan the QR code and pay the fixed amount of ₹300.</div>
+      <div class="form-card-sub" id="paymentInstructionText">Please scan the QR code to make your payment.</div>
 
-<div id="movieQRSection">
+      <div id="movieQRSection">
 
-<div class="qr-section">
+        <div class="qr-section">
 
-<div class="qr-label">UPI QR Gate (₹300)</div>
+          <div class="qr-label">UPI QR Gate</div>
 
-<div class="qr-box"><img id="movieQRImg" src="" alt="UPI QR"/></div>
+          <div class="qr-box"><img id="movieQRImg" src="" alt="UPI QR"/></div>
 
-</div>
+        </div>
 
-</div>
+      </div>
 
-<div id="movieQRUnavail" class="qr-unavail" style="display:none;">
+      <div id="movieQRUnavail" class="qr-unavail" style="display:none;">
 
-<p>🔔 Payment QR for your year will be shared by the admin shortly. Please contact the committee.</p>
+        <p>🔔 Payment QR for your year will be shared by the admin shortly. Please contact the committee.</p>
 
-</div>
+      </div>
 
-<hr class="divider"/>
+      <hr class="divider"/>
 
-<div class="form-group">
+      <div class="form-group">
 
-<label class="form-label">Payment Screenshot</label>
+        <label class="form-label">Payment Screenshot</label>
 
+        
 
+        <div class="upload-zone" id="mUploadZone">
 
-<div class="upload-zone" id="mUploadZone">
+          <input type="file" id="mproofFile" accept="image/*,.pdf"/>
 
-<input type="file" id="mproofFile" accept="image/*,.pdf"/>
+          <div class="upload-icon">
 
-<div class="upload-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
 
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          </div>
 
-</div>
+          <div class="upload-text"><span>Tap to upload</span> payment screenshot</div>
 
-<div class="upload-text"><span>Tap to upload</span> payment screenshot</div>
+        </div>
 
-</div>
+        <div class="upload-hint">JPG, PNG or PDF · Max 5 MB · UTR auto-detected</div>
 
-<div class="upload-hint">JPG, PNG or PDF · Max 5 MB · UTR auto-detected</div>
+        
 
+        <div class="upload-preview" id="mUploadPreview">
 
+          <img id="mpreviewImg" src="" alt="preview" style="display:none;"/>
 
-<div class="upload-preview" id="mUploadPreview">
+          <div class="file-name" id="mFileName"></div>
 
-<img id="mpreviewImg" src="" alt="preview" style="display:none;"/>
+        </div>
 
-<div class="file-name" id="mFileName"></div>
+        <div class="error-msg" id="merr-proof">Please upload your payment screenshot to continue</div>
 
-</div>
+        <div class="file-size-warn" id="merr-filesize" style="font-size:0.7rem; color:var(--bms-red); margin-top:0.2rem; display:none;">File too large. Please upload under 5 MB.</div>
 
-<div class="error-msg" id="merr-proof">Please upload your payment screenshot to continue</div>
+        <div class="utr-status" id="utrStatus"></div>
 
-<div class="file-size-warn" id="merr-filesize" style="font-size:0.7rem; color:var(--bms-red); margin-top:0.2rem; display:none;">File too large. Please upload under 5 MB.</div>
+        <div class="utr-input-wrap" id="utrInputWrap">
 
-<div class="utr-status" id="utrStatus"></div>
+          <label class="form-label" for="utrInput">UTR / UPI Reference No.</label>
 
-<div class="utr-input-wrap" id="utrInputWrap">
+          <input class="form-input" type="text" id="utrInput" placeholder="Auto-detected or enter manually" autocomplete="off"/>
 
-<label class="form-label" for="utrInput">UTR / UPI Reference No.</label>
+        </div>
 
-<input class="form-input" type="text" id="utrInput" placeholder="Auto-detected or enter manually" autocomplete="off"/>
+      </div>
 
-</div>
+      <button class="submit-btn" id="msubmitBtn" onclick="movieGoToStep3()">Preview Ticket →</button>
 
-</div>
+    </div>
 
-<button class="submit-btn" id="msubmitBtn" onclick="movieGoToStep3()">Preview Ticket →</button>
+  </div>
 
-</div>
 
-</div>
 
+  <div id="mpStep3" style="display:none;">
 
+    <p class="ticket-preview-label">Review your booking details</p>
 
-<div id="mpStep3" style="display:none;">
+    <div class="bms-ticket-wrap">
 
-<p class="ticket-preview-label">Review your booking details</p>
+      <div class="bms-ticket" id="mPreviewTicket">
 
-<div class="bms-ticket-wrap">
+        <div class="bms-top">
 
-<div class="bms-ticket" id="mPreviewTicket">
+          <div class="bms-top-row">
 
-<div class="bms-top">
+            <div>
 
-<div class="bms-top-row">
+              <div class="bms-org-label">NITS Telugu Network</div>
 
-<div>
+              <div class="bms-movie-title">Movie Pass</div>
 
-<div class="bms-org-label">NITS Telugu Network</div>
+            </div>
 
-<div class="bms-movie-title">Movie Pass</div>
+            <div class="bms-status-badge">Pending</div>
 
-</div>
+          </div>
 
-<div class="bms-status-badge">Pending</div>
+          <div class="bms-meta-strip">
 
-</div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
 
-<div class="bms-meta-strip">
+            <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
 
-<div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Toxic</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
 
-<div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
+          </div>
 
-<div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
+        </div>
 
-</div>
+        <div class="bms-perf"><div class="bms-perf-line"></div></div>
 
-</div>
+        <div class="bms-qr-section">
 
-<div class="bms-perf"><div class="bms-perf-line"></div></div>
+          <div class="bms-qr-frame"><img id="t-qr" src="" alt="QR"/></div>
 
-<div class="bms-qr-section">
+          <div class="bms-qr-info">
 
-<div class="bms-qr-frame"><img id="t-qr" src="" alt="QR"/></div>
+            <div class="bms-booking-label">Booking ID</div>
 
-<div class="bms-qr-info">
+            <div class="bms-booking-id" id="t-booking-id">—</div>
 
-<div class="bms-booking-label">Booking ID</div>
+          </div>
 
-<div class="bms-booking-id" id="t-booking-id">—</div>
+        </div>
 
-</div>
+        <div class="bms-details">
 
-</div>
+          <div class="bms-details-grid">
 
-<div class="bms-details">
+            <div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="t-name">—</div></div>
 
-<div class="bms-details-grid">
+            <div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="t-mobile">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="t-name">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="t-year">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="t-mobile">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="t-dept">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="t-year">—</div></div>
+          </div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="t-dept">—</div></div>
+        </div>
 
-</div>
+        <div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
 
-</div>
+      </div>
 
-<div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
+    </div>
 
-</div>
+    <div class="ticket-actions">
 
-</div>
+      <button class="confirm-btn" id="mfinalSubmitBtn" onclick="movieSubmitForm()">Confirm Booking</button>
 
-<div class="ticket-actions">
+      <button class="edit-btn" onclick="movieGoBackToStep1()">← Change Details</button>
 
-<button class="confirm-btn" id="mfinalSubmitBtn" onclick="movieSubmitForm()">Confirm Booking</button>
+    </div>
 
-<button class="edit-btn" onclick="movieGoBackToStep1()">← Change Details</button>
-
-</div>
-
-</div>
+  </div>
 
 
 
@@ -898,119 +898,119 @@ font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight
 
 <div id="movieSuccessScreen" class="fade-up">
 
-<div id="successMessageBlock">
+  <div id="successMessageBlock">
 
-<div class="movie-success-top">
+    <div class="movie-success-top">
 
-<div class="gpay-check">
+      <div class="gpay-check">
 
-<svg width="24" height="24" viewBox="0 0 44 44" fill="none">
+        <svg width="24" height="24" viewBox="0 0 44 44" fill="none">
 
-<path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 
-</svg>
+        </svg>
 
-</div>
+      </div>
 
-<div style="font-family:var(--font-display);font-weight:800;font-size:1.25rem;color:var(--dark);margin-bottom:0.2rem;">Booking Sent!</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:1.25rem;color:var(--dark);margin-bottom:0.2rem;">Booking Sent!</div>
 
-<div class="success-verified-note">⏳ Verification check underway</div>
+      <div class="success-verified-note">⏳ Verification check underway</div>
 
-<div id="msuccessNameMsg">Your payment record has been saved.</div>
+      <div id="msuccessNameMsg">Your payment record has been saved.</div>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 
 
-<div id="ticketBlock">
+  <div id="ticketBlock">
 
-<div class="bms-ticket-wrap">
+    <div class="bms-ticket-wrap">
 
-<div class="bms-ticket" id="mFinalTicket">
+      <div class="bms-ticket" id="mFinalTicket">
 
-<div class="bms-top">
+        <div class="bms-top">
 
-<div class="bms-top-row">
+          <div class="bms-top-row">
 
-<div>
+            <div>
 
-<div class="bms-org-label">NITS Telugu Network</div>
+              <div class="bms-org-label">NITS Telugu Network</div>
 
-<div class="bms-movie-title">Movie Pass</div>
+              <div class="bms-movie-title">Movie Pass</div>
 
-</div>
+            </div>
 
-<div class="bms-status-badge confirmed">Submitted ✓</div>
+            <div class="bms-status-badge confirmed">Submitted ✓</div>
 
-</div>
+          </div>
 
-<div class="bms-meta-strip">
+          <div class="bms-meta-strip">
 
-<div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
 
-<div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
 
-<div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-<div class="bms-perf"><div class="bms-perf-line"></div></div>
+        <div class="bms-perf"><div class="bms-perf-line"></div></div>
 
-<div class="bms-qr-section">
+        <div class="bms-qr-section">
 
-<div class="bms-qr-frame"><img id="ft-qr" src="" alt="QR"/></div>
+          <div class="bms-qr-frame"><img id="ft-qr" src="" alt="QR"/></div>
 
-<div class="bms-qr-info">
+          <div class="bms-qr-info">
 
-<div class="bms-booking-label">Booking ID</div>
+            <div class="bms-booking-label">Booking ID</div>
 
-<div class="bms-booking-id" id="ft-booking-id">—</div>
+            <div class="bms-booking-id" id="ft-booking-id">—</div>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-<div class="bms-details">
+        <div class="bms-details">
 
-<div class="bms-details-grid">
+          <div class="bms-details-grid">
 
-<div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="ft-name">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Name</div><div class="bms-detail-value" id="ft-name">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="ft-mobile">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Mobile</div><div class="bms-detail-value" id="ft-mobile">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="ft-year">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Year</div><div class="bms-detail-value" id="ft-year">—</div></div>
 
-<div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="ft-dept">—</div></div>
+            <div class="bms-detail-item"><div class="bms-meta-label">Branch</div><div class="bms-detail-value" id="ft-dept">—</div></div>
 
-</div>
+          </div>
 
-</div>
+        </div>
 
-<div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
+        <div class="bms-notice"><p>Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p></div>
 
-</div>
+      </div>
 
-</div>
+    </div>
 
-<div class="ticket-actions">
+    <div class="ticket-actions">
 
-<button class="download-btn" id="dlBtn" onclick="downloadTicket()">
+      <button class="download-btn" id="dlBtn" onclick="downloadTicket()">
 
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
 
-Download Pass
+        Download Pass
 
-</button>
+      </button>
 
-<a href="index" class="movie-back-btn">← Back to Dashboard</a>
+      <a href="index" class="movie-back-btn">← Back to Dashboard</a>
 
-</div>
+    </div>
 
-</div>
+  </div>
 
 </div>
 
@@ -1018,17 +1018,17 @@ Download Pass
 
 <div id="loadingOverlay">
 
-<div class="loader-box">
+  <div class="loader-box">
 
-<div class="loader-icon">🎬</div>
+    <div class="loader-icon">🎬</div>
 
-<div class="loader-title" id="loaderTitle">Processing…</div>
+    <div class="loader-title" id="loaderTitle">Processing…</div>
 
-<div class="loader-sub" id="loaderSub">Saving information</div>
+    <div class="loader-sub" id="loaderSub">Saving information</div>
 
-<div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
 
-</div>
+  </div>
 
 </div>
 
@@ -1036,141 +1036,141 @@ Download Pass
 
 <script type="module">
 
-import { initializeApp, getApps, getApp }
+  import { initializeApp, getApps, getApp }
 
-from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
-import {
+  import {
 
-getFirestore,
+    getFirestore,
 
-collection,
+    collection,
 
-addDoc,
+    addDoc,
 
-onSnapshot,
+    onSnapshot,
 
-serverTimestamp,
+    serverTimestamp,
 
-query,
+    query,
 
-orderBy,
+    orderBy,
 
-where,
+    where,
 
-getDocs,
+    getDocs,
 
-doc,
+    doc,
 
-updateDoc
+    updateDoc
 
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 
 
-const firebaseConfig = {
+  const firebaseConfig = {
 
-apiKey: "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
+    apiKey:             "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
 
-authDomain: "movie-tickets-booking-a1545.firebaseapp.com",
+    authDomain:        "movie-tickets-booking-a1545.firebaseapp.com",
 
-projectId: "movie-tickets-booking-a1545",
+    projectId:         "movie-tickets-booking-a1545",
 
-storageBucket: "movie-tickets-booking-a1545.firebasestorage.app",
+    storageBucket:     "movie-tickets-booking-a1545.firebasestorage.app",
 
-messagingSenderId: "557765260182",
+    messagingSenderId: "557765260182",
 
-appId: "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
+    appId:             "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
 
-measurementId: "G-GNNYBNTQFC"
+    measurementId:     "G-GNNYBNTQFC"
 
-};
+  };
 
 
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+  const db  = getFirestore(app);
 
-console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
+  console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
 
 
 
-window.saveToFirestore = async function(data) {
+  window.saveToFirestore = async function(data) {
 
-const payload = {
+    const payload = {
 
-bookingId: data.bookingId || "",
+      bookingId: data.bookingId || "",
 
-name: data.name || "",
+      name:      data.name      || "",
 
-mobile: data.mobile || "",
+      mobile:    data.mobile    || "",
 
-year: data.year || "",
+      year:      data.year      || "",
 
-branch: data.branch || "",
+      branch:    data.branch    || "",
 
-utr: data.utr || "",
+      utr:       data.utr       || "",
 
-status: data.status || "Submitted",
+      status:    data.status    || "Submitted",
 
-timestamp: data.timestamp || "",
+      timestamp: data.timestamp || "",
 
-createdAt: serverTimestamp()
+      createdAt: serverTimestamp()
 
-};
+    };
 
-try {
+    try {
 
-const docRef = await addDoc(collection(db, "movieBookings"), payload);
+      const docRef = await addDoc(collection(db, "movieBookings"), payload);
 
-localStorage.setItem("movieBookingId", payload.bookingId);
+      localStorage.setItem("movieBookingId", payload.bookingId);
 
-return docRef.id;
+      return docRef.id;
 
-} catch (err) {
+    } catch (err) {
 
-console.error("❌ Firestore addDoc FAILED:", err.code, err.message);
+      console.error("❌ Firestore addDoc FAILED:", err.code, err.message);
 
-return null;
+      return null;
 
-}
+    }
 
-};
+  };
 
 
 
-try {
+  try {
 
-const q = query(collection(db, "movieBookings"), orderBy("createdAt", "desc"));
+    const q = query(collection(db, "movieBookings"), orderBy("createdAt", "desc"));
 
-onSnapshot(q, (snapshot) => {
+    onSnapshot(q, (snapshot) => {
 
-const bookings = [];
+      const bookings = [];
 
-snapshot.forEach(d => bookings.push({ id: d.id, ...d.data() }));
+      snapshot.forEach(d => bookings.push({ id: d.id, ...d.data() }));
 
-}, (err) => {
+    }, (err) => {
 
-console.error("❌ onSnapshot error:", err.code, err.message);
+      console.error("❌ onSnapshot error:", err.code, err.message);
 
-});
+    });
 
-} catch (err) {
+  } catch (err) {
 
-console.error("❌ Failed to attach listener:", err.message);
+    console.error("❌ Failed to attach listener:", err.message);
 
-}
+  }
 
 
 
-window._firestoreIsReady = true;
+  window._firestoreIsReady = true;
 
-if (typeof window._firestoreReadyResolve === "function") {
+  if (typeof window._firestoreReadyResolve === "function") {
 
-window._firestoreReadyResolve();
+    window._firestoreReadyResolve();
 
-}
+  }
 
 </script>
 
@@ -1178,386 +1178,892 @@ window._firestoreReadyResolve();
 
 <script>
 
-const MOVIE_CONFIG = {
+  const MOVIE_CONFIG = {
 
-"1": { upi: "tejasaichimata@ybl", bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
+    "1": { upi: "9908533262@ibl", bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
 
-"2": { upi: "9032979645@axl", bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295" },
+    "2": { upi: "9908533262@ibl", bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
 
-"3": { upi: "9908533262@axl", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838" },
+    "3": { upi: "9908533262@ibl", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"       },
 
-"4": { upi: "9908533262-3@ybl", bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076" }
+    "4": { upi: "9908533262@ibl", bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076"    }
 
-};
+  };
 
 
 
-const SHEET_URLS = {
+  const SHEET_URLS = {
 
-"1": "https://script.google.com/macros/s/AKfycbwnbOQuS4G5oXvle6XPGUeEdM4Fxa0tra1wXe_87BL96J3u0uXK4CAPH-eIBABO_yNmVg/exec",
+    "1": "https://script.google.com/macros/s/AKfycbwnbOQuS4G5oXvle6XPGUeEdM4Fxa0tra1wXe_87BL96J3u0uXK4CAPH-eIBABO_yNmVg/exec",
 
-"2": "https://script.google.com/macros/s/AKfycbzg4obR5ZOllB1N8Kpijj_rGNe0iJHOUXHsB8kngzzvTvL4Ej2p8wKLamAKzYF3-Dbm/exec",
+    "2": "https://script.google.com/macros/s/AKfycbzg4obR5ZOllB1N8Kpijj_rGNe0iJHOUXHsB8kngzzvTvL4Ej2p8wKLamAKzYF3-Dbm/exec",
 
-"3": "https://script.google.com/macros/s/AKfycbzEkMQap3d_zqddGmpjAM18wPIugn4sSYEwYUydW-3Z2NoIOSXRueHofb6eQX6U23cq/exec",
+    "3": "https://script.google.com/macros/s/AKfycbzEkMQap3d_zqddGmpjAM18wPIugn4sSYEwYUydW-3Z2NoIOSXRueHofb6eQX6U23cq/exec",
 
-"4": "https://script.google.com/macros/s/AKfycbxLDL_otis32OjHCmRwS4HXNbN3f_I_Yh3u00Qj3xeOMVdpZH9FenO8rHdSVV0TWinGdA/exec"
+    "4": "https://script.google.com/macros/s/AKfycbxLDL_otis32OjHCmRwS4HXNbN3f_I_Yh3u00Qj3xeOMVdpZH9FenO8rHdSVV0TWinGdA/exec"
 
-};
+  };
 
 
 
-const YEAR_LABEL = { "1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year" };
+  const YEAR_LABEL = { "1":"1st Year","2":"2nd Year","3":"3rd Year","4":"4th Year" };
 
 
 
-let mBookingId = "";
+  let mBookingId    = "";
 
-let mPrefetchedId = "";
+  let mPrefetchedId = "";
 
-let mPrefetchYear = "";
+  let mPrefetchYear = "";
 
 
 
-window.detectedUTR = "";
+  window.detectedUTR = "";
 
-let ocrRunning = false;
+  let ocrRunning     = false;
 
 
 
-function generateBookingId(year) {
+  function generateBookingId(year) {
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-let rand = "";
+    let rand = "";
 
-for (let i = 0; i < 7; i++) rand += chars.charAt(Math.floor(Math.random() * chars.length));
+    for (let i = 0; i < 7; i++) rand += chars.charAt(Math.floor(Math.random() * chars.length));
 
-return ${year}${rand};
+    return `${year}${rand}`;
 
-}
+  }
 
 
 
-document.getElementById("mgradYear").addEventListener("change", function() {
+  document.getElementById("mgradYear").addEventListener("change", function() {
 
-const year = this.value;
+    const year = this.value;
 
-if (!year) return;
+    if (!year) return;
 
-mPrefetchedId = generateBookingId(year);
+    mPrefetchedId = generateBookingId(year);
 
-mPrefetchYear = year;
+    mPrefetchYear = year;
 
-});
+  });
 
 
 
-function setProgress(pct, title, sub) {
+  function setProgress(pct, title, sub) {
 
-document.getElementById("progressBar").style.width = pct + "%";
+    document.getElementById("progressBar").style.width = pct + "%";
 
-if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
+    if (title !== undefined) document.getElementById("loaderTitle").textContent = title;
 
-if (sub !== undefined) document.getElementById("loaderSub").textContent = sub;
+    if (sub   !== undefined) document.getElementById("loaderSub").textContent   = sub;
 
-}
+  }
 
 
 
-function sendToGoogleSheet(year, payload) {
+  function sendToGoogleSheet(year, payload) {
 
-const url = SHEET_URLS[year];
+    const url = SHEET_URLS[year];
 
-if (!url) return;
+    if (!url) return;
 
-fetch(url, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(payload) }).catch(() => {});
+    fetch(url, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(payload) }).catch(() => {});
 
-}
+  }
 
 
 
-function makePaymentQR(upiId, size) {
+  function makePaymentQR(upiId, size) {
 
-const data = upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&am=300&cu=INR;
+    const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
 
-return https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=0F172A&bgcolor=FFFFFF&qzone=2`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=0F172A&bgcolor=FFFFFF&qzone=2`;
 
-}
+  }
 
-function makeTicketQR(name, year, dept, mobile, bid, size) {
+  function makeTicketQR(name, year, dept, mobile, bid, size) {
 
-const d = JSON.stringify({ id:bid, name, year, dept, mobile });
+    const d = JSON.stringify({ id:bid, name, year, dept, mobile });
 
-return https://api.qrserver.com/v1/create-qr-code/?size=${size}x {encodeURIComponent(d)}&color=0F172A&bgcolor=FFFFFF&qzone=1`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=0F172A&bgcolor=FFFFFF&qzone=1`;
 
-}
+  }
 
 
 
-const QR_CACHE = {};
+  const QR_CACHE = {};
 
-(function preloadQRs() {
+  (function preloadQRs() {
 
-Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
+    Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
 
-if (!cfg.upi) return;
+      if (!cfg.upi) return;
 
-const url = makePaymentQR(cfg.upi, 120);
+      const url = makePaymentQR(cfg.upi, 120);
 
-const img = new Image(); img.src = url;
+      const img = new Image(); img.src = url;
 
-QR_CACHE[year] = url;
+      QR_CACHE[year] = url;
 
-});
+    });
 
-})();
+  })();
 
 
 
-function preprocessImageForOCR(file) {
+  function preprocessImageForOCR(file) {
 
-return new Promise((resolve) => {
+    return new Promise((resolve) => {
 
-const img = new Image();
+      const img = new Image();
 
-const url = URL.createObjectURL(file);
+      const url = URL.createObjectURL(file);
 
-img.onload = () => {
+      img.onload = () => {
 
-const MAX = 1400;
+        const MAX = 1400;
 
-let w = img.naturalWidth, h = img.naturalHeight;
+        let w = img.naturalWidth, h = img.naturalHeight;
 
-if (w > MAX || h > MAX) { const ratio = Math.min(MAX/w, MAX/h); w = Math.round(wratio); h = Math.round(hratio); }
+        if (w > MAX || h > MAX) { const ratio = Math.min(MAX/w, MAX/h); w = Math.round(w*ratio); h = Math.round(h*ratio); }
 
-const canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
+        const canvas = document.createElement("canvas"); canvas.width = w; canvas.height = h;
 
-const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, w, h);
+        const ctx = canvas.getContext("2d"); ctx.drawImage(img, 0, 0, w, h);
 
-const imgData = ctx.getImageData(0, 0, w, h); const d = imgData.data;
+        const imgData = ctx.getImageData(0, 0, w, h); const d = imgData.data;
 
-for (let i = 0; i < d.length; i += 4) {
+        for (let i = 0; i < d.length; i += 4) {
 
-const gray = 0.299d[i] + 0.587d[i+1] + 0.114*d[i+2];
+          const gray = 0.299*d[i] + 0.587*d[i+1] + 0.114*d[i+2];
 
-const boosted = Math.min(255, Math.max(0, (gray-128)*1.6+128));
+          const boosted = Math.min(255, Math.max(0, (gray-128)*1.6+128));
 
-d[i] = d[i+1] = d[i+2] = boosted;
+          d[i] = d[i+1] = d[i+2] = boosted;
 
-}
+        }
 
-ctx.putImageData(imgData, 0, 0); URL.revokeObjectURL(url);
+        ctx.putImageData(imgData, 0, 0); URL.revokeObjectURL(url);
 
-canvas.toBlob(resolve, "image/png");
+        canvas.toBlob(resolve, "image/png");
 
-};
+      };
 
-img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(file); };
 
-img.src = url;
+      img.src = url;
 
-});
+    });
 
-}
+  }
 
 
 
-function extractUTR(text) {
+  function extractUTR(text) {
 
-const patterns = [
+    const patterns = [
 
-/UTR[:\s#]*([A-Z0-9]{10,30})/i,
+      /UTR[:\s#]*([A-Z0-9]{10,30})/i,
 
-/UPI\sRef(?:erence)?\s(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /UPI\s*Ref(?:erence)?\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
 
-/Transaction\s*(?:ID|No|Number)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /Transaction\s*(?:ID|No|Number)?[:\s#]*([A-Z0-9]{10,30})/i,
 
-/Reference\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
+      /Reference\s*(?:No|Number|ID)?[:\s#]*([A-Z0-9]{10,30})/i,
 
-/RRN[:\s#]*([A-Z0-9]{10,30})/i
+      /RRN[:\s#]*([A-Z0-9]{10,30})/i
 
-];
+    ];
 
-for (const p of patterns) { const m = text.match(p); if (m) return m[1].toUpperCase(); }
+    for (const p of patterns) { const m = text.match(p); if (m) return m[1].toUpperCase(); }
 
-return null;
+    return null;
 
-}
+  }
 
 
 
-function setUTRStatus(type, message) {
+  function setUTRStatus(type, message) {
 
-const el = document.getElementById("utrStatus");
+    const el = document.getElementById("utrStatus");
 
-el.className = utr-status ${type}`; el.textContent = message;
+    el.className = `utr-status ${type}`; el.textContent = message;
 
-}
+  }
 
 
 
-async function runOCROnFile(file) {
+  async function runOCROnFile(file) {
 
-if (!file || !file.type.startsWith("image/")) {
+    if (!file || !file.type.startsWith("image/")) {
 
-setUTRStatus("not-found", "⚠️ Auto-detection not available for PDF. Please enter UTR manually.");
+      setUTRStatus("not-found", "⚠️ Auto-detection not available for PDF. Please enter UTR manually.");
 
-document.getElementById("msubmitBtn").disabled = false; ocrRunning = false; return;
+      document.getElementById("msubmitBtn").disabled = false; ocrRunning = false; return;
 
-}
+    }
 
-ocrRunning = true; document.getElementById("msubmitBtn").disabled = true;
+    ocrRunning = true; document.getElementById("msubmitBtn").disabled = true;
 
-setUTRStatus("detecting", "🔍 Scanning screenshot for UTR...");
+    setUTRStatus("detecting", "🔍 Scanning screenshot for UTR...");
 
-try {
+    try {
 
-const processedBlob = await preprocessImageForOCR(file);
+      const processedBlob = await preprocessImageForOCR(file);
 
-const result = await Tesseract.recognize(processedBlob, "eng", { logger: () => {} });
+      const result = await Tesseract.recognize(processedBlob, "eng", { logger: () => {} });
 
-const rawText = result.data.text;
+      const rawText = result.data.text;
 
-const utr = extractUTR(rawText);
+      const utr = extractUTR(rawText);
 
-if (utr) {
+      if (utr) {
 
-window.detectedUTR = utr;
+        window.detectedUTR = utr;
 
-const utrInput = document.getElementById("utrInput");
+        const utrInput = document.getElementById("utrInput");
 
-utrInput.value = utr; utrInput.classList.add("auto-filled");
+        utrInput.value = utr; utrInput.classList.add("auto-filled");
 
-setUTRStatus("found", ✅ UTR Detected:${utr}`);
+        setUTRStatus("found", `✅ UTR Detected: ${utr}`);
 
-} else {
+      } else {
 
-window.detectedUTR = "";
+        window.detectedUTR = "";
 
-setUTRStatus("not-found", "⚠️ UTR missing. Enter manually.");
+        setUTRStatus("not-found", "⚠️ UTR missing. Enter manually.");
 
-}
+      }
 
-} catch (err) {
+    } catch (err) {
 
-window.detectedUTR = "";
+      window.detectedUTR = "";
 
-setUTRStatus("not-found", "⚠️ Could not read image. Enter manually.");
+      setUTRStatus("not-found", "⚠️ Could not read image. Enter manually.");
 
-} finally {
+    } finally {
 
-ocrRunning = false; document.getElementById("msubmitBtn").disabled = false;
+      ocrRunning = false; document.getElementById("msubmitBtn").disabled = false;
 
-}
+    }
 
-}
+  }
 
 
 
-const MAX_FILE_BYTES = 5 * 1024 * 1024;
+  const MAX_FILE_BYTES = 5 * 1024 * 1024;
 
 
 
-document.getElementById("mproofFile").addEventListener("change", function(e) { handleMovieFileUpload(e); });
+  document.getElementById("mproofFile").addEventListener("change", function(e) { handleMovieFileUpload(e); });
 
 
 
-const muz = document.getElementById("mUploadZone");
+  const muz = document.getElementById("mUploadZone");
 
-muz.addEventListener("dragover", e => { e.preventDefault(); muz.classList.add("dragover"); });
+  muz.addEventListener("dragover",  e => { e.preventDefault(); muz.classList.add("dragover"); });
 
-muz.addEventListener("dragleave", () => muz.classList.remove("dragover"));
+  muz.addEventListener("dragleave", () => muz.classList.remove("dragover"));
 
-muz.addEventListener("drop", e => {
+  muz.addEventListener("drop", e => {
 
-e.preventDefault(); muz.classList.remove("dragover");
+    e.preventDefault(); muz.classList.remove("dragover");
 
-if (e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files[0]) {
 
-document.getElementById("mproofFile").files = e.dataTransfer.files;
+      document.getElementById("mproofFile").files = e.dataTransfer.files;
 
-handleMovieFileUpload({ target: document.getElementById("mproofFile") });
+      handleMovieFileUpload({ target: document.getElementById("mproofFile") });
 
-}
+    }
 
-});
+  });
 
 
 
-function handleMovieFileUpload(e) {
+  function handleMovieFileUpload(e) {
 
-const file = e.target.files[0]; if (!file) return;
+    const file = e.target.files[0]; if (!file) return;
 
-const sizeWarn = document.getElementById("merr-filesize");
+    const sizeWarn = document.getElementById("merr-filesize");
 
-if (file.size > MAX_FILE_BYTES) {
+    if (file.size > MAX_FILE_BYTES) {
 
-sizeWarn.classList.add("show");
+      sizeWarn.classList.add("show");
 
-document.getElementById("merr-proof").classList.remove("show");
+      document.getElementById("merr-proof").classList.remove("show");
 
-document.getElementById("mUploadPreview").style.display = "none";
+      document.getElementById("mUploadPreview").style.display = "none";
 
-e.target.value = ""; return;
+      e.target.value = ""; return;
 
-}
+    }
 
-sizeWarn.classList.remove("show");
+    sizeWarn.classList.remove("show");
 
-document.getElementById("mFileName").textContent = file.name;
+    document.getElementById("mFileName").textContent = file.name;
 
-document.getElementById("mUploadPreview").style.display = "flex";
+    document.getElementById("mUploadPreview").style.display = "flex";
 
-document.getElementById("merr-proof").classList.remove("show");
+    document.getElementById("merr-proof").classList.remove("show");
 
-const img = document.getElementById("mpreviewImg");
+    const img = document.getElementById("mpreviewImg");
 
-if (file.type.startsWith("image/")) {
+    if (file.type.startsWith("image/")) {
 
-const r = new FileReader(); r.onload = ev => { img.src = ev.target.result; img.style.display = "block"; }; r.readAsDataURL(file);
+      const r = new FileReader(); r.onload = ev => { img.src = ev.target.result; img.style.display = "block"; }; r.readAsDataURL(file);
 
-} else { img.style.display = "none"; }
+    } else { img.style.display = "none"; }
 
-runOCROnFile(file);
+    runOCROnFile(file);
 
-}
+  }
 
 
 
-function sendToTelegram(botToken, chatId, caption, file) {
+  function sendToTelegram(botToken, chatId, caption, file) {
 
-const base = https://api.telegram.org/bot${botToken}`;
+    const base = `https://api.telegram.org/bot${botToken}`;
 
-const fd = new FormData(); fd.append("chat_id", chatId); fd.append("parse_mode", "Markdown"); fd.append("caption", caption);
+    const fd = new FormData(); fd.append("chat_id", chatId); fd.append("parse_mode", "Markdown"); fd.append("caption", caption);
 
-const isImage = file.type.startsWith("image/");
+    const isImage = file.type.startsWith("image/");
 
-fd.append(isImage ? "photo" : "document", file, file.name);
+    fd.append(isImage ? "photo" : "document", file, file.name);
 
-fetch(``${base}/${isImage ? "sendPhoto" : "sendDocument"}, { method:"POST", body:fd }).catch(() => {});
+    fetch(`${base}/${isImage ? "sendPhoto" : "sendDocument"}`, { method:"POST", body:fd }).catch(() => {});
 
-}
+  }
 
 
 
-function playSuccessSound() {
+  function playSuccessSound() {
 
-try {
+    try {
 
-const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-[[523.25,0,0.12],[659.25,0.1,0.12],[783.99,0.2,0.12],[1046.5,0.33,0.28]].forEach(([f,w,d]) => {
+      [[523.25,0,0.12],[659.25,0.1,0.12],[783.99,0.2,0.12],[1046.5,0.33,0.28]].forEach(([f,w,d]) => {
 
-const o = ctx.createOscillator(), g = ctx.createGain();
+        const o = ctx.createOscillator(), g = ctx.createGain();
 
-o.connect(g); g.connect(ctx.destination); o.type = "sine";
+        o.connect(g); g.connect(ctx.destination); o.type = "sine";
 
-o.frequency.setValueAtTime(f, ctx.currentTime+w);
+        o.frequency.setValueAtTime(f, ctx.currentTime+w);
 
-g.gain.setValueAtTime(0, ctx.currentTime+w);
+        g.gain.setValueAtTime(0, ctx.currentTime+w);
 
-g.gain.linearRampToValueAtTime(0.16, ctx.currentTime+w+0.02);
+        g.gain.linearRampToValueAtTime(0.16, ctx.currentTime+w+0.02);
 
-g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+w+d+0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+w+d+0.1);
 
-o.start(ctx.currentTime
+        o.start(ctx.currentTime+w); o.stop(ctx.currentTime+w+d+0.15);
+
+      });
+
+    } catch(e) {}
+
+  }
+
+
+
+  function showMErr(id, show) {
+
+    document.getElementById(id).classList.toggle("show", show);
+
+    const map = { "merr-name":"mfullName","merr-year":"mgradYear","merr-dept":"mdepartment","merr-mobile":"mmobile" };
+
+    if (map[id]) document.getElementById(map[id]).classList.toggle("error", show);
+
+  }
+
+
+
+  document.getElementById("mmobile").addEventListener("input", function() { this.value = this.value.replace(/\D/g, ""); });
+
+
+
+  function markStep(doneDot, doneLine, activeDot) {
+
+    const d = document.getElementById(doneDot);
+
+    d.className = "step-dot done"; d.textContent = "✓";
+
+    document.getElementById(doneLine).classList.add("done");
+
+    document.getElementById(activeDot).classList.add("active");
+
+  }
+
+
+
+  function movieGoToStep2() {
+
+    const name  = document.getElementById("mfullName").value.trim();
+
+    const year  = document.getElementById("mgradYear").value;
+
+    const dept  = document.getElementById("mdepartment").value;
+
+    const mob   = document.getElementById("mmobile").value.trim();
+
+    const terms = document.getElementById("mtermsCheck").checked;
+
+    let valid = true;
+
+    showMErr("merr-name",   !name);                      if (!name)  valid = false;
+
+    const mobOk = /^\d{10}$/.test(mob);
+
+    showMErr("merr-mobile", !mobOk);                  if (!mobOk) valid = false;
+
+    showMErr("merr-year",   !year);                     if (!year)  valid = false;
+
+    showMErr("merr-dept",   !dept);                     if (!dept)  valid = false;
+
+    document.getElementById("merr-terms").classList.toggle("show", !terms);
+
+    if (!terms) valid = false;
+
+    if (!valid) return;
+
+
+
+    if (mPrefetchedId && mPrefetchYear === year) { mBookingId = mPrefetchedId; mPrefetchedId = ""; }
+
+    else mBookingId = generateBookingId(year);
+
+
+
+    const cfg = MOVIE_CONFIG[year];
+
+    if (cfg && cfg.upi) {
+
+      document.getElementById("movieQRSection").style.display = "block";
+
+      document.getElementById("movieQRUnavail").style.display = "none";
+
+      document.getElementById("movieQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 120);
+
+    } else {
+
+      document.getElementById("movieQRSection").style.display = "none";
+
+      document.getElementById("movieQRUnavail").style.display = "block";
+
+    }
+
+    markStep("mdot1", "mline1", "mdot2");
+
+    document.getElementById("mpStep1").style.display = "none";
+
+    document.getElementById("mpStep2").style.display = "block";
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+
+  }
+
+
+
+  function movieGoToStep3() {
+
+    if (ocrRunning) { alert("⏳ Scanning image. Please wait."); return; }
+
+    const file = document.getElementById("mproofFile").files[0];
+
+    if (!file) { document.getElementById("merr-proof").classList.add("show"); return; }
+
+    if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
+
+    window.detectedUTR = document.getElementById("utrInput").value.trim();
+
+    const name = document.getElementById("mfullName").value.trim();
+
+    const year = document.getElementById("mgradYear").value;
+
+    const dept = document.getElementById("mdepartment").value;
+
+    const mob  = document.getElementById("mmobile").value.trim();
+
+    const yl   = YEAR_LABEL[year] || year;
+
+    document.getElementById("t-name").textContent       = name;
+
+    document.getElementById("t-year").textContent       = yl;
+
+    document.getElementById("t-dept").textContent       = dept;
+
+    document.getElementById("t-mobile").textContent     = "+91 " + mob;
+
+    document.getElementById("t-booking-id").textContent = mBookingId;
+
+    document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
+
+    markStep("mdot2", "mline2", "mdot3");
+
+    document.getElementById("mpStep2").style.display = "none";
+
+    document.getElementById("mpStep3").style.display = "block";
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+
+  }
+
+
+
+  function movieGoBackToStep1() {
+
+    mBookingId = ""; mPrefetchedId = ""; mPrefetchYear = "";
+
+    document.getElementById("mpStep3").style.display = "none";
+
+    document.getElementById("mpStep2").style.display = "none";
+
+    document.getElementById("mpStep1").style.display = "block";
+
+    ["mdot1","mdot2","mdot3"].forEach((id, i) => {
+
+      const d = document.getElementById(id);
+
+      d.className = "step-dot" + (i === 0 ? " active" : ""); d.textContent = i + 1;
+
+    });
+
+    ["mline1","mline2"].forEach(id => document.getElementById(id).classList.remove("done"));
+
+    document.getElementById("mproofFile").value = "";
+
+    document.getElementById("mUploadPreview").style.display = "none";
+
+    document.getElementById("merr-filesize").classList.remove("show");
+
+    document.getElementById("utrStatus").className = "utr-status";
+
+    document.getElementById("utrInput").value = "";
+
+    document.getElementById("utrInput").classList.remove("auto-filled");
+
+    window.detectedUTR = "";
+
+    window.scrollTo({ top:0, behavior:"smooth" });
+
+  }
+
+
+
+  async function movieSubmitForm() {
+
+    const file = document.getElementById("mproofFile").files[0];
+
+    if (!file) return;
+
+    if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
+
+    const name = document.getElementById("mfullName").value.trim();
+
+    const year = document.getElementById("mgradYear").value;
+
+    const dept = document.getElementById("mdepartment").value;
+
+    const mob  = document.getElementById("mmobile").value.trim();
+
+    const yl   = YEAR_LABEL[year] || year;
+
+    const cfg  = MOVIE_CONFIG[year];
+
+    const utr  = document.getElementById("utrInput").value.trim() || window.detectedUTR || "";
+
+    const btn  = document.getElementById("mfinalSubmitBtn");
+
+    btn.disabled = true; btn.innerHTML = "⏳ Sending…";
+
+    document.getElementById("loadingOverlay").style.display = "flex";
+
+    setProgress(20, "Saving details…", "Sending request");
+
+    const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
+
+    try {
+
+      sendToGoogleSheet(year, { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, timestamp:ts, status:"Submitted" });
+
+      setProgress(50, "Notifying admin…", "Sending receipt photo");
+
+      const caption =
+
+        `*🎬 Movie Ticket Booking — NITS Telugu Network*\n\n` +
+
+        `*Booking ID:* \`${mBookingId}\`\n*Name:* ${name}\n*Year:* ${yl}\n*Branch:* ${dept}\n` +
+
+        `*Mobile:* +91 ${mob}\n*UTR:* ${utr || "Not provided"}\n*UPI:* ${cfg&&cfg.upi?cfg.upi:"N/A"}\n*Time:* ${ts}`;
+
+      if (cfg && cfg.bot && cfg.cid) sendToTelegram(cfg.bot, cfg.cid, caption, file);
+
+      setProgress(75, "Saving to database…", "Updating records");
+
+      try {
+
+        if (!window._firestoreIsReady) {
+
+          await new Promise((resolve, reject) => {
+
+            window._firestoreReadyResolve = resolve;
+
+            setTimeout(() => reject(new Error("Database connection timed out")), 8000);
+
+          });
+
+        }
+
+        await window.saveToFirestore({ bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, status:"Submitted", timestamp:ts });
+
+      } catch (fsErr) { console.error("❌ Firestore step failed:", fsErr.message); }
+
+
+
+      setProgress(100, "Done! 🎉", "");
+
+      await new Promise(r => setTimeout(r, 350));
+
+      document.getElementById("loadingOverlay").style.display = "none";
+
+      document.getElementById("msuccessNameMsg").textContent =
+
+        `Thank you, ${name}! Your booking request (${mBookingId}) has been successfully received.`;
+
+      document.getElementById("ft-name").textContent       = name;
+
+      document.getElementById("ft-year").textContent       = yl;
+
+      document.getElementById("ft-dept").textContent       = dept;
+
+      document.getElementById("ft-mobile").textContent     = "+91 " + mob;
+
+      document.getElementById("ft-booking-id").textContent = mBookingId;
+
+      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
+
+      document.getElementById("movieFormContainer").style.display = "none";
+
+      document.getElementById("movieStepInd").style.display       = "none";
+
+      document.getElementById("movieSuccessScreen").style.display = "block";
+
+      const successBlock = document.getElementById("successMessageBlock");
+
+      const ticketBlock  = document.getElementById("ticketBlock");
+
+      successBlock.style.display = "block"; ticketBlock.style.display = "none";
+
+      window.scrollTo({ top:0, behavior:"smooth" }); playSuccessSound();
+
+      setTimeout(() => {
+
+        successBlock.style.display = "none"; ticketBlock.style.display = "block";
+
+        window.scrollTo({ top:0, behavior:"smooth" });
+
+      }, 1800);
+
+    } catch (err) {
+
+      document.getElementById("loadingOverlay").style.display = "none";
+
+      setProgress(0, "Processing…", "");
+
+      btn.disabled = false; btn.innerHTML = "Confirm Booking";
+
+      alert(`❌ Something went wrong: ${err.message}`);
+
+    }
+
+  }
+
+
+
+  async function downloadTicket() {
+
+    const btn = document.getElementById("dlBtn");
+
+    btn.innerHTML = "⏳ Preparing Pass…"; btn.disabled = true;
+
+    const qrImg = document.getElementById("ft-qr");
+
+    if (!qrImg.complete || !qrImg.naturalWidth) await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
+
+    await new Promise(r => setTimeout(r, 400));
+
+    
+
+    const name   = document.getElementById("ft-name").textContent;
+
+    const year   = document.getElementById("ft-year").textContent;
+
+    const dept   = document.getElementById("ft-dept").textContent;
+
+    const mobile = document.getElementById("ft-mobile").textContent;
+
+    const bid    = document.getElementById("ft-booking-id").textContent;
+
+    const qrSrc  = makeTicketQR(name, year, dept, mobile, bid, 360);
+
+    
+
+    const clone  = document.createElement("div");
+
+    clone.style.cssText = "position:fixed;left:-9999px;top:0;width:360px;background:#F1F5F9;padding:20px;font-family:'Inter',Arial,sans-serif;z-index:-1;pointer-events:none;box-sizing:border-box;";
+
+    
+
+    clone.innerHTML = `
+
+      <div style="background:#FFFFFF; border-radius:16px; border:1px solid #E2E8F0; overflow:hidden; width:100%; box-sizing:border-box; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+
+        <div style="padding:20px 20px 16px; position:relative; box-sizing:border-box;">
+
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:12px;">
+
+            <div>
+
+              <div style="font-size:10px; font-weight:700; color:#0EA5E9; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; font-family:'Plus Jakarta Sans',sans-serif;">NITS Telugu Network</div>
+
+              <div style="font-weight:800; font-size:20px; color:#1E293B; line-height:1.2; letter-spacing:-0.01em; font-family:'Plus Jakarta Sans',sans-serif;">Movie Pass</div>
+
+            </div>
+
+            <div style="background:#D1FAE5; border:1px solid #A7F3D0; border-radius:4px; padding:4px 8px; font-size:10px; font-weight:700; color:#047857; letter-spacing:0.02em; text-transform:uppercase; font-family:'Plus Jakarta Sans',sans-serif; white-space:nowrap;">Submitted ✓</div>
+
+          </div>
+
+          <div style="display:flex; gap:12px; padding-top:14px; border-top:1px dashed #E2E8F0; box-sizing:border-box;">
+
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Type</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Telugu Film</div></div>
+
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Venue</div><div style="font-size:12px; font-weight:600; color:#1E293B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gold Cinema</div></div>
+
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Seat</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Open Track</div></div>
+
+          </div>
+
+        </div>
+
+        
+
+        <div style="height:14px; position:relative; display:flex; align-items:center; background:transparent;">
+
+          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; left:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+
+          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; right:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+
+          <div style="flex:1; margin:0 10px; height:1px; background-image:radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size:5px 1px; background-repeat:repeat-x;"></div>
+
+        </div>
+
+        
+
+        <div style="padding:16px 20px; display:flex; align-items:center; gap:20px; background:#F8FAFC; box-sizing:border-box;">
+
+          <div style="background:#FFF; border-radius:12px; padding:6px; display:inline-block; border:1px solid #E2E8F0; flex-shrink:0;">
+
+            <img src="${qrSrc}" style="display:block; width:100px; height:100px; border-radius:4px;"/>
+
+          </div>
+
+          <div style="flex:1; min-width:0;">
+
+            <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; font-family:'Plus Jakarta Sans',sans-serif;">Booking ID</div>
+
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:22px; color:#0F172A; letter-spacing:0.01em; line-height:1.1; word-break:break-all;">${bid}</div>
+
+          </div>
+
+        </div>
+
+        
+
+        <div style="padding:18px 20px; background:#FFFFFF; border-top:1px solid #E2E8F0; box-sizing:border-box;">
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 16px;">
+
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Name</div><div style="font-size:13px; font-weight:600; color:#1E293B; word-break:break-word;">${name}</div></div>
+
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Mobile</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${mobile}</div></div>
+
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Year</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${year}</div></div>
+
+            <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Branch</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${dept}</div></div>
+
+          </div>
+
+        </div>
+
+        
+
+        <div style="margin:0 16px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:10px; text-align:center; box-sizing:border-box;">
+
+          <p style="font-size:10px; color:#64748B; font-weight:400; line-height:1.4; margin:0;">Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p>
+
+        </div>
+
+      </div>
+
+    `;
+
+    
+
+    document.body.appendChild(clone);
+
+    
+
+    try {
+
+      const canvas = await html2canvas(clone, {
+
+        useCORS: true,
+
+        allowTaint: true,
+
+        scale: 3,
+
+        backgroundColor: "#F1F5F9",
+
+        windowWidth: 360,
+
+        windowHeight: clone.offsetHeight
+
+      });
+
+      
+
+      const link = document.createElement("a");
+
+      link.download = `MoviePass-${bid}.png`;
+
+      link.href = canvas.toDataURL("image/png");
+
+      link.click();
+
+    } catch (e) {
+
+      alert("Download failed. Please take a screenshot of the pass directly.");
+
+    } finally {
+
+      document.body.removeChild(clone);
+
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M4 20h16"/></svg> Download Pass`;
+
+      btn.disabled = false;
+
+    }
+
+  }
+
+</script>
+
+</body>
+
+</html>
