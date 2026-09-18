@@ -16,8 +16,8 @@
   
   <style>
     /* ==========================================================================
-       SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
-       ========================================================================== */
+        SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
+        ========================================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     :root {
@@ -361,10 +361,10 @@
   <div id="mpStep2" style="display:none;">
     <div class="form-card">
       <div class="form-card-title">Scan &amp; Pay</div>
-      <div class="form-card-sub" id="paymentInstructionText">Please scan the QR code to make your payment.</div>
+      <div class="form-card-sub" id="paymentInstructionText">Please scan the QR code to pay <strong style="color: var(--dark);">₹300</strong>.</div>
       <div id="movieQRSection">
         <div class="qr-section">
-          <div class="qr-label">UPI QR Gate</div>
+          <div class="qr-label">UPI QR Gate (Amount: ₹300)</div>
           <div class="qr-box"><img id="movieQRImg" src="" alt="UPI QR"/></div>
         </div>
       </div>
@@ -416,7 +416,7 @@
           <div class="bms-meta-strip">
             <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
             <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
-            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Amount</div><div class="bms-meta-value">₹300</div></div>
           </div>
         </div>
         <div class="bms-perf"><div class="bms-perf-line"></div></div>
@@ -474,7 +474,7 @@
           <div class="bms-meta-strip">
             <div class="bms-meta-item"><div class="bms-meta-label">Type</div><div class="bms-meta-value">Telugu Film</div></div>
             <div class="bms-meta-item"><div class="bms-meta-label">Venue</div><div class="bms-meta-value">Gold Cinema</div></div>
-            <div class="bms-meta-item"><div class="bms-meta-label">Seat</div><div class="bms-meta-value">Open Track</div></div>
+            <div class="bms-meta-item"><div class="bms-meta-label">Amount</div><div class="bms-meta-value">₹300</div></div>
           </div>
         </div>
         <div class="bms-perf"><div class="bms-perf-line"></div></div>
@@ -527,13 +527,13 @@
   } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey:             "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
-    authDomain:        "movie-tickets-booking-a1545.firebaseapp.com",
-    projectId:         "movie-tickets-booking-a1545",
-    storageBucket:     "movie-tickets-booking-a1545.firebasestorage.app",
-    messagingSenderId: "557765260182",
-    appId:             "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
-    measurementId:     "G-GNNYBNTQFC"
+    apiKey:              "AIzaSyDcShIu9jboeypiOtTczFNh4PS7BD2NTSw",
+    authDomain:          "movie-tickets-booking-a1545.firebaseapp.com",
+    projectId:           "movie-tickets-booking-a1545",
+    storageBucket:       "movie-tickets-booking-a1545.firebasestorage.app",
+    messagingSenderId:   "557765260182",
+    appId:               "1:557765260182:web:b1bc6e5e3d59cbe9c063b7",
+    measurementId:       "G-GNNYBNTQFC"
   };
 
   const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
@@ -548,6 +548,7 @@
       year:      data.year      || "",
       branch:    data.branch    || "",
       utr:       data.utr       || "",
+      amount:    "300",
       status:    data.status    || "Submitted",
       screenshotUrl: data.screenshotUrl || "",
       timestamp: data.timestamp || "",
@@ -583,10 +584,10 @@
 
 <script>
   const MOVIE_CONFIG = {
-    "1": { upi: "9908533262@ibl", bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
-    "2": { upi: "9908533262@ibl", bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
-    "3": { upi: "9908533262@ibl", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"       },
-    "4": { upi: "9908533262@ibl", bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076"    }
+    "1": { upi: "9908533262-3@ybl", bot: "8612728100:AAFn9mCMD_kn45f7yc6vx5ES8Ydk_o9qZ5Y", cid: "-1003755501239" },
+    "2": { upi: "9908533262-3@ybl", bot: "8968942116:AAFwXUSoSLzY97xbGkEaD0deoVFmqkv5FA0", cid: "-5094405295"    },
+    "3": { upi: "9908533262-3@ybl", bot: "8811915395:AAG2G0zFzKIQVHjQ7kCx7mUEix_dq-yIG_U", cid: "6453644838"        },
+    "4": { upi: "9908533262-3@ybl", bot: "8849015786:AAHcjlP4Ag5pHRGDf5jBa5E4ogD0Tep_BXM", cid: "-5224555076"    }
   };
 
   const SHEET_URLS = {
@@ -628,11 +629,11 @@
   }
 
   function makePaymentQR(upiId, size) {
-    const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&cu=INR`;
+    const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&am=300&cu=INR`;
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=0F172A&bgcolor=FFFFFF&qzone=2`;
   }
   function makeTicketQR(name, year, dept, mobile, bid, size) {
-    const d = JSON.stringify({ id:bid, name, year, dept, mobile });
+    const d = JSON.stringify({ id:bid, name, year, dept, mobile, amount:"300" });
     return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=0F172A&bgcolor=FFFFFF&qzone=1`;
   }
 
@@ -822,9 +823,9 @@
     let valid = true;
     showMErr("merr-name",   !name);                      if (!name)  valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showMErr("merr-mobile", !mobOk);                  if (!mobOk) valid = false;
-    showMErr("merr-year",   !year);                     if (!year)  valid = false;
-    showMErr("merr-dept",   !dept);                     if (!dept)  valid = false;
+    showMErr("merr-mobile", !mobOk);                   if (!mobOk) valid = false;
+    showMErr("merr-year",   !year);                      if (!year)  valid = false;
+    showMErr("merr-dept",   !dept);                      if (!dept)  valid = false;
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
@@ -872,10 +873,10 @@
     const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
-    document.getElementById("t-name").textContent       = name;
-    document.getElementById("t-year").textContent       = yl;
-    document.getElementById("t-dept").textContent       = dept;
-    document.getElementById("t-mobile").textContent     = "+91 " + mob;
+    document.getElementById("t-name").textContent        = name;
+    document.getElementById("t-year").textContent        = yl;
+    document.getElementById("t-dept").textContent        = dept;
+    document.getElementById("t-mobile").textContent      = "+91 " + mob;
     document.getElementById("t-booking-id").textContent = mBookingId;
     document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
     markStep("mdot2", "mline2", "mdot3");
@@ -933,16 +934,15 @@
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
     
     try {
-      // Execute Cloudinary image upload first to get the secure URL
       const cloudinaryPromise = uploadToCloudinary(file);
 
-      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, timestamp:ts, status:"Submitted" };
+      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted" };
       sendToGoogleSheet(year, sheetPayload);
 
       const caption =
         `*🎬 Movie Ticket Booking — NITS Telugu Network*\n\n` +
         `*Booking ID:* \`${mBookingId}\`\n*Name:* ${name}\n*Year:* ${yl}\n*Branch:* ${dept}\n` +
-        `*Mobile:* +91 ${mob}\n*UTR:* ${utr}\n*UPI:* ${cfg&&cfg.upi?cfg.upi:"N/A"}\n*Time:* ${ts}`;
+        `*Mobile:* +91 ${mob}\n*Amount:* ₹300\n*UTR:* ${utr}\n*UPI:* ${cfg&&cfg.upi?cfg.upi:"N/A"}\n*Time:* ${ts}`;
       if (cfg && cfg.bot && cfg.cid) {
         sendToTelegram(cfg.bot, cfg.cid, caption, file);
       }
@@ -978,36 +978,29 @@
         throw new Error("Primary database sync failed. Please try again.");
       }
 
-      await new Promise(r => setTimeout(r, 250));
       document.getElementById("loadingOverlay").style.display = "none";
       
       document.getElementById("msuccessNameMsg").textContent =
         `Thank you, ${name}! Your booking request (${mBookingId}) has been successfully received.`;
       
-      document.getElementById("ft-name").textContent       = name;
-      document.getElementById("ft-year").textContent       = yl;
-      document.getElementById("ft-dept").textContent       = dept;
-      document.getElementById("ft-mobile").textContent     = "+91 " + mob;
+      document.getElementById("ft-name").textContent        = name;
+      document.getElementById("ft-year").textContent        = yl;
+      document.getElementById("ft-dept").textContent        = dept;
+      document.getElementById("ft-mobile").textContent      = "+91 " + mob;
       document.getElementById("ft-booking-id").textContent = mBookingId;
       document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
       
       document.getElementById("movieFormContainer").style.display = "none";
-      document.getElementById("movieStepInd").style.display       = "none";
+      document.getElementById("movieStepInd").style.display        = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
       
       const successBlock = document.getElementById("successMessageBlock");
       const ticketBlock  = document.getElementById("ticketBlock");
-      successBlock.style.display = "block"; 
-      ticketBlock.style.display = "none";
+      successBlock.style.display = "none"; 
+      ticketBlock.style.display = "block";
       
       window.scrollTo({ top:0, behavior:"smooth" }); 
       playSuccessSound();
-      
-      setTimeout(() => {
-        successBlock.style.display = "none"; 
-        ticketBlock.style.display = "block";
-        window.scrollTo({ top:0, behavior:"smooth" });
-      }, 1800);
     } catch (err) {
       document.getElementById("loadingOverlay").style.display = "none";
       btn.disabled = false; 
@@ -1046,7 +1039,7 @@
           <div style="display:flex; gap:12px; padding-top:14px; border-top:1px dashed #E2E8F0; box-sizing:border-box;">
             <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Type</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Telugu Film</div></div>
             <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Venue</div><div style="font-size:12px; font-weight:600; color:#1E293B; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gold Cinema</div></div>
-            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Seat</div><div style="font-size:12px; font-weight:600; color:#1E293B;">Open Track</div></div>
+            <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Amount</div><div style="font-size:12px; font-weight:600; color:#1E293B;">₹300</div></div>
           </div>
         </div>
         
