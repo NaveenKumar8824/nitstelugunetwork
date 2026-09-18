@@ -106,11 +106,61 @@ body{ font-family:var(--font); background: var(--bg-gradient); color:var(--g900)
 .year-lbl{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--g500); margin-bottom:14px; display: flex; align-items: center; gap: 8px; }
 .year-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border-glass); }
 .year-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
-.yc{ background: var(--card-glass); border-radius:20px; border:1px solid var(--border-glass); padding: 18px 20px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.yc{ background: var(--card-glass); border-radius:20px; border:1px solid var(--border-glass); padding: 18px 20px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
 .yc:hover { transform: translateY(-1px); border-color: rgba(0,0,0,0.15); background: var(--g50); }
 .yc.y1{border-left:4px solid var(--blue)} .yc.y2{border-left:4px solid #06b6d4}
 .yc.y3{border-left:4px solid var(--green)} .yc.y4{border-left:4px solid var(--orange)}
-.yc-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--g500);margin-bottom:6px}
+.yc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.yc-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--g500)}
+
+/* Exact Replica Google Sheets Link Style (Border-less / Clean text with logo) */
+.sheets-link-btn { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  padding: 3px 6px; 
+  border-radius: 6px; 
+  color: #0f172a; 
+  background: transparent; 
+  border: none; 
+  font-size: 13px; 
+  font-weight: 700; 
+  text-decoration: none; 
+  transition: all 0.2s ease; 
+}
+.sheets-link-btn:hover { 
+  background: rgba(0,0,0,0.04); 
+}
+.sheets-logo-wrap { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  width: 22px; 
+  height: 22px; 
+  background: #0f9d58; 
+  border-radius: 4px; 
+  position: relative; 
+  flex-shrink: 0; 
+  box-shadow: 0 1px 2px rgba(15, 157, 88, 0.3); 
+}
+.sheets-logo-wrap::before { 
+  content: ''; 
+  position: absolute; 
+  width: 10px; 
+  height: 10px; 
+  background: #7dd3fc; 
+  border-radius: 2px; 
+  left: 2px; 
+  top: 2px; 
+}
+.sheets-logo-wrap svg { 
+  width: 11px; 
+  height: 11px; 
+  fill: #ffffff; 
+  position: relative; 
+  z-index: 1; 
+}
+
 .yc-val{font-size:24px;font-weight:700;color:var(--g900);line-height:1}
 .yc-sub{font-size:11px;color:var(--g500);margin-top:4px; font-weight: 500;}
 
@@ -169,9 +219,27 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--g200);border-top-color:var(--apple-blue);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.icon-btn.proof-btn { border-color: rgba(2, 132, 199, 0.15); color: var(--apple-blue); background: var(--blue-light); width: 28px; height: 28px; border-radius: 6px; }
-.icon-btn.proof-btn:hover { background: rgba(0, 113, 227, 0.15); border-color: rgba(0, 113, 227, 0.25); color: var(--apple-blue-hover); }
-.icon-btn.proof-btn svg { width: 14px; height: 14px; }
+/* Clean View Button with Soft Blue Background */
+.table-view-btn { 
+  display: inline-flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 5px 12px; 
+  background: #eff6ff; 
+  border: 1px solid #bfdbfe; 
+  color: #1d4ed8; 
+  border-radius: 8px; 
+  font-size: 12px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: all 0.15s ease; 
+  text-decoration: none; 
+}
+.table-view-btn:hover { 
+  background: #dbeafe; 
+  border-color: #93c5fd; 
+  color: #1e40af; 
+}
 .no-img-text { font-size: 11px; font-weight: 600; color: var(--g400); padding-left: 4px; }
 
 /* ── MODALS ── */
@@ -191,7 +259,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 .img-body-clean { position:relative; display:flex; align-items:center; justify-content:center; flex:1; width:100%; min-height:200px; }
 .img-body-clean img { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); display:none; }
 .img-controls-bottom { margin-top: 24px; display:flex; justify-content:center; width:100%; }
-.btn-full-size-clean { display:inline-flex; align-items:center; gap:8px; padding: 12px 24px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 99px; font-size: 13px; font-weight: 600; text-decoration: none; transition: 0.2s; backdrop-filter: blur(4px); }
+.btn-full-size-clean { display:inline-flex; align-items:center; gap:6px; padding: 8px 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 99px; font-size: 11.5px; font-weight: 600; text-decoration: none; transition: 0.2s; backdrop-filter: blur(4px); }
 .btn-full-size-clean:hover { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.3); }
 
 /* Detail Modal Specifics */
@@ -222,7 +290,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
 @media print{ body>*{display:none!important} #print-area{display:block!important;position:static!important;width:100%!important;padding:0!important} }
 @media(max-width:992px) { .metrics { grid-template-columns: repeat(2, 1fr); gap: 16px; } .mc.orange { grid-column: span 2; } .year-cards { grid-template-columns: repeat(2, 1fr); } }
-@media(max-width:768px){ .metrics{grid-template-columns:1fr; gap:12px} .mc.orange{grid-column: span 1} .year-cards{grid-template-columns:repeat(2,1fr); gap: 12px;} .page{padding:16px 14px} .topbar { padding: 0 16px; } .panel-toolbar{padding: 14px; gap:10px} .search-wrap { max-width: 100%; min-width: 100%; } .filter-group { width: 100%; justify-content: flex-start; } .detail-modal{max-width:100%;max-height:82vh;border-radius:24px 24px 0 0;align-self:flex-end; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);} .overlay.open .detail-modal { transform: translateY(0); } @keyframes modalSlide { from { transform: translateY(100%); } to { transform: translateY(0); } } .overlay{align-items:flex-end;padding:0} }
+@media(max-width:768px){ .metrics{grid-template-columns:1fr; gap:12px} .mc.orange{grid-column: span 1} .year-cards{grid-template-columns:repeat(2,1fr); gap: 12px;} .page{padding:16px 14px} .topbar { padding: 0 16px; } .panel-toolbar{padding: 14px; gap:10px} .search-wrap { max-width: 100%; min-width: 100%; } .filter-group { width: 100%; justify-content: flex-start; } .detail-modal{max-width:100%;max-height:82vh;border-radius:24px 24px 0 0;align-self:flex-end; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); } .overlay.open .detail-modal { transform: translateY(0); } @keyframes modalSlide { from { transform: translateY(100%); } to { transform: translateY(0); } } .overlay{align-items:flex-end;padding:0} }
 </style>
 </head>
 <body>
@@ -295,10 +363,46 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
     <div class="year-lbl">Year-wise Breakdown</div>
     <div class="year-cards">
-      <div class="yc y1"><div class="yc-lbl">1st Year</div><div class="yc-val" id="y1-c">—</div><div class="yc-sub">Bookings</div></div>
-      <div class="yc y2"><div class="yc-lbl">2nd Year</div><div class="yc-val" id="y2-c">—</div><div class="yc-sub">Bookings</div></div>
-      <div class="yc y3"><div class="yc-lbl">3rd Year</div><div class="yc-val" id="y3-c">—</div><div class="yc-sub">Bookings</div></div>
-      <div class="yc y4"><div class="yc-lbl">4th Year</div><div class="yc-val" id="y4-c">—</div><div class="yc-sub">Bookings</div></div>
+      <div class="yc y1">
+        <div class="yc-header">
+          <div class="yc-lbl">1st Year</div>
+          <a href="https://docs.google.com/spreadsheets/d/103lvYWRd06piUYup3vcmQJZpE_swASp_6i2TBQm-M7o/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 1st Year Google Sheet">
+            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            Sheets
+          </a>
+        </div>
+        <div class="yc-val" id="y1-c">—</div><div class="yc-sub">Bookings</div>
+      </div>
+      <div class="yc y2">
+        <div class="yc-header">
+          <div class="yc-lbl">2nd Year</div>
+          <a href="https://docs.google.com/spreadsheets/d/1L82CpC7xrGqp99rAfT7awaE_UgksBN6aND2K6b6KDbA/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 2nd Year Google Sheet">
+            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            Sheets
+          </a>
+        </div>
+        <div class="yc-val" id="y2-c">—</div><div class="yc-sub">Bookings</div>
+      </div>
+      <div class="yc y3">
+        <div class="yc-header">
+          <div class="yc-lbl">3rd Year</div>
+          <a href="https://docs.google.com/spreadsheets/d/1g1AmrPhNqjFZsD6QOPIvvm122o6nhk6PoxauxrFahM4/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 3rd Year Google Sheet">
+            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            Sheets
+          </a>
+        </div>
+        <div class="yc-val" id="y3-c">—</div><div class="yc-sub">Bookings</div>
+      </div>
+      <div class="yc y4">
+        <div class="yc-header">
+          <div class="yc-lbl">4th Year</div>
+          <a href="https://docs.google.com/spreadsheets/d/1-4JbtwlRn57YGYtEnUH6kWEEojoRzjhXSEQhTpdeoQI/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 4th Year Google Sheet">
+            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            Sheets
+          </a>
+        </div>
+        <div class="yc-val" id="y4-c">—</div><div class="yc-sub">Bookings</div>
+      </div>
     </div>
 
     <div class="panel">
@@ -403,8 +507,8 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     </div>
     <div class="img-controls-bottom">
        <a id="img-full-btn" href="#" target="_blank" class="btn-full-size-clean">
-         Open Full Size 
-         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+         Open Full Screen 
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
        </a>
     </div>
   </div>
@@ -453,7 +557,6 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
   window._allDocs = [];
   let filters    = { year:'all', branch:'all', status:'all' };
-  // Keep newest at top by default
   let sortField  = 'timestamp', sortDir = -1;
   let currentPage = 1;
   const PAGE = 25;
@@ -593,12 +696,12 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     const imgEl = document.getElementById('payment-img');
     const loaderEl = document.getElementById('img-loader');
     const errEl = document.getElementById('img-err');
-    
+     
     imgEl.style.display = 'none';
     errEl.style.display = 'none';
     imgEl.src = ''; 
     loaderEl.style.display = 'inline-block';
-    
+     
     imgEl.src = url;
     document.getElementById('img-full-btn').href = url;
     document.getElementById('img-overlay').classList.add('open');
@@ -619,14 +722,13 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     const page  = rows.slice(start, start + PAGE);
     document.getElementById('rec-badge').textContent = total === 1 ? '1 record' : `${total} records`;
     document.getElementById('pg-info').textContent = total ? `${start+1}–${Math.min(start+PAGE,total)} of ${total}` : '';
-    
+     
     if (!total) {
       document.getElementById('tbody').innerHTML = `<tr><td class="empty-td" colspan="10">No bookings found.</td></tr>`;
       document.getElementById('pagination').innerHTML = '';
       return;
     }
 
-    // Duplicate globally based on trimmed names & UTRs
     const nameMap = {};
     const utrMap = {};
     window._allDocs.forEach(d => {
@@ -635,29 +737,26 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
        if(n) nameMap[n] = (nameMap[n] || 0) + 1;
        if(u) utrMap[u] = (utrMap[u] || 0) + 1;
     });
-    
+     
     document.getElementById('tbody').innerHTML = page.map((d, i) => {
       const sc = statusClass(d.status);
       const isVerified = (d.status || '').toLowerCase() === 'verified';
       const ts = d.timestamp?.toDate ? d.timestamp.toDate().toLocaleString('en-IN',{day:'2-digit',month:'numeric',hour:'2-digit',minute:'2-digit'}) : d.timestamp || '—';
-      
+       
       const nKey = (d.name || '').trim().toLowerCase();
       const uKey = (d.utr || d.txnId || '').trim();
-      
-      // Duplicates are RED strictly unless verified
+       
       const isDupName = nKey && nameMap[nKey] > 1 && !isVerified;
       const isDupUtr = uKey && utrMap[uKey] > 1 && !isVerified;
 
       const nameDisplay = isDupName ? `<span class="dup-text">${esc(d.name)}</span>` : esc(d.name||'—');
       const utrDisplay = isDupUtr ? `<span class="dup-text">${esc(d.utr||d.txnId||'—')}</span>` : esc(d.utr||d.txnId||'—');
-      
+       
       const rawMob = d.mobile || '';
       const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
         
       const proofBtn = d.screenshotUrl 
-        ? `<button class="icon-btn proof-btn" onclick="openImageModal(event, '${d.screenshotUrl}')" title="View Proof">
-             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-           </button>` 
+        ? `<button class="table-view-btn" onclick="openImageModal(event, '${d.screenshotUrl}')" title="View Proof">View</button>` 
         : `<span class="no-img-text">—</span>`;
         
       return `<tr onclick="openModal('${d.id}')">
@@ -673,7 +772,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
         <td class="td-mono">${ts}</td>
       </tr>`;
     }).join('');
-    
+     
     const pages = Math.ceil(total / PAGE);
     const pel = document.getElementById('pagination');
     if (pages <= 1) { pel.innerHTML = ''; return; }
@@ -704,11 +803,9 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
       
     const rawMob = d.mobile || '';
     const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
-    
+      
     const modalProofBtn = d.screenshotUrl 
-        ? `<button onclick="openImageModal(event, '${d.screenshotUrl}')" style="display:flex;align-items:center;gap:6px;background:var(--blue-light);color:var(--apple-blue);border:1px solid rgba(2,132,199,0.15);padding:6px 12px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;">
-             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> View Proof
-           </button>` 
+        ? `<button onclick="openImageModal(event, '${d.screenshotUrl}')" class="table-view-btn">View</button>` 
         : '<span class="plain">No Image</span>';
 
     document.getElementById('dm-body').innerHTML = [
@@ -780,19 +877,23 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     } catch(e) { showToast('Error: ' + e.message, 'error'); }
   };
 
-  // ── Export PDF ──
+  // ── Export PDF (Redesigned A4 Portrait Clean & Multi-Page Support) ──
   window.exportPDF = function() {
     const docs = window._filteredRows || window._allDocs || [];
     if (!docs.length) { alert('No bookings to export.'); return; }
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-    doc.setFontSize(14); doc.setFont('helvetica','bold');
-    doc.text('Bookings — NITS Telugu Network', 14, 14);
-    doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(100);
-    doc.text(`Generated: ${new Date().toLocaleString('en-IN')} · ${docs.length} record${docs.length===1?'':'s'}`, 14, 20);
-    doc.setTextColor(0);
+    doc.setFontSize(16); 
+    doc.setFont('helvetica','bold');
+    doc.setTextColor(15, 23, 42);
+    doc.text('Bookings Summary Report', 14, 18);
+    
+    doc.setFontSize(9); 
+    doc.setFont('helvetica','normal'); 
+    doc.setTextColor(100, 116, 139);
+    doc.text(`NITS Telugu Network · Generated on ${new Date().toLocaleString('en-IN')} · Total Records: ${docs.length}`, 14, 24);
 
     const nameMap = {}; const utrMap = {};
     window._allDocs.forEach(d => {
@@ -805,43 +906,45 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     const rows = docs.map((d, i) => {
       const ts = d.timestamp?.toDate ? d.timestamp.toDate().toLocaleString('en-IN',{day:'2-digit',month:'numeric',hour:'2-digit',minute:'2-digit'}) : d.timestamp || '—';
       const isVerified = (d.status || '').toLowerCase() === 'verified';
-      
+       
       const isDupN = (d.name||'').trim().toLowerCase() && nameMap[(d.name||'').trim().toLowerCase()] > 1 && !isVerified;
       const isDupU = (d.utr||d.txnId||'').trim() && utrMap[(d.utr||d.txnId||'').trim()] > 1 && !isVerified;
-      
+       
       const rawMob = d.mobile || '';
       const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
-      
+       
       return [
-        i+1,
-        (d.name||'—') + (isDupN ? ' [DUP]' : ''),
-        d.year||'—',
-        d.branch||'—',
+        i + 1,
+        (d.name || '—') + (isDupN ? ' [DUP]' : ''),
+        d.year || '—',
+        d.branch || '—',
         mobDisp,
-        d.screenshotUrl ? 'Yes' : 'No',
-        (d.utr||d.txnId||'—') + (isDupU ? ' [DUP]' : ''),
-        d.bookingId||d.id||'—',
-        d.status||'Pending',
+        d.utr || d.txnId || '—',
+        d.status || 'Pending',
         ts
       ];
     });
 
     doc.autoTable({
-      startY: 24,
-      head: [['#','Name','Year','Branch','Mobile','Proof','UTR / TXN ID','Booking ID','Status','Time']],
+      startY: 30,
+      head: [['#', 'Name', 'Year', 'Branch', 'Mobile', 'UTR / TXN ID', 'Status', 'Time']],
       body: rows,
-      styles: { fontSize: 7, cellPadding: 2.5, font: 'helvetica' },
-      headStyles: { fillColor: [26,86,219], textColor: 255, fontStyle: 'bold', fontSize: 7 },
-      alternateRowStyles: { fillColor: [245,247,250] },
+      styles: { fontSize: 8, cellPadding: 4, font: 'helvetica', lineColor: [226, 232, 240], lineWidth: 0.1 },
+      headStyles: { fillColor: [15, 23, 42], textColor: 255, fontStyle: 'bold', fontSize: 8, halign: 'left' },
+      alternateRowStyles: { fillColor: [248, 250, 252] },
       columnStyles: {
-        0: { cellWidth: 8 },  1: { cellWidth: 32 }, 2: { cellWidth: 14 }, 3: { cellWidth: 14 },
-        4: { cellWidth: 26 }, 5: { cellWidth: 14 }, 6: { cellWidth: 34 }, 7: { cellWidth: 26 }, 
-        8: { cellWidth: 20 }, 9: { cellWidth: 28 }
+        0: { cellWidth: 10 },  
+        1: { cellWidth: 38 }, 
+        2: { cellWidth: 20 }, 
+        3: { cellWidth: 16 },
+        4: { cellWidth: 28 }, 
+        5: { cellWidth: 32 }, 
+        6: { cellWidth: 22 }, 
+        7: { cellWidth: 26 }
       },
       didDrawCell: (data) => {
-        if (data.section === 'body' && (data.column.index === 1 || data.column.index === 6)) {
+        if (data.section === 'body' && (data.column.index === 1 || data.column.index === 5)) {
            if (String(data.cell.raw).includes('[DUP]')) {
-             // Clean the [DUP] text out in drawing, just color it red
              const cleanText = String(data.cell.raw).replace(' [DUP]', '');
              doc.setTextColor(220, 38, 38);
              doc.setFont('helvetica','bold');
@@ -850,9 +953,9 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
              return false;
            }
         }
-        if (data.section === 'body' && data.column.index === 8) {
+        if (data.section === 'body' && data.column.index === 6) {
           const status = (data.cell.raw||'').toLowerCase();
-          const colors = { verified: [21,128,61], submitted: [26,86,219], pending: [180,83,9], failed: [200,30,30] };
+          const colors = { verified: [22, 163, 74], submitted: [2, 132, 199], pending: [234, 88, 12], failed: [220, 38, 38] };
           const color = colors[status] || colors.pending;
           doc.setTextColor(...color); doc.setFont('helvetica','bold');
           doc.text(String(data.cell.raw), data.cell.x + data.cell.padding('left'), data.cell.y + data.cell.height / 2 + 1, { baseline: 'middle' });
@@ -860,10 +963,16 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
           return false;
         }
       },
-      margin: { left: 14, right: 14 }
+      didDrawPage: (data) => {
+        let str = 'Page ' + doc.internal.getNumberOfPages();
+        doc.setFontSize(8);
+        doc.setTextColor(150);
+        doc.text(str, doc.internal.pageSize.getWidth() - 20, doc.internal.pageSize.getHeight() - 10, { align: 'right' });
+      },
+      margin: { left: 14, right: 14, top: 30, bottom: 20 }
     });
 
-    doc.save(`bookings_${new Date().toISOString().slice(0,10)}.pdf`);
+    doc.save(`bookings_report_${new Date().toISOString().slice(0,10)}.pdf`);
   };
 
   // ── Print ──
@@ -871,7 +980,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     const docs = window._filteredRows || window._allDocs || [];
     if (!docs.length) { alert('No bookings to print.'); return; }
 
-    const statusColors = { verified: '#15803d', submitted: '#1a56db', pending: '#b45309', failed: '#c81e1e' };
+    const statusColors = { verified: '#16a34a', submitted: '#0284c7', pending: '#ea580c', failed: '#dc2626' };
     const nameMap = {}; const utrMap = {};
     window._allDocs.forEach(d => {
        const n = (d.name || '').trim().toLowerCase();
@@ -882,15 +991,15 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
     const rows = docs.map((d, i) => {
       const ts = d.timestamp?.toDate ? d.timestamp.toDate().toLocaleString('en-IN',{day:'2-digit',month:'numeric',hour:'2-digit',minute:'2-digit'}) : d.timestamp || '—';
-      const sc = statusColors[(d.status||'').toLowerCase()] || '#b45309';
+      const sc = statusColors[(d.status||'').toLowerCase()] || '#ea580c';
       const isVerified = (d.status || '').toLowerCase() === 'verified';
-      
+       
       const isDupN = (d.name||'').trim().toLowerCase() && nameMap[(d.name||'').trim().toLowerCase()] > 1 && !isVerified;
       const isDupU = (d.utr||d.txnId||'').trim() && utrMap[(d.utr||d.txnId||'').trim()] > 1 && !isVerified;
-      
+       
       const nDisp = isDupN ? `<span style="color:#dc2626;font-weight:bold;">${esc(d.name||'—')}</span>` : `<strong>${esc(d.name||'—')}</strong>`;
       const uDisp = isDupU ? `<span style="color:#dc2626;font-weight:bold;">${esc(d.utr||d.txnId||'—')}</span>` : `${esc(d.utr||d.txnId||'—')}`;
-      
+       
       const rawMob = d.mobile || '';
       const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
 
@@ -900,9 +1009,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
         <td>${esc(d.year||'—')}</td>
         <td>${esc(d.branch||'—')}</td>
         <td>${mobDisp}</td>
-        <td>${d.screenshotUrl ? 'Yes' : 'No'}</td>
         <td>${uDisp}</td>
-        <td style="font-size:9px">${esc(d.bookingId||d.id||'—')}</td>
         <td><span style="background:${sc}22;color:${sc};border:1px solid ${sc}55;padding:2px 8px;border-radius:99px;font-weight:700;font-size:9px">${esc(d.status||'Pending')}</span></td>
         <td>${ts}</td>
       </tr>`;
@@ -912,28 +1019,27 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
       <title>Bookings Report</title>
       <style>
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:Arial,sans-serif;font-size:11px;color:#111;padding:20px}
-        h1{font-size:16px;font-weight:700;margin-bottom:3px}
-        .sub{font-size:10px;color:#666;margin-bottom:14px}
+        body{font-family:'Plus Jakarta Sans',Arial,sans-serif;font-size:11px;color:#0f172a;padding:24px}
+        h1{font-size:18px;font-weight:700;margin-bottom:4px}
+        .sub{font-size:11px;color:#64748b;margin-bottom:20px}
         table{width:100%;border-collapse:collapse}
-        th{background:#1a56db;color:#fff;padding:8px;text-align:left;font-size:9px;text-transform:uppercase;letter-spacing:.05em}
-        td{padding:6px 8px;border-bottom:1px solid #e5e7eb;vertical-align:middle}
-        tr:nth-child(even) td{background:#f9fafb}
-        @media print{@page{size:A4 landscape;margin:10mm}}
+        th{background:#0f172a;color:#fff;padding:10px 12px;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}
+        td{padding:10px 12px;border-bottom:1px solid #e2e8f0;vertical-align:middle}
+        tr:nth-child(even) td{background:#f8fafc}
+        @media print{@page{size:A4 portrait;margin:12mm}}
       </style></head><body>
       <h1>Bookings Report — NITS Telugu Network</h1>
-      <div class="sub">Printed: ${new Date().toLocaleString('en-IN')} &nbsp;·&nbsp; ${docs.length} record${docs.length===1?'':'s'}</div>
+      <div class="sub">Printed: ${new Date().toLocaleString('en-IN')} &nbsp;·&nbsp; Total Records: ${docs.length}</div>
       <table>
         <thead><tr>
           <th>#</th><th>Name</th><th>Year</th><th>Branch</th>
-          <th>Mobile</th><th>Proof</th><th>UTR / TXN ID</th><th>Booking ID</th>
-          <th>Status</th><th>Time</th>
+          <th>Mobile</th><th>UTR / TXN ID</th><th>Status</th><th>Time</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </body></html>`;
 
-    const w = window.open('','_blank','width=1100,height=750');
+    const w = window.open('','_blank','width=1000,height=750');
     w.document.write(printContent);
     w.document.close();
     w.focus();
@@ -957,6 +1063,5 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
   checkSession();
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
