@@ -113,23 +113,24 @@ body{ font-family:var(--font); background: var(--bg-gradient); color:var(--g900)
 .yc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 .yc-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--g500)}
 
-/* Exact Replica Google Sheets Link Style (Border-less / Clean text with logo) */
+/* Icon Link Actions Container */
+.yc-actions { display: flex; align-items: center; gap: 6px; }
+
+/* Icon-Only Google Sheets Link Style */
 .sheets-link-btn { 
   display: inline-flex; 
   align-items: center; 
-  gap: 6px; 
-  padding: 3px 6px; 
+  justify-content: center;
+  width: 28px;
+  height: 28px;
   border-radius: 6px; 
-  color: #0f172a; 
   background: transparent; 
   border: none; 
-  font-size: 13px; 
-  font-weight: 700; 
   text-decoration: none; 
   transition: all 0.2s ease; 
 }
 .sheets-link-btn:hover { 
-  background: rgba(0,0,0,0.04); 
+  background: rgba(0,0,0,0.06); 
 }
 .sheets-logo-wrap { 
   display: inline-flex; 
@@ -159,6 +160,40 @@ body{ font-family:var(--font); background: var(--bg-gradient); color:var(--g900)
   fill: #ffffff; 
   position: relative; 
   z-index: 1; 
+}
+
+/* Telegram Logo Button Style */
+.telegram-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.telegram-link-btn:hover {
+  background: rgba(0,0,0,0.06);
+}
+.telegram-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #229ed9;
+  border-radius: 4px;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 1px 2px rgba(34, 158, 217, 0.3);
+}
+.telegram-logo-wrap svg {
+  width: 12px;
+  height: 12px;
+  fill: #ffffff;
 }
 
 .yc-val{font-size:24px;font-weight:700;color:var(--g900);line-height:1}
@@ -363,43 +398,63 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
     <div class="year-lbl">Year-wise Breakdown</div>
     <div class="year-cards">
+      <!-- 1st Year Card -->
       <div class="yc y1">
         <div class="yc-header">
           <div class="yc-lbl">1st Year</div>
-          <a href="https://docs.google.com/spreadsheets/d/103lvYWRd06piUYup3vcmQJZpE_swASp_6i2TBQm-M7o/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 1st Year Google Sheet">
-            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
-            Sheets
-          </a>
+          <div class="yc-actions">
+            <a href="https://docs.google.com/spreadsheets/d/103lvYWRd06piUYup3vcmQJZpE_swASp_6i2TBQm-M7o/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 1st Year Google Sheet">
+              <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            </a>
+            <a href="https://t.me/+gtC3eUlZzbc3YjJl" target="_blank" class="telegram-link-btn" title="Open 1st Year Telegram">
+              <span class="telegram-logo-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.02-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.04 8.46-3.61 4.03-1.66 4.87-1.95 5.42-1.96.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.2 0 .28z"/></svg></span>
+            </a>
+          </div>
         </div>
         <div class="yc-val" id="y1-c">—</div><div class="yc-sub">Bookings</div>
       </div>
+
+      <!-- 2nd Year Card -->
       <div class="yc y2">
         <div class="yc-header">
           <div class="yc-lbl">2nd Year</div>
-          <a href="https://docs.google.com/spreadsheets/d/1L82CpC7xrGqp99rAfT7awaE_UgksBN6aND2K6b6KDbA/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 2nd Year Google Sheet">
-            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
-            Sheets
-          </a>
+          <div class="yc-actions">
+            <a href="https://docs.google.com/spreadsheets/d/1L82CpC7xrGqp99rAfT7awaE_UgksBN6aND2K6b6KDbA/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 2nd Year Google Sheet">
+              <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            </a>
+            <a href="https://t.me/+jcGYtYrru3A3NGQ1" target="_blank" class="telegram-link-btn" title="Open 2nd Year Telegram">
+              <span class="telegram-logo-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.02-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.04 8.46-3.61 4.03-1.66 4.87-1.95 5.42-1.96.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.2 0 .28z"/></svg></span>
+            </a>
+          </div>
         </div>
         <div class="yc-val" id="y2-c">—</div><div class="yc-sub">Bookings</div>
       </div>
+
+      <!-- 3rd Year Card -->
       <div class="yc y3">
         <div class="yc-header">
           <div class="yc-lbl">3rd Year</div>
-          <a href="https://docs.google.com/spreadsheets/d/1g1AmrPhNqjFZsD6QOPIvvm122o6nhk6PoxauxrFahM4/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 3rd Year Google Sheet">
-            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
-            Sheets
-          </a>
+          <div class="yc-actions">
+            <a href="https://docs.google.com/spreadsheets/d/1g1AmrPhNqjFZsD6QOPIvvm122o6nhk6PoxauxrFahM4/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 3rd Year Google Sheet">
+              <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            </a>
+          </div>
         </div>
         <div class="yc-val" id="y3-c">—</div><div class="yc-sub">Bookings</div>
       </div>
+
+      <!-- 4th Year Card -->
       <div class="yc y4">
         <div class="yc-header">
           <div class="yc-lbl">4th Year</div>
-          <a href="https://docs.google.com/spreadsheets/d/1-4JbtwlRn57YGYtEnUH6kWEEojoRzjhXSEQhTpdeoQI/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 4th Year Google Sheet">
-            <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
-            Sheets
-          </a>
+          <div class="yc-actions">
+            <a href="https://docs.google.com/spreadsheets/d/1-4JbtwlRn57YGYtEnUH6kWEEojoRzjhXSEQhTpdeoQI/edit?usp=sharing" target="_blank" class="sheets-link-btn" title="Open 4th Year Google Sheet">
+              <span class="sheets-logo-wrap"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm-8-4H7V7h2v2zm4 0h-2V7h2v2zm4 0h-2V7h2v2z"/></svg></span>
+            </a>
+            <a href="https://t.me/+F-5FD2EjxOozNDk1" target="_blank" class="telegram-link-btn" title="Open 4th Year Telegram">
+              <span class="telegram-logo-wrap"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.02-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.04 8.46-3.61 4.03-1.66 4.87-1.95 5.42-1.96.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.2 0 .28z"/></svg></span>
+            </a>
+          </div>
         </div>
         <div class="yc-val" id="y4-c">—</div><div class="yc-sub">Bookings</div>
       </div>
@@ -560,7 +615,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
   let sortField  = 'timestamp', sortDir = -1;
   let currentPage = 1;
   const PAGE = 25;
-  let currentDocId   = null;
+  let currentDocId    = null;
   let currentDocData = null;
 
   window._filteredRows = [];
@@ -793,7 +848,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
   window.openModal = function(id) {
     const d = (window._allDocs || []).find(x => x.id === id);
     if (!d) return;
-    currentDocId   = id;
+    currentDocId    = id;
     currentDocData = d;
     const ts = d.timestamp?.toDate ? d.timestamp.toDate().toLocaleString('en-IN') : d.timestamp || '—';
     document.getElementById('dm-name').textContent = d.name || 'Booking Details';
@@ -828,7 +883,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
   window.closeModal = function() {
     document.getElementById('overlay').classList.remove('open');
-    currentDocId   = null;
+    currentDocId    = null;
     currentDocData = null;
   };
 
