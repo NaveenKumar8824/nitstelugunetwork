@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -6,20 +7,22 @@
   <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Movie Tickets — NITS Telugu Network</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-  
+  <!-- Lightweight client-side QR Code library for instant, lag-free generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+
   <style>
     /* ==========================================================================
         SYSTEM ARCHITECTURE & RESET (Premium Minimal Light Aesthetic)
         ========================================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
     :root {
       --primary: #10B981;
       --secondary: #0EA5E9;
@@ -32,7 +35,7 @@
       --bms-red: #FF3366;
       --bms-red-glow: rgba(255, 51, 102, 0.15);
       --bg: #F1F5F9;
-      
+
       --font-heading: 'Poppins', sans-serif;
       --font-display: 'Plus Jakarta Sans', sans-serif;
       --font-body: 'Inter', sans-serif;
@@ -66,21 +69,21 @@
         ========================================================================== */
     .movie-page-hero { padding: 1rem 1rem 0.5rem; text-align: center; }
     .movie-badge {
-      display: inline-flex; align-items: center; gap: 0.3rem; 
-      background: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 100px; 
-      padding: 0.2rem 0.5rem; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; 
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: #E0F2FE; border: 1px solid #BAE6FD; border-radius: 100px;
+      padding: 0.2rem 0.5rem; font-family: var(--font-display); font-size: 0.65rem; font-weight: 700;
       color: #0369A1; margin-bottom: 0.35rem; text-transform: uppercase; letter-spacing: 0.04em;
     }
     .movie-live-dot { width: 5px; height: 5px; background: var(--primary); border-radius: 50%; animation: pulseGlow 2s infinite ease-in-out; box-shadow: 0 0 6px var(--primary); }
-    
-    .hero-title { 
-      font-family: var(--font-heading); 
-      font-weight: 800; 
-      font-size: 1.65rem; 
-      color: var(--dark); 
-      line-height: 1.15; 
-      margin-bottom: 0.25rem; 
-      letter-spacing: -0.035em; 
+
+    .hero-title {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: 1.65rem;
+      color: var(--dark);
+      line-height: 1.15;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.035em;
     }
     .hero-title span { color: var(--secondary); }
     .hero-sub { font-size: 0.8rem; font-weight: 400; color: var(--muted); max-width: 320px; margin: 0 auto; }
@@ -94,10 +97,10 @@
         ========================================================================== */
     .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0.5rem auto 0.75rem; max-width: 280px; padding: 0; }
     .step-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
-    .step-dot { 
-      width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
-      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; border: 1.5px solid var(--ui-border); 
-      background: #FFFFFF; color: var(--muted); transition: all 0.3s ease; position: relative; z-index: 1; 
+    .step-dot {
+      width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 0.7rem; font-weight: 700; border: 1.5px solid var(--ui-border);
+      background: #FFFFFF; color: var(--muted); transition: all 0.3s ease; position: relative; z-index: 1;
     }
     .step-dot.active { background: var(--secondary); border-color: var(--secondary); color: #FFF; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2); }
     .step-dot.done { background: var(--primary); border-color: var(--primary); color: #FFF; }
@@ -109,64 +112,64 @@
         PREMIUM FORM & CARD INTERFACE
         ========================================================================== */
     .form-container { max-width: 400px; margin: 0 auto; padding: 0 1.25rem 1.5rem; width: 100%; }
-    .form-card { 
-      background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem; 
-      box-shadow: var(--shadow-premium); 
+    .form-card {
+      background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem;
+      box-shadow: var(--shadow-premium);
     }
     .form-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--dark); margin-bottom: 0.1rem; letter-spacing: -0.01em; }
     .form-card-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.85rem; }
-    
+
     .form-group { margin-bottom: 0.85rem; }
     .form-label { display: block; font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    .form-input { 
-      width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
-      font-family: var(--font-body); font-size: 0.85rem; color: var(--text); background: #F8FAFC; 
-      outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none; 
+    .form-input {
+      width: 100%; padding: 0.65rem 0.75rem; border: 1px solid var(--ui-border); border-radius: var(--radius-md);
+      font-family: var(--font-body); font-size: 0.85rem; color: var(--text); background: #F8FAFC;
+      outline: none; transition: all 0.2s ease; -webkit-appearance: none; appearance: none;
     }
     .form-input:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12); background: #FFFFFF; }
     .form-input.error { border-color: var(--bms-red); box-shadow: 0 0 0 3px rgba(255, 51, 102, 0.1); }
-    
+
     select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748B'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.9rem; padding-right: 2rem; }
-    
+
     .error-msg { font-size: 0.7rem; color: var(--bms-red); margin-top: 0.2rem; font-weight: 500; display: none; }
     .error-msg.show { display: block; }
-    
+
     .phone-wrap { position: relative; }
     .phone-flag { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); font-size: 0.85rem; color: var(--muted); pointer-events: none; font-weight: 500; }
     input[type=tel] { padding-left: 2.5rem !important; }
-    
+
     .terms-compact { background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; margin-bottom: 0.85rem; }
     .checkbox-row { display: flex; align-items: flex-start; gap: 0.4rem; cursor: pointer; }
     .checkbox-row input[type=checkbox] { width: 14px; height: 14px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
     .checkbox-row label { font-size: 0.75rem; color: var(--muted); line-height: 1.35; cursor: pointer; }
     .checkbox-row label span { color: var(--bms-red); font-weight: 500; }
-    
+
     /* Interactive Buttons */
-    .btn-primary, .submit-btn, .confirm-btn, .download-btn { 
-      width: 100%; padding: 0.65rem; color: #FFF; border: none; border-radius: var(--radius-md); 
-      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; cursor: pointer; 
-      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.3rem; 
+    .btn-primary, .submit-btn, .confirm-btn, .download-btn {
+      width: 100%; padding: 0.65rem; color: #FFF; border: none; border-radius: var(--radius-md);
+      font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 0.3rem;
     }
     .btn-primary { background: #FFFFFF; border: 1px solid var(--ui-border); color: var(--text); }
     .btn-primary:hover:not(:disabled) { border-color: var(--secondary); background: #F0F9FF; }
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-    
+
     /* ==========================================================================
         COMPACT PAYMENT SECTION
         ========================================================================== */
     .qr-section { text-align: center; margin-bottom: 0.75rem; }
     .qr-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
     .qr-box { display: inline-block; background: #FFF; border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--ui-border); box-shadow: 0 4px 12px rgba(15,23,42,0.03); }
-    .qr-box img { display: block; border-radius: 4px; width: 110px; height: 110px; }
+    .qr-box img { display: block; border-radius: 4px; width: 110px; height: 110px; image-rendering: pixelated; }
     .qr-unavail { padding: 0.75rem; text-align: center; background: #FFF7ED; border: 1px dashed #FED7AA; border-radius: var(--radius-md); margin-bottom: 0.75rem; }
     .qr-unavail p { font-size: 0.75rem; color: #C2410C; font-weight: 400; }
-    
+
     .divider { border: none; border-top: 1px solid var(--ui-border); margin: 0.85rem 0; }
-    
-    .upload-zone { 
-      border: 1.5px dashed #CBD5E1; border-radius: var(--radius-md); 
-      padding: 0.55rem; text-align: center; cursor: pointer; 
-      transition: all 0.2s ease; background: #F8FAFC; 
+
+    .upload-zone {
+      border: 1.5px dashed #CBD5E1; border-radius: var(--radius-md);
+      padding: 0.55rem; text-align: center; cursor: pointer;
+      transition: all 0.2s ease; background: #F8FAFC;
       margin-bottom: 0.2rem; position: relative; display: flex; align-items: center; justify-content: center; gap: 0.4rem;
     }
     .upload-zone:hover, .upload-zone.dragover { border-color: var(--secondary); background: #F0F9FF; }
@@ -176,19 +179,19 @@
     .upload-text { font-family: var(--font-display); font-size: 0.75rem; font-weight: 500; color: var(--text); }
     .upload-text span { color: var(--secondary); font-weight: 600; }
     .upload-hint { font-size: 0.62rem; color: var(--muted); margin-top: 0.1rem; text-align: center; }
-    
+
     .upload-preview { margin-top: 0.35rem; display: none; align-items: center; gap: 0.35rem; background: #F1F5F9; padding: 0.3rem 0.45rem; border-radius: 6px; border: 1px solid var(--ui-border); }
     .upload-preview img { width: 22px; height: 22px; border-radius: 4px; object-fit: cover; }
     .upload-preview .file-name { font-size: 0.7rem; color: var(--primary); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    
+
     .submit-btn { background: var(--primary); color: #FFFFFF; font-weight: 700; margin-top: 0.75rem; }
     .submit-btn:hover:not(:disabled) { background: #059669; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
-    
+
     .utr-status { margin-top: 0.35rem; padding: 0.3rem 0.45rem; border-radius: 6px; font-size: 0.7rem; font-weight: 500; display: none; align-items: center; gap: 0.3rem; font-family: var(--font-display); }
     .utr-status.detecting { display: flex; background: #F0F9FF; color: #0369A1; border: 1px solid #B9E6FD; }
     .utr-status.found { display: flex; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; }
     .utr-status.not-found { display: flex; background: #FFF7ED; color: #C2410C; border: 1px solid #FED7AA; }
-    
+
     .utr-input-wrap { margin-top: 0.65rem; }
     #utrInput.auto-filled { border-color: var(--primary); background: #ECFDF5; font-weight: 600; color: #047857; }
 
@@ -197,48 +200,48 @@
         ========================================================================== */
     .ticket-preview-label { text-align: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; }
     .bms-ticket-wrap { max-width: 340px; margin: 0 auto 1rem; width: 100%; }
-    
-    .bms-ticket { 
+
+    .bms-ticket {
       background: #FFFFFF; border-radius: var(--radius-lg); overflow: hidden; position: relative; width: 100%;
       border: 1px solid var(--ui-border); box-shadow: var(--shadow-premium);
     }
-    
+
     .bms-top { padding: 1rem 1rem 0.85rem; position: relative; }
     .bms-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
     .bms-org-label { font-size: 0.55rem; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1px; font-family: var(--font-display); }
     .bms-movie-title { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; color: var(--dark); line-height: 1.2; letter-spacing: -0.01em; }
-    
-    .bms-status-badge { 
-      background: #FEF3C7; border: 1px solid #FDE68A; 
-      border-radius: 4px; padding: 2px 5px; font-size: 0.6rem; font-weight: 700; color: #D97706; 
+
+    .bms-status-badge {
+      background: #FEF3C7; border: 1px solid #FDE68A;
+      border-radius: 4px; padding: 2px 5px; font-size: 0.6rem; font-weight: 700; color: #D97706;
       letter-spacing: 0.02em; text-transform: uppercase; font-family: var(--font-display);
     }
     .bms-status-badge.confirmed { background: #D1FAE5; border-color: #A7F3D0; color: #047857; }
-    
+
     .bms-meta-strip { display: flex; gap: 8px; padding-top: 0.75rem; border-top: 1px dashed var(--ui-border); }
     .bms-meta-item { flex: 1; min-width: 0; }
     .bms-meta-label { font-size: 0.55rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
     .bms-meta-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    
+
     /* Couplings */
     .bms-perf { height: 14px; position: relative; display: flex; align-items: center; background: transparent; }
     .bms-perf::before, .bms-perf::after { content: ''; width: 14px; height: 14px; border-radius: 50%; background: var(--bg); position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; border: 1px solid var(--ui-border); }
     .bms-perf::before { left: -8px; }
     .bms-perf::after { right: -8px; }
     .bms-perf-line { flex: 1; margin: 0 10px; height: 1px; background-image: radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size: 5px 1px; background-repeat: repeat-x; }
-    
+
     .bms-qr-section { padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.85rem; background: #F8FAFC; }
     .bms-qr-frame { flex-shrink: 0; background: #FFF; border-radius: var(--radius-md); padding: 4px; display: inline-block; border: 1px solid var(--ui-border); }
-    .bms-qr-frame img { display: block; width: 75px; height: 75px; border-radius: 4px; }
+    .bms-qr-frame img { display: block; width: 75px; height: 75px; border-radius: 4px; image-rendering: pixelated; }
     .bms-qr-info { flex: 1; min-width: 0; }
     .bms-booking-label { font-size: 0.55rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1px; font-family: var(--font-display); }
     .bms-booking-id { font-family: var(--font-display); font-weight: 800; font-size: 1rem; color: var(--dark); letter-spacing: 0.01em; line-height: 1.1; }
-    
+
     .bms-details { padding: 0.85rem 1rem; background: #FFFFFF; border-top: 1px solid var(--ui-border); }
     .bms-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
     .bms-detail-item .bms-meta-label { color: var(--muted); }
     .bms-detail-value { font-size: 0.75rem; font-weight: 600; color: var(--text); line-height: 1.2; word-break: break-word; }
-    
+
     /* Elegant Ticket Notice Update */
     .bms-notice { margin: 0 1rem 1rem; background: #F8FAFC; border: 1px solid var(--ui-border); border-radius: var(--radius-md); padding: 0.5rem 0.65rem; text-align: center; }
     .bms-notice p { font-size: 0.68rem; color: #64748B; font-weight: 400; line-height: 1.4; font-family: var(--font-body); }
@@ -246,34 +249,34 @@
     .ticket-actions { max-width: 340px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
     .confirm-btn { background: var(--bms-red); font-weight: 700; color: #FFFFFF; }
     .confirm-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
-    
-    .edit-btn, .movie-back-btn { 
-      width: 100%; padding: 0.65rem; background: #FFFFFF; color: var(--muted); 
-      border: 1px solid var(--ui-border); border-radius: var(--radius-md); 
-      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; cursor: pointer; 
-      transition: all 0.2s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.2rem; 
+
+    .edit-btn, .movie-back-btn {
+      width: 100%; padding: 0.65rem; background: #FFFFFF; color: var(--muted);
+      border: 1px solid var(--ui-border); border-radius: var(--radius-md);
+      font-family: var(--font-display); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+      transition: all 0.2s ease; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 0.2rem;
     }
     .edit-btn:hover, .movie-back-btn:hover { border-color: #94A3B8; color: var(--text); background: #F8FAFC; }
-    
+
     /* ==========================================================================
         SUCCESS COMPONENT
         ========================================================================== */
     #movieSuccessScreen { display: none; padding: 0.5rem 1.25rem 2rem; max-width: 400px; margin: 0 auto; width: 100%; }
-    .gpay-check { 
-      width: 44px; height: 44px; border-radius: 50%; background: var(--primary); 
-      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; 
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; 
+    .gpay-check {
+      width: 44px; height: 44px; border-radius: 50%; background: var(--primary);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
     .gpay-tick { stroke-dasharray: 60; stroke-dashoffset: 60; animation: drawTick 0.4s 0.1s ease forwards; }
     .movie-success-top { text-align: center; padding: 0.5rem 0; }
-    
-    .success-verified-note { 
-      display: inline-flex; align-items: center; gap: 0.25rem; background: #ECFDF5; 
-      border: 1px solid #A7F3D0; border-radius: 100px; padding: 0.25rem 0.75rem; 
-      font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight: 600; margin-bottom: 0.75rem; 
+
+    .success-verified-note {
+      display: inline-flex; align-items: center; gap: 0.25rem; background: #ECFDF5;
+      border: 1px solid #A7F3D0; border-radius: 100px; padding: 0.25rem 0.75rem;
+      font-family: var(--font-display); font-size: 0.7rem; color: #047857; font-weight: 600; margin-bottom: 0.75rem;
     }
     #msuccessNameMsg { font-size: 0.8rem; color: var(--muted); line-height: 1.4; max-width: 320px; margin: 0 auto 0.85rem; }
-    
+
     .download-btn { background: var(--bms-red); font-weight: 700; margin-bottom: 0.2rem; }
     .download-btn:hover:not(:disabled) { background: #E52E5C; box-shadow: 0 4px 12px rgba(255, 51, 102, 0.2); }
 
@@ -374,7 +377,7 @@
       <hr class="divider"/>
       <div class="form-group">
         <label class="form-label">Payment Screenshot</label>
-        
+
         <div class="upload-zone" id="mUploadZone">
           <input type="file" id="mproofFile" accept="image/jpeg, image/png, image/webp"/>
           <div class="upload-icon">
@@ -383,7 +386,7 @@
           <div class="upload-text"><span>Tap to upload</span> payment screenshot</div>
         </div>
         <div class="upload-hint">JPG, PNG, WEBP · Max 5 MB · UTR auto-detected</div>
-        
+
         <div class="upload-preview" id="mUploadPreview">
           <img id="mpreviewImg" src="" alt="preview" style="display:none;"/>
           <div class="file-name" id="mFileName"></div>
@@ -541,6 +544,7 @@
   console.log("✅ Firebase ready | project:", firebaseConfig.projectId);
 
   window.saveToFirestore = async function(data) {
+    const url = data.screenshotUrl || "";
     const payload = {
       bookingId: data.bookingId || "",
       name:      data.name      || "",
@@ -550,7 +554,10 @@
       utr:       data.utr       || "",
       amount:    "300",
       status:    data.status    || "Submitted",
-      screenshotUrl: data.screenshotUrl || "",
+      screenshotUrl: url,
+      // "hosted" = Cloudinary URL, "inline" = compressed Base64 fallback,
+      // "missing" = image could not be stored at all (flag these in the dashboard).
+      screenshotType: url ? (url.startsWith("data:") ? "inline" : "hosted") : "missing",
       timestamp: data.timestamp || "",
       createdAt: serverTimestamp()
     };
@@ -560,6 +567,18 @@
       return docRef.id;
     } catch (err) {
       console.error("❌ Firestore addDoc FAILED:", err.code, err.message);
+      // Last-resort retry without the image so the booking record itself is never lost.
+      if (payload.screenshotUrl) {
+        try {
+          const retry = { ...payload, screenshotUrl: "", screenshotType: "missing" };
+          const docRef = await addDoc(collection(db, "movieBookings"), retry);
+          localStorage.setItem("movieBookingId", retry.bookingId);
+          console.warn("⚠️ Saved booking without screenshot after initial failure.");
+          return docRef.id;
+        } catch (err2) {
+          console.error("❌ Retry without screenshot also FAILED:", err2.code, err2.message);
+        }
+      }
       return null;
     }
   };
@@ -628,24 +647,27 @@
     fetch(url, { method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain"}, body:JSON.stringify(payload) }).catch(() => {});
   }
 
-  function makePaymentQR(upiId, size) {
-    const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&am=300&cu=INR`;
-    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&color=0F172A&bgcolor=FFFFFF&qzone=2`;
-  }
-  function makeTicketQR(name, year, dept, mobile, bid, size) {
-    const d = JSON.stringify({ id:bid, name, year, dept, mobile, amount:"300" });
-    return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(d)}&color=0F172A&bgcolor=FFFFFF&qzone=1`;
+  // Instant local client-side QR generation (Zero network latency)
+  function makeInstantQR(dataString) {
+    try {
+      const qr = qrcode(0, 'M');
+      qr.addData(dataString);
+      qr.make();
+      return qr.createDataURL(4, 2);
+    } catch (e) {
+      return "";
+    }
   }
 
-  const QR_CACHE = {};
-  (function preloadQRs() {
-    Object.entries(MOVIE_CONFIG).forEach(([year, cfg]) => {
-      if (!cfg.upi) return;
-      const url = makePaymentQR(cfg.upi, 120);
-      const img = new Image(); img.src = url;
-      QR_CACHE[year] = url;
-    });
-  })();
+  function makePaymentQR(upiId) {
+    const data = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent("NITS Telugu Network")}&am=300&cu=INR`;
+    return makeInstantQR(data);
+  }
+
+  function makeTicketQR(name, year, dept, mobile, bid) {
+    const d = JSON.stringify({ id:bid, name, year, dept, mobile, amount:"300" });
+    return makeInstantQR(d);
+  }
 
   function preprocessImageForOCR(file) {
     return new Promise((resolve) => {
@@ -734,7 +756,7 @@
 
   function handleMovieFileUpload(e) {
     const file = e.target.files[0]; if (!file) return;
-    
+
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
       alert("Invalid file type. Please upload a JPG, PNG, or WEBP image.");
       e.target.value = "";
@@ -749,31 +771,84 @@
       document.getElementById("mUploadPreview").style.display = "none";
       e.target.value = ""; return;
     }
-    
+
     sizeWarn.classList.remove("show");
     document.getElementById("mFileName").textContent = file.name;
     document.getElementById("mUploadPreview").style.display = "flex";
     document.getElementById("merr-proof").classList.remove("show");
     const img = document.getElementById("mpreviewImg");
-    
+
     const r = new FileReader(); r.onload = ev => { img.src = ev.target.result; img.style.display = "block"; }; r.readAsDataURL(file);
     runOCROnFile(file);
   }
 
-  async function uploadToCloudinary(file) {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "Payment Screenshots");
+  /* ==========================================================================
+      SCREENSHOT STORAGE
+      Firestore caps a single document at 1,048,576 bytes. A raw Base64 copy of a
+      phone screenshot blows past that and takes the ENTIRE booking record down
+      with it, so the local fallback compresses before encoding.
+      ========================================================================== */
+  const FIRESTORE_SAFE_CHARS = 700000; // headroom for the other fields
 
-    const response = await fetch(CLOUDINARY_URL, {
-      method: "POST",
-      body: formData
+  function compressToDataURL(file, maxChars = FIRESTORE_SAFE_CHARS) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        let maxDim = 1280;
+        let last = "";
+
+        // Shrink dimensions, then quality, until the encoded string fits.
+        for (let pass = 0; pass < 5; pass++) {
+          let w = img.naturalWidth, h = img.naturalHeight;
+          const ratio = Math.min(1, maxDim / Math.max(w, h));
+          w = Math.max(1, Math.round(w * ratio));
+          h = Math.max(1, Math.round(h * ratio));
+
+          canvas.width = w; canvas.height = h;
+          ctx.fillStyle = "#FFFFFF";          // flatten PNG transparency
+          ctx.fillRect(0, 0, w, h);
+          ctx.drawImage(img, 0, 0, w, h);
+
+          for (const q of [0.82, 0.65, 0.5, 0.38]) {
+            const candidate = canvas.toDataURL("image/jpeg", q);
+            if (candidate.length <= maxChars) { resolve(candidate); return; }
+            last = candidate;
+          }
+          maxDim = Math.round(maxDim * 0.75);
+        }
+        resolve(last.length <= maxChars ? last : "");
+      };
+
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(""); };
+      img.src = url;
     });
-    if (!response.ok) {
-      throw new Error("Payment screenshot upload failed.");
+  }
+
+  // Cloudinary upload with an automatic, size-safe local fallback.
+  async function uploadToCloudinary(file) {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "Payment Screenshots");
+
+      const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.secure_url) return data.secure_url;
+      }
+      console.warn("Cloudinary responded but returned no secure_url — check that the preset is Unsigned.");
+    } catch (e) {
+      console.warn("Cloudinary upload failed, using compressed local fallback.", e);
     }
-    const data = await response.json();
-    return data.secure_url;
+
+    const dataUrl = await compressToDataURL(file);
+    if (!dataUrl) console.error("Screenshot could not be compressed under the Firestore limit.");
+    return dataUrl;
   }
 
   function playSuccessSound() {
@@ -829,7 +904,7 @@
     if (cfg && cfg.upi) {
       document.getElementById("movieQRSection").style.display = "block";
       document.getElementById("movieQRUnavail").style.display = "none";
-      document.getElementById("movieQRImg").src = QR_CACHE[year] || makePaymentQR(cfg.upi, 120);
+      document.getElementById("movieQRImg").src = makePaymentQR(cfg.upi);
     } else {
       document.getElementById("movieQRSection").style.display = "none";
       document.getElementById("movieQRUnavail").style.display = "block";
@@ -844,7 +919,7 @@
     if (ocrRunning) { alert("⏳ Scanning image. Please wait."); return; }
     const file = document.getElementById("mproofFile").files[0];
     const utrVal = document.getElementById("utrInput").value.trim() || window.detectedUTR;
-    
+
     if (!utrVal) {
       document.getElementById("merr-utr").classList.add("show");
       document.getElementById("utrInput").classList.add("error");
@@ -858,7 +933,7 @@
     if (!file) { document.getElementById("merr-proof").classList.add("show"); return; }
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) { alert("Please upload a valid image (JPG, PNG, WEBP)."); return; }
     if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
-    
+
     window.detectedUTR = utrVal;
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
@@ -870,7 +945,7 @@
     document.getElementById("t-dept").textContent         = dept;
     document.getElementById("t-mobile").textContent       = "+91 " + mob;
     document.getElementById("t-booking-id").textContent = mBookingId;
-    document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
+    document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId);
     markStep("mdot2", "mline2", "mdot3");
     document.getElementById("mpStep2").style.display = "none";
     document.getElementById("mpStep3").style.display = "block";
@@ -900,81 +975,82 @@
   async function movieSubmitForm() {
     const file = document.getElementById("mproofFile").files[0];
     const utr = document.getElementById("utrInput").value.trim() || window.detectedUTR || "";
-    
+
     if (!utr) {
       alert("⚠️ UTR / UPI Reference No. is mandatory.");
       document.getElementById("utrInput").focus();
       return;
     }
-    
+
     if (!file) {
       alert("⚠️ Please upload your payment screenshot.");
       return;
     }
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) { alert("Please upload a valid image (JPG, PNG, WEBP)."); return; }
     if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
-    
+
     const name = document.getElementById("mfullName").value.trim();
     const year = document.getElementById("mgradYear").value;
     const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
     const btn  = document.getElementById("mfinalSubmitBtn");
-    
-    btn.disabled = true; 
+
+    btn.disabled = true;
     btn.innerHTML = "⏳ Uploading & Submitting…";
     document.getElementById("loadingOverlay").style.display = "flex";
-    
+
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
-    
+
     try {
-      // Upload image to Cloudinary and run the 3-second preloader concurrently
-      const [cloudinaryUrl] = await Promise.all([
-        uploadToCloudinary(file).catch(err => {
-          console.error("Cloudinary upload failed:", err);
-          return "";
-        }),
+      // Upload image (with automatic compressed fallback) and hold the 3s preloader
+      const [screenshotUrl] = await Promise.all([
+        uploadToCloudinary(file),
         new Promise(resolve => setTimeout(resolve, 3000))
       ]);
 
-      // Save complete record with valid screenshotUrl to Google Sheets and Firestore
-      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted", screenshotUrl: cloudinaryUrl };
+      // Google Sheets: never push a huge Base64 blob into a cell — send a marker instead.
+      const sheetScreenshot = screenshotUrl.startsWith("data:")
+        ? "Stored in dashboard (inline)"
+        : screenshotUrl;
+
+      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted", screenshotUrl: sheetScreenshot };
       sendToGoogleSheet(year, sheetPayload);
 
-      await window.saveToFirestore({ 
-        bookingId: mBookingId, 
-        name, 
-        year: yl, 
-        branch: dept, 
-        mobile: "+91" + mob, 
-        utr, 
-        screenshotUrl: cloudinaryUrl, 
-        status: "Submitted", 
-        timestamp: ts 
+      await window.saveToFirestore({
+        bookingId: mBookingId,
+        name,
+        year: yl,
+        branch: dept,
+        mobile: "+91" + mob,
+        utr,
+        screenshotUrl,
+        status: "Submitted",
+        timestamp: ts
       });
 
       document.getElementById("loadingOverlay").style.display = "none";
-      
+
       document.getElementById("msuccessNameMsg").textContent =
         `Data submitted successfully, ${name}! Your booking request (${mBookingId}) has been recorded.`;
-      
+
       document.getElementById("ft-name").textContent         = name;
       document.getElementById("ft-year").textContent         = yl;
       document.getElementById("ft-dept").textContent         = dept;
       document.getElementById("ft-mobile").textContent       = "+91 " + mob;
       document.getElementById("ft-booking-id").textContent = mBookingId;
-      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
-      
+      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId);
+
       document.getElementById("movieFormContainer").style.display = "none";
       document.getElementById("movieStepInd").style.display        = "none";
       document.getElementById("movieSuccessScreen").style.display = "block";
-      
+
       const successBlock = document.getElementById("successMessageBlock");
       const ticketBlock  = document.getElementById("ticketBlock");
-      successBlock.style.display = "block"; 
+      successBlock.style.display = "block";
       ticketBlock.style.display = "block";
-      
-      window.scrollTo({ top:0, behavior:"smooth" }); 
+
+      window.scrollTo({ top:0, behavior:"smooth" });
       playSuccessSound();
 
     } catch (err) {
@@ -988,20 +1064,18 @@
   async function downloadTicket() {
     const btn = document.getElementById("dlBtn");
     btn.innerHTML = "⏳ Preparing Pass…"; btn.disabled = true;
-    const qrImg = document.getElementById("ft-qr");
-    if (!qrImg.complete || !qrImg.naturalWidth) await new Promise(res => { qrImg.onload = res; qrImg.onerror = res; });
     await new Promise(r => setTimeout(r, 400));
-    
+
     const name   = document.getElementById("ft-name").textContent;
     const year   = document.getElementById("ft-year").textContent;
     const dept   = document.getElementById("ft-dept").textContent;
     const mobile = document.getElementById("ft-mobile").textContent;
     const bid    = document.getElementById("ft-booking-id").textContent;
-    const qrSrc  = makeTicketQR(name, year, dept, mobile, bid, 360);
-    
+    const qrSrc  = makeTicketQR(name, year, dept, mobile, bid);
+
     const clone  = document.createElement("div");
     clone.style.cssText = "position:fixed;left:-9999px;top:0;width:360px;background:#F1F5F9;padding:20px;font-family:'Inter',Arial,sans-serif;z-index:-1;pointer-events:none;box-sizing:border-box;";
-    
+
     clone.innerHTML = `
       <div style="background:#FFFFFF; border-radius:16px; border:1px solid #E2E8F0; overflow:hidden; width:100%; box-sizing:border-box; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
         <div style="padding:20px 20px 16px; position:relative; box-sizing:border-box;">
@@ -1018,23 +1092,23 @@
             <div style="flex:1;"><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Amount</div><div style="font-size:12px; font-weight:600; color:#1E293B;">₹300</div></div>
           </div>
         </div>
-        
+
         <div style="height:14px; position:relative; display:flex; align-items:center; background:transparent;">
-          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; left:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
-          <div style="content:''; width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; right:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+          <div style="width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; left:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
+          <div style="width:14px; height:14px; border-radius:50%; background:#F1F5F9; position:absolute; right:-7px; z-index:5; border:1px solid #E2E8F0;"></div>
           <div style="flex:1; margin:0 10px; height:1px; background-image:radial-gradient(circle, #CBD5E1 1px, transparent 1.5px); background-size:5px 1px; background-repeat:repeat-x;"></div>
         </div>
-        
+
         <div style="padding:16px 20px; display:flex; align-items:center; gap:20px; background:#F8FAFC; box-sizing:border-box;">
           <div style="background:#FFF; border-radius:12px; padding:6px; display:inline-block; border:1px solid #E2E8F0; flex-shrink:0;">
-            <img src="${qrSrc}" style="display:block; width:100px; height:100px; border-radius:4px;"/>
+            <img src="${qrSrc}" style="display:block; width:100px; height:100px; border-radius:4px; image-rendering:pixelated;"/>
           </div>
           <div style="flex:1; min-width:0;">
             <div style="font-size:10px; font-weight:700; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:4px; font-family:'Plus Jakarta Sans',sans-serif;">Booking ID</div>
             <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:22px; color:#0F172A; letter-spacing:0.01em; line-height:1.1; word-break:break-all;">${bid}</div>
           </div>
         </div>
-        
+
         <div style="padding:18px 20px; background:#FFFFFF; border-top:1px solid #E2E8F0; box-sizing:border-box;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px 16px;">
             <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Name</div><div style="font-size:13px; font-weight:600; color:#1E293B; word-break:break-word;">${name}</div></div>
@@ -1043,15 +1117,15 @@
             <div><div style="font-size:9px; font-weight:600; color:#64748B; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px; font-family:'Plus Jakarta Sans',sans-serif;">Branch</div><div style="font-size:13px; font-weight:600; color:#1E293B;">${dept}</div></div>
           </div>
         </div>
-        
+
         <div style="margin:0 16px 16px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:10px; text-align:center; box-sizing:border-box;">
           <p style="font-size:10px; color:#64748B; font-weight:400; line-height:1.4; margin:0;">Present your Booking ID to the distributor to collect the physical ticket a day before the event. System-generated ticket is not the original ticket.</p>
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(clone);
-    
+
     try {
       const canvas = await html2canvas(clone, {
         useCORS: true,
@@ -1061,7 +1135,7 @@
         windowWidth: 360,
         windowHeight: clone.offsetHeight
       });
-      
+
       const link = document.createElement("a");
       link.download = `MoviePass-${bid}.png`;
       link.href = canvas.toDataURL("image/png");
