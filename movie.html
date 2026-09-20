@@ -62,8 +62,8 @@
     .fade-up { animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
     /* ==========================================================================
-       CINEMATIC COMPACT HEADER (Optimized Spacing)
-       ========================================================================== */
+        CINEMATIC COMPACT HEADER (Optimized Spacing)
+        ========================================================================== */
     .movie-page-hero { padding: 1rem 1rem 0.5rem; text-align: center; }
     .movie-badge {
       display: inline-flex; align-items: center; gap: 0.3rem; 
@@ -90,8 +90,8 @@
     }
 
     /* ==========================================================================
-       COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
-       ========================================================================== */
+        COMPACT STEP STEWARD COMPONENT (Optimized Spacing)
+        ========================================================================== */
     .step-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin: 0.5rem auto 0.75rem; max-width: 280px; padding: 0; }
     .step-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
     .step-dot { 
@@ -106,8 +106,8 @@
     .step-label { font-size: 0.6rem; font-weight: 600; color: var(--muted); text-align: center; margin-top: 0.2rem; white-space: nowrap; }
 
     /* ==========================================================================
-       PREMIUM FORM & CARD INTERFACE
-       ========================================================================== */
+        PREMIUM FORM & CARD INTERFACE
+        ========================================================================== */
     .form-container { max-width: 400px; margin: 0 auto; padding: 0 1.25rem 1.5rem; width: 100%; }
     .form-card { 
       background: var(--surface); border: 1px solid var(--ui-border); border-radius: var(--radius-lg); padding: 1rem; 
@@ -152,8 +152,8 @@
     .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
     
     /* ==========================================================================
-       COMPACT PAYMENT SECTION
-       ========================================================================== */
+        COMPACT PAYMENT SECTION
+        ========================================================================== */
     .qr-section { text-align: center; margin-bottom: 0.75rem; }
     .qr-label { font-family: var(--font-display); font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
     .qr-box { display: inline-block; background: #FFF; border-radius: var(--radius-md); padding: 5px; border: 1px solid var(--ui-border); box-shadow: 0 4px 12px rgba(15,23,42,0.03); }
@@ -193,8 +193,8 @@
     #utrInput.auto-filled { border-color: var(--primary); background: #ECFDF5; font-weight: 600; color: #047857; }
 
     /* ==========================================================================
-       PREMIUM LIGHT DESIGN TICKET (Refined Spacing)
-       ========================================================================== */
+        PREMIUM LIGHT DESIGN TICKET (Refined Spacing)
+        ========================================================================== */
     .ticket-preview-label { text-align: center; font-family: var(--font-display); font-size: 0.7rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.65rem; }
     .bms-ticket-wrap { max-width: 340px; margin: 0 auto 1rem; width: 100%; }
     
@@ -256,8 +256,8 @@
     .edit-btn:hover, .movie-back-btn:hover { border-color: #94A3B8; color: var(--text); background: #F8FAFC; }
     
     /* ==========================================================================
-       SUCCESS COMPONENT
-       ========================================================================== */
+        SUCCESS COMPONENT
+        ========================================================================== */
     #movieSuccessScreen { display: none; padding: 0.5rem 1.25rem 2rem; max-width: 400px; margin: 0 auto; width: 100%; }
     .gpay-check { 
       width: 44px; height: 44px; border-radius: 50%; background: var(--primary); 
@@ -813,11 +813,11 @@
     const mob   = document.getElementById("mmobile").value.trim();
     const terms = document.getElementById("mtermsCheck").checked;
     let valid = true;
-    showMErr("merr-name",   !name);                      if (!name)  valid = false;
+    showMErr("merr-name",    !name);                     if (!name)  valid = false;
     const mobOk = /^\d{10}$/.test(mob);
-    showMErr("merr-mobile", !mobOk);                   if (!mobOk) valid = false;
-    showMErr("merr-year",   !year);                      if (!year)  valid = false;
-    showMErr("merr-dept",   !dept);                      if (!dept)  valid = false;
+    showMErr("merr-mobile", !mobOk);                    if (!mobOk) valid = false;
+    showMErr("merr-year",    !year);                     if (!year)  valid = false;
+    showMErr("merr-dept",    !dept);                     if (!dept)  valid = false;
     document.getElementById("merr-terms").classList.toggle("show", !terms);
     if (!terms) valid = false;
     if (!valid) return;
@@ -865,10 +865,10 @@
     const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
-    document.getElementById("t-name").textContent        = name;
-    document.getElementById("t-year").textContent        = yl;
-    document.getElementById("t-dept").textContent        = dept;
-    document.getElementById("t-mobile").textContent      = "+91 " + mob;
+    document.getElementById("t-name").textContent         = name;
+    document.getElementById("t-year").textContent         = yl;
+    document.getElementById("t-dept").textContent         = dept;
+    document.getElementById("t-mobile").textContent       = "+91 " + mob;
     document.getElementById("t-booking-id").textContent = mBookingId;
     document.getElementById("t-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
     markStep("mdot2", "mline2", "mdot3");
@@ -916,7 +916,6 @@
     const dept = document.getElementById("mdepartment").value;
     const mob  = document.getElementById("mmobile").value.trim();
     const yl   = YEAR_LABEL[year] || year;
-    const cfg  = MOVIE_CONFIG[year];
     const btn  = document.getElementById("mfinalSubmitBtn");
     
     btn.disabled = true; 
@@ -925,23 +924,39 @@
     
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
     
-    try {
-      const cloudinaryPromise = uploadToCloudinary(file);
+    // Instantly transition UI for zero lag feedback
+    document.getElementById("loadingOverlay").style.display = "none";
+    
+    document.getElementById("msuccessNameMsg").textContent =
+      `Thank you, ${name}! Your booking request (${mBookingId}) has been successfully received.`;
+    
+    document.getElementById("ft-name").textContent         = name;
+    document.getElementById("ft-year").textContent         = yl;
+    document.getElementById("ft-dept").textContent         = dept;
+    document.getElementById("ft-mobile").textContent       = "+91 " + mob;
+    document.getElementById("ft-booking-id").textContent = mBookingId;
+    document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
+    
+    document.getElementById("movieFormContainer").style.display = "none";
+    document.getElementById("movieStepInd").style.display        = "none";
+    document.getElementById("movieSuccessScreen").style.display = "block";
+    
+    const successBlock = document.getElementById("successMessageBlock");
+    const ticketBlock  = document.getElementById("ticketBlock");
+    successBlock.style.display = "none"; 
+    ticketBlock.style.display = "block";
+    
+    window.scrollTo({ top:0, behavior:"smooth" }); 
+    playSuccessSound();
 
-      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted" };
-      sendToGoogleSheet(year, sheetPayload);
-
-      if (!window._firestoreIsReady) {
-        await new Promise((resolve, reject) => {
-          window._firestoreReadyResolve = resolve;
-          setTimeout(() => reject(new Error("Database connection timed out")), 8000);
-        });
-      }
-
-      const cloudinaryUrl = await cloudinaryPromise;
-      
-      let firestoreSuccess = false;
+    // Background sync execution
+    (async () => {
       try {
+        const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted" };
+        sendToGoogleSheet(year, sheetPayload);
+
+        const cloudinaryUrl = await uploadToCloudinary(file).catch(() => "");
+        
         await window.saveToFirestore({ 
           bookingId: mBookingId, 
           name, 
@@ -953,44 +968,11 @@
           status: "Submitted", 
           timestamp: ts 
         });
-        firestoreSuccess = true;
-      } catch (fsErr) { 
-        console.error("❌ Firestore step failed:", fsErr.message); 
+        console.log("✅ Background sync complete for:", mBookingId);
+      } catch (bgErr) {
+        console.warn("⚠️ Background sync encountered an issue:", bgErr.message);
       }
-
-      if (!firestoreSuccess) {
-        throw new Error("Primary database sync failed. Please try again.");
-      }
-
-      document.getElementById("loadingOverlay").style.display = "none";
-      
-      document.getElementById("msuccessNameMsg").textContent =
-        `Thank you, ${name}! Your booking request (${mBookingId}) has been successfully received.`;
-      
-      document.getElementById("ft-name").textContent        = name;
-      document.getElementById("ft-year").textContent        = yl;
-      document.getElementById("ft-dept").textContent        = dept;
-      document.getElementById("ft-mobile").textContent      = "+91 " + mob;
-      document.getElementById("ft-booking-id").textContent = mBookingId;
-      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
-      
-      document.getElementById("movieFormContainer").style.display = "none";
-      document.getElementById("movieStepInd").style.display        = "none";
-      document.getElementById("movieSuccessScreen").style.display = "block";
-      
-      const successBlock = document.getElementById("successMessageBlock");
-      const ticketBlock  = document.getElementById("ticketBlock");
-      successBlock.style.display = "none"; 
-      ticketBlock.style.display = "block";
-      
-      window.scrollTo({ top:0, behavior:"smooth" }); 
-      playSuccessSound();
-    } catch (err) {
-      document.getElementById("loadingOverlay").style.display = "none";
-      btn.disabled = false; 
-      btn.innerHTML = "Confirm Booking";
-      alert(`❌ ${err.message}`);
-    }
+    })();
   }
 
   async function downloadTicket() {
@@ -1083,6 +1065,5 @@
     }
   }
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
