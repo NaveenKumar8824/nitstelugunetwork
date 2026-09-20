@@ -829,26 +829,47 @@
     });
   }
 
-  // Cloudinary upload with an automatic, size-safe local fallback.
+  function dataURLtoBlob(dataUrl) {
+    const [header, base64] = dataUrl.split(",");
+    const mime = header.match(/:(.*?);/)[1];
+    const binary = atob(base64);
+    const arr = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
+    return new Blob([arr], { type: mime });
+  }
+
+  // Cloudinary upload with a hard timeout and a local fallback computed up
+  // front, so a slow or congested network fails over in ~4.5s instead of
+  // stalling the whole submission. Compressing first also shrinks the upload
+  // payload, so even successful uploads finish faster.
   async function uploadToCloudinary(file) {
+    const compressedDataUrl = await compressToDataURL(file);
+    if (!compressedDataUrl) {
+      console.error("Screenshot could not be compressed under the Firestore limit.");
+      return "";
+    }
+
     try {
+      const blob = dataURLtoBlob(compressedDataUrl);
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("file", blob, "payment.jpg");
       formData.append("upload_preset", "Payment Screenshots");
 
-      const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 4500);
+      const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData, signal: controller.signal });
+      clearTimeout(timeout);
+
       if (response.ok) {
         const data = await response.json();
         if (data.secure_url) return data.secure_url;
       }
       console.warn("Cloudinary responded but returned no secure_url — check that the preset is Unsigned.");
     } catch (e) {
-      console.warn("Cloudinary upload failed, using compressed local fallback.", e);
+      console.warn("Cloudinary upload failed or timed out (4.5s cap), using local copy instead.", e);
     }
 
-    const dataUrl = await compressToDataURL(file);
-    if (!dataUrl) console.error("Screenshot could not be compressed under the Firestore limit.");
-    return dataUrl;
+    return compressedDataUrl;
   }
 
   function playSuccessSound() {
@@ -1003,11 +1024,8 @@
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
 
     try {
-      // Upload image (with automatic compressed fallback) and hold the 3s preloader
-      const [screenshotUrl] = await Promise.all([
-        uploadToCloudinary(file),
-        new Promise(resolve => setTimeout(resolve, 3000))
-      ]);
+      // Upload image (compressed first, Cloudinary capped at 4.5s, local fallback ready either way)
+      const screenshotUrl = await uploadToCloudinary(file);
 
       // Google Sheets: never push a huge Base64 blob into a cell — send a marker instead.
       const sheetScreenshot = screenshotUrl.startsWith("data:")
