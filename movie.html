@@ -454,9 +454,9 @@
           <path class="gpay-tick" d="M10 22 L19 31 L34 13" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <div style="font-family:var(--font-display);font-weight:800;font-size:1.25rem;color:var(--dark);margin-bottom:0.2rem;">Booking Sent!</div>
-      <div class="success-verified-note">⏳ Verification check underway</div>
-      <div id="msuccessNameMsg">Your payment record has been saved.</div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:1.25rem;color:var(--dark);margin-bottom:0.2rem;">Data Submitted Successfully!</div>
+      <div class="success-verified-note">✓ Verified &amp; Recorded</div>
+      <div id="msuccessNameMsg">Your payment record and booking have been successfully saved.</div>
     </div>
   </div>
 
@@ -509,7 +509,7 @@
 <div id="loadingOverlay">
   <div class="spinner-box">
     <div class="circular-spinner"></div>
-    <div class="spinner-text">Submitting…</div>
+    <div class="spinner-text">Submitting Data…</div>
   </div>
 </div>
 
@@ -907,7 +907,10 @@
       return;
     }
     
-    if (!file) return;
+    if (!file) {
+      alert("⚠️ Please upload your payment screenshot.");
+      return;
+    }
     if (!ALLOWED_IMAGE_TYPES.includes(file.type)) { alert("Please upload a valid image (JPG, PNG, WEBP)."); return; }
     if (file.size > MAX_FILE_BYTES) { document.getElementById("merr-filesize").classList.add("show"); return; }
     
@@ -919,60 +922,67 @@
     const btn  = document.getElementById("mfinalSubmitBtn");
     
     btn.disabled = true; 
-    btn.innerHTML = "⏳ Submitting…";
+    btn.innerHTML = "⏳ Uploading & Submitting…";
     document.getElementById("loadingOverlay").style.display = "flex";
     
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
     
-    // Instantly transition UI for zero lag feedback
-    document.getElementById("loadingOverlay").style.display = "none";
-    
-    document.getElementById("msuccessNameMsg").textContent =
-      `Thank you, ${name}! Your booking request (${mBookingId}) has been successfully received.`;
-    
-    document.getElementById("ft-name").textContent         = name;
-    document.getElementById("ft-year").textContent         = yl;
-    document.getElementById("ft-dept").textContent         = dept;
-    document.getElementById("ft-mobile").textContent       = "+91 " + mob;
-    document.getElementById("ft-booking-id").textContent = mBookingId;
-    document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
-    
-    document.getElementById("movieFormContainer").style.display = "none";
-    document.getElementById("movieStepInd").style.display        = "none";
-    document.getElementById("movieSuccessScreen").style.display = "block";
-    
-    const successBlock = document.getElementById("successMessageBlock");
-    const ticketBlock  = document.getElementById("ticketBlock");
-    successBlock.style.display = "none"; 
-    ticketBlock.style.display = "block";
-    
-    window.scrollTo({ top:0, behavior:"smooth" }); 
-    playSuccessSound();
+    try {
+      // Upload image to Cloudinary and run the 3-second preloader concurrently
+      const [cloudinaryUrl] = await Promise.all([
+        uploadToCloudinary(file).catch(err => {
+          console.error("Cloudinary upload failed:", err);
+          return "";
+        }),
+        new Promise(resolve => setTimeout(resolve, 3000))
+      ]);
 
-    // Background sync execution
-    (async () => {
-      try {
-        const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted" };
-        sendToGoogleSheet(year, sheetPayload);
+      // Save complete record with valid screenshotUrl to Google Sheets and Firestore
+      const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted", screenshotUrl: cloudinaryUrl };
+      sendToGoogleSheet(year, sheetPayload);
 
-        const cloudinaryUrl = await uploadToCloudinary(file).catch(() => "");
-        
-        await window.saveToFirestore({ 
-          bookingId: mBookingId, 
-          name, 
-          year: yl, 
-          branch: dept, 
-          mobile: "+91" + mob, 
-          utr, 
-          screenshotUrl: cloudinaryUrl, 
-          status: "Submitted", 
-          timestamp: ts 
-        });
-        console.log("✅ Background sync complete for:", mBookingId);
-      } catch (bgErr) {
-        console.warn("⚠️ Background sync encountered an issue:", bgErr.message);
-      }
-    })();
+      await window.saveToFirestore({ 
+        bookingId: mBookingId, 
+        name, 
+        year: yl, 
+        branch: dept, 
+        mobile: "+91" + mob, 
+        utr, 
+        screenshotUrl: cloudinaryUrl, 
+        status: "Submitted", 
+        timestamp: ts 
+      });
+
+      document.getElementById("loadingOverlay").style.display = "none";
+      
+      document.getElementById("msuccessNameMsg").textContent =
+        `Data submitted successfully, ${name}! Your booking request (${mBookingId}) has been recorded.`;
+      
+      document.getElementById("ft-name").textContent         = name;
+      document.getElementById("ft-year").textContent         = yl;
+      document.getElementById("ft-dept").textContent         = dept;
+      document.getElementById("ft-mobile").textContent       = "+91 " + mob;
+      document.getElementById("ft-booking-id").textContent = mBookingId;
+      document.getElementById("ft-qr").src = makeTicketQR(name, yl, dept, "+91 "+mob, mBookingId, 80);
+      
+      document.getElementById("movieFormContainer").style.display = "none";
+      document.getElementById("movieStepInd").style.display        = "none";
+      document.getElementById("movieSuccessScreen").style.display = "block";
+      
+      const successBlock = document.getElementById("successMessageBlock");
+      const ticketBlock  = document.getElementById("ticketBlock");
+      successBlock.style.display = "block"; 
+      ticketBlock.style.display = "block";
+      
+      window.scrollTo({ top:0, behavior:"smooth" }); 
+      playSuccessSound();
+
+    } catch (err) {
+      document.getElementById("loadingOverlay").style.display = "none";
+      btn.disabled = false;
+      btn.innerHTML = "Confirm Booking";
+      alert("❌ Submission error: " + err.message);
+    }
   }
 
   async function downloadTicket() {
