@@ -38,8 +38,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Aligns content to the very top */
-      padding: 10px 0 0 0;
+      justify-content: flex-start;
+      padding: 12px 0;
       margin: 0;
     }
 
@@ -57,12 +57,12 @@
       align-items: center;
       justify-content: flex-start;
       text-align: center;
-      padding: 0 1rem;
+      padding: 0 16px;
       animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .ugadi-container {
-      max-width: 440px;
+      max-width: 480px;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -77,12 +77,12 @@
       background: var(--white);
       border: 1px solid #E2E8F0;
       border-radius: 100px;
-      padding: 0.25rem 0.85rem;
+      padding: 0.3rem 0.85rem;
       font-family: var(--font-main);
       font-size: 0.72rem;
       font-weight: 600;
       color: var(--dark);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.8rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
     .badge-dot {
@@ -98,10 +98,10 @@
     .ugadi-title {
       font-family: var(--font-main);
       font-weight: 800;
-      font-size: 2.1rem;
+      font-size: 2.25rem;
       color: var(--dark);
       line-height: 1.15;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.3rem;
       letter-spacing: -0.03em;
     }
     .ugadi-title .accent {
@@ -112,10 +112,10 @@
     }
 
     .ugadi-year {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       font-weight: 500;
       color: var(--muted);
-      margin-bottom: 0.85rem;
+      margin-bottom: 1.2rem;
     }
 
     /* Card Wrapper Container */
@@ -123,7 +123,7 @@
       background: var(--white);
       border: 1px solid #E2E8F0;
       border-radius: var(--radius-lg);
-      padding: 28px 24px 24px 24px;
+      padding: 32px 24px 28px 24px;
       box-shadow: var(--shadow-premium);
       text-align: center;
       width: 100%;
@@ -139,7 +139,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 0.85rem auto;
+      margin: 0 auto 1rem auto;
       color: var(--primary);
     }
 
@@ -152,26 +152,26 @@
       color: #C2410C;
       border: 1px solid rgba(255, 107, 0, 0.2);
       border-radius: 100px;
-      padding: 0.3rem 0.9rem;
+      padding: 0.35rem 1rem;
       font-size: 0.75rem;
       font-weight: 600;
-      margin-bottom: 0.9rem;
+      margin-bottom: 1.1rem;
     }
 
     .ugadi-heading-inner {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--dark);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
       letter-spacing: -0.02em;
     }
 
     .ugadi-desc {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 400;
       color: var(--muted);
       line-height: 1.55;
-      margin-bottom: 1.15rem;
+      margin-bottom: 1.4rem;
     }
 
     /* Reopening Box style */
@@ -179,18 +179,18 @@
       background: #FAFAFB;
       border: 1px dashed #CBD5E1;
       border-radius: 14px;
-      padding: 0.8rem 1rem;
-      margin-bottom: 1.15rem;
+      padding: 0.9rem 1rem;
+      margin-bottom: 1.4rem;
       text-align: center;
     }
     .ugadi-reopen-box .title {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--dark);
-      margin-bottom: 0.1rem;
+      margin-bottom: 0.15rem;
     }
     .ugadi-reopen-box .subtitle {
-      font-size: 0.74rem;
+      font-size: 0.76rem;
       color: var(--muted);
       font-weight: 500;
     }
@@ -202,7 +202,7 @@
       justify-content: center;
       gap: 0.5rem;
       width: 100%;
-      padding: 0.8rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       background: var(--dark);
       color: white;
       border: none;
@@ -220,11 +220,11 @@
       transform: translateY(-1px);
     }
 
-    @media(max-width: 440px) {
-      body { padding-top: 5px; }
-      .ugadi-hero { padding: 0 0.5rem; }
-      .ugadi-card { padding: 22px 16px 20px 16px; }
-      .ugadi-title { font-size: 1.8rem; }
+    @media(max-width: 480px) {
+      body { padding-top: 8px; }
+      .ugadi-hero { padding: 0 12px; }
+      .ugadi-card { padding: 28px 20px 24px 20px; }
+      .ugadi-title { font-size: 2rem; }
     }
   </style>
 </head>
