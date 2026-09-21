@@ -746,6 +746,21 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
   }
 
   // ── MODAL CONTROLS ──
+  // Look the screenshot up by booking document ID instead of embedding the raw
+  // URL (which can be a very large Base64 data: string for the compressed
+  // fallback) directly into an inline HTML attribute. Large attribute strings
+  // baked into innerHTML can be truncated by mobile WebKit browsers, which was
+  // why images sometimes silently failed to open.
+  window.openImageModalById = function(e, id) {
+    if (e) e.stopPropagation();
+    const d = (window._allDocs || []).find(x => x.id === id);
+    if (!d || !d.screenshotUrl) {
+      showToast('No screenshot saved for this booking.', 'error');
+      return;
+    }
+    window.openImageModal(e, d.screenshotUrl);
+  };
+
   window.openImageModal = function(e, url) {
     if(e) e.stopPropagation(); 
     const imgEl = document.getElementById('payment-img');
@@ -810,8 +825,9 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
       const rawMob = d.mobile || '';
       const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
         
+      // Pass only the (short, safe) document ID — never the screenshot URL itself — into the HTML.
       const proofBtn = d.screenshotUrl 
-        ? `<button class="table-view-btn" onclick="openImageModal(event, '${d.screenshotUrl}')" title="View Proof">View</button>` 
+        ? `<button class="table-view-btn" onclick="openImageModalById(event, '${esc(d.id)}')" title="View Proof">View</button>` 
         : `<span class="no-img-text">—</span>`;
         
       return `<tr onclick="openModal('${d.id}')">
@@ -859,8 +875,10 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     const rawMob = d.mobile || '';
     const mobDisp = rawMob ? (rawMob.startsWith('+91') ? esc(rawMob) : `+91 ${esc(rawMob)}`) : '—';
       
+    // Reference currentDocData directly at click time instead of interpolating
+    // the URL into the HTML string — same fix as the table's Proof button.
     const modalProofBtn = d.screenshotUrl 
-        ? `<button onclick="openImageModal(event, '${d.screenshotUrl}')" class="table-view-btn">View</button>` 
+        ? `<button onclick="openImageModal(event, currentDocData.screenshotUrl)" class="table-view-btn">View</button>` 
         : '<span class="plain">No Image</span>';
 
     document.getElementById('dm-body').innerHTML = [
@@ -1118,5 +1136,6 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
 
   checkSession();
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
