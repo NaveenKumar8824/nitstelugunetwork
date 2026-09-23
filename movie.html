@@ -512,7 +512,7 @@
 <div id="loadingOverlay">
   <div class="spinner-box">
     <div class="circular-spinner"></div>
-    <div class="spinner-text">Submitting Data…</div>
+    <div class="spinner-text" id="loadingText">Submitting Data…</div>
   </div>
 </div>
 
@@ -838,10 +838,10 @@
     return new Blob([arr], { type: mime });
   }
 
-  // Cloudinary upload with a hard timeout and a local fallback computed up
-  // front, so a slow or congested network fails over in ~4.5s instead of
-  // stalling the whole submission. Compressing first also shrinks the upload
-  // payload, so even successful uploads finish faster.
+  // Cloudinary upload — waits for a real result instead of racing a short
+  // timeout. Retries a couple of times on transient network failures before
+  // falling back to a locally-compressed copy, so "success" only means the
+  // image genuinely made it out, not that we gave up quickly.
   async function uploadToCloudinary(file) {
     const compressedDataUrl = await compressToDataURL(file);
     if (!compressedDataUrl) {
@@ -849,26 +849,41 @@
       return "";
     }
 
-    try {
-      const blob = dataURLtoBlob(compressedDataUrl);
-      const formData = new FormData();
-      formData.append("file", blob, "payment.jpg");
-      formData.append("upload_preset", "Payment Screenshots");
+    const blob = dataURLtoBlob(compressedDataUrl);
+    const MAX_ATTEMPTS = 3;
+    const ATTEMPT_TIMEOUT_MS = 20000; // give slow mobile connections a real chance
 
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 4500);
-      const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData, signal: controller.signal });
-      clearTimeout(timeout);
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      try {
+        if (typeof updateLoadingText === "function") {
+          updateLoadingText(attempt === 1 ? "Uploading screenshot…" : `Uploading screenshot… (retry ${attempt - 1})`);
+        }
+        const formData = new FormData();
+        formData.append("file", blob, "payment.jpg");
+        formData.append("upload_preset", "Payment Screenshots");
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data.secure_url) return data.secure_url;
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), ATTEMPT_TIMEOUT_MS);
+        const response = await fetch(CLOUDINARY_URL, { method: "POST", body: formData, signal: controller.signal });
+        clearTimeout(timeout);
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.secure_url) return data.secure_url;
+          console.warn("Cloudinary responded but returned no secure_url — check that the preset is Unsigned.");
+          break; // a valid-but-wrong response won't fix itself by retrying
+        } else {
+          console.warn(`Cloudinary upload attempt ${attempt} failed with status ${response.status}.`);
+        }
+      } catch (e) {
+        console.warn(`Cloudinary upload attempt ${attempt} failed or timed out (${ATTEMPT_TIMEOUT_MS/1000}s cap).`, e);
       }
-      console.warn("Cloudinary responded but returned no secure_url — check that the preset is Unsigned.");
-    } catch (e) {
-      console.warn("Cloudinary upload failed or timed out (4.5s cap), using local copy instead.", e);
     }
 
+    if (typeof updateLoadingText === "function") {
+      updateLoadingText("Saving locally…");
+    }
+    console.warn("All Cloudinary attempts exhausted, using local compressed copy instead.");
     return compressedDataUrl;
   }
 
@@ -993,6 +1008,11 @@
     window.scrollTo({ top:0, behavior:"smooth" });
   }
 
+  function updateLoadingText(msg) {
+    const el = document.getElementById("loadingText");
+    if (el) el.textContent = msg;
+  }
+
   async function movieSubmitForm() {
     const file = document.getElementById("mproofFile").files[0];
     const utr = document.getElementById("utrInput").value.trim() || window.detectedUTR || "";
@@ -1019,12 +1039,14 @@
 
     btn.disabled = true;
     btn.innerHTML = "⏳ Uploading & Submitting…";
+    updateLoadingText("Uploading screenshot…");
     document.getElementById("loadingOverlay").style.display = "flex";
 
     const ts = new Date().toLocaleString("en-IN", { timeZone:"Asia/Kolkata" });
 
     try {
-      // Upload image (compressed first, Cloudinary capped at 4.5s, local fallback ready either way)
+      // Upload image — now genuinely waits for Cloudinary to confirm (with
+      // retries) rather than racing a short timeout and falling back silently.
       const screenshotUrl = await uploadToCloudinary(file);
 
       // Google Sheets: never push a huge Base64 blob into a cell — send a marker instead.
@@ -1037,6 +1059,7 @@
       const sheetPayload = { action:"addBooking", bookingId:mBookingId, name, year:yl, branch:dept, mobile:"+91"+mob, utr, amount:"300", timestamp:ts, status:"Submitted", screenshotUrl: sheetScreenshot };
       sendToGoogleSheet(year, sheetPayload);
 
+      updateLoadingText("Saving booking…");
       const savedId = await window.saveToFirestore({
         bookingId: mBookingId,
         name,
@@ -1173,5 +1196,6 @@
     }
   }
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"66761a9200ff42729b8c9caefacc4af9","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
