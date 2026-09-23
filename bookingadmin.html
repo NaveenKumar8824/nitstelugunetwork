@@ -275,7 +275,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
   border-color: #93c5fd; 
   color: #1e40af; 
 }
-.no-img-text { font-size: 11px; font-weight: 600; color: var(--g400); padding-left: 4px; }
+.no-img-text { font-size: 11px; font-weight: 600; color: var(--red); padding-left: 4px; }
 
 /* ── MODALS ── */
 .overlay{ display:none; position:fixed; inset:0; background:rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index:200; align-items:center; justify-content:center; padding:20px; animation: fadeIn 0.2s ease; }
@@ -828,7 +828,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
       // Pass only the (short, safe) document ID — never the screenshot URL itself — into the HTML.
       const proofBtn = d.screenshotUrl 
         ? `<button class="table-view-btn" onclick="openImageModalById(event, '${esc(d.id)}')" title="View Proof">View</button>` 
-        : `<span class="no-img-text">—</span>`;
+        : `<span class="no-img-text" title="Screenshot upload failed to save for this booking — ask the student to resubmit">⚠ Failed</span>`;
         
       return `<tr onclick="openModal('${d.id}')">
         <td class="td-num">${start+i+1}</td>
@@ -879,7 +879,7 @@ tbody td{padding:14px 18px;font-size:13px;color:var(--g700); vertical-align: mid
     // the URL into the HTML string — same fix as the table's Proof button.
     const modalProofBtn = d.screenshotUrl 
         ? `<button onclick="openImageModal(event, currentDocData.screenshotUrl)" class="table-view-btn">View</button>` 
-        : '<span class="plain">No Image</span>';
+        : '<span class="plain" style="color:var(--red);font-weight:600;">⚠ Upload failed — ask student to resubmit</span>';
 
     document.getElementById('dm-body').innerHTML = [
       ['Name',       d.name||'—',             true],
