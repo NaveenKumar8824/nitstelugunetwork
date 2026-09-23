@@ -839,9 +839,11 @@
   }
 
   // Cloudinary upload — waits for a real result instead of racing a short
-  // timeout. Retries a couple of times on transient network failures before
-  // falling back to a locally-compressed copy, so "success" only means the
-  // image genuinely made it out, not that we gave up quickly.
+  // timeout, and spaces retries apart with real delays so a flaky connection
+  // gets several genuine, unhurried chances before we ever fall back to the
+  // locally-compressed copy.
+  function wait(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
   async function uploadToCloudinary(file) {
     const compressedDataUrl = await compressToDataURL(file);
     if (!compressedDataUrl) {
@@ -850,13 +852,22 @@
     }
 
     const blob = dataURLtoBlob(compressedDataUrl);
-    const MAX_ATTEMPTS = 3;
-    const ATTEMPT_TIMEOUT_MS = 20000; // give slow mobile connections a real chance
+    const MAX_ATTEMPTS = 4;
+    const ATTEMPT_TIMEOUT_MS = 25000;     // real per-attempt network budget
+    const RETRY_DELAYS_MS = [2000, 4000, 8000]; // spacing before attempts 2, 3, 4
 
     for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      if (attempt > 1) {
+        const delay = RETRY_DELAYS_MS[attempt - 2] || 8000;
+        if (typeof updateLoadingText === "function") {
+          updateLoadingText(`Retrying upload in ${Math.round(delay/1000)}s…`);
+        }
+        await wait(delay);
+      }
+
       try {
         if (typeof updateLoadingText === "function") {
-          updateLoadingText(attempt === 1 ? "Uploading screenshot…" : `Uploading screenshot… (retry ${attempt - 1})`);
+          updateLoadingText(attempt === 1 ? "Uploading screenshot…" : `Uploading screenshot… (attempt ${attempt} of ${MAX_ATTEMPTS})`);
         }
         const formData = new FormData();
         formData.append("file", blob, "payment.jpg");
@@ -870,10 +881,11 @@
         if (response.ok) {
           const data = await response.json();
           if (data.secure_url) return data.secure_url;
-          console.warn("Cloudinary responded but returned no secure_url — check that the preset is Unsigned.");
-          break; // a valid-but-wrong response won't fix itself by retrying
+          console.warn("Cloudinary responded 200 but returned no secure_url — check that the preset is Unsigned.", data);
         } else {
-          console.warn(`Cloudinary upload attempt ${attempt} failed with status ${response.status}.`);
+          let bodyText = "";
+          try { bodyText = await response.text(); } catch (_) {}
+          console.warn(`Cloudinary upload attempt ${attempt} failed — status ${response.status}. Response: ${bodyText}`);
         }
       } catch (e) {
         console.warn(`Cloudinary upload attempt ${attempt} failed or timed out (${ATTEMPT_TIMEOUT_MS/1000}s cap).`, e);
@@ -883,7 +895,7 @@
     if (typeof updateLoadingText === "function") {
       updateLoadingText("Saving locally…");
     }
-    console.warn("All Cloudinary attempts exhausted, using local compressed copy instead.");
+    console.warn("All Cloudinary attempts exhausted after spaced retries, using local compressed copy instead.");
     return compressedDataUrl;
   }
 
